@@ -30,6 +30,12 @@
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServerService.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\std\ZmqTransportDataImpl.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\ping\Ping.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AgentClient.h">
@@ -42,6 +48,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServerService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\ZmqTransportDataImpl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\ping\Ping.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

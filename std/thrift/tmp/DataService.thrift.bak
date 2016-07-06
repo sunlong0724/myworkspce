@@ -5,7 +5,7 @@ struct MinMaxStruct {
   2: double max
 }
 
-service AgentServerService{
+service DataService{
  //i32 open(1: string camera_name,2: i64 timestamp, 3: string video_data),
  list<string> find_cameras(),
  i32					add_cameras(1: list<string> l),

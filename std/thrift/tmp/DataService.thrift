@@ -5,18 +5,10 @@ struct MinMaxStruct {
   2: double max
 }
 
-service AgentServerService{
- //i32 open(1: string camera_name,2: i64 timestamp, 3: string video_data),
- list<string> find_cameras(),
- i32					add_cameras(1: list<string> l),
- list<string> get_hold_cameras(),
- i32					del_cameras(1: list<string> l),
- i32 					open(1: string camera_name),
- i32 					close(1: string camera_name),
- 
- //i32					set_display_frame_rate(1: string camera_name, 2: i32 display_frame_rate, 3: i32 grab_frame_rate),
- i32 					start(1: string camera_name, 2: i32 display_frame_rate),
- i32 					stop(1: string camera_name),
+service DataService{
+
+ i32					set_display_frame_rate(1: string camera_name, 2: i32 display_frame_rate, 3: i32 grab_frame_rate),
+
  
  i32 					set_exposure_time(1: string camera_name, 2: double microseconds),
  i32 					set_gain_by_sensor_all(1: string camera_name, 2: double gain),

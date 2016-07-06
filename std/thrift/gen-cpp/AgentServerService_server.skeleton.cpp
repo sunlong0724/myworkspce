@@ -52,7 +52,7 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
     printf("close\n");
   }
 
-  int32_t start(const std::string& camera_name) {
+  int32_t start(const std::string& camera_name, const int32_t display_frame_rate) {
     // Your implementation goes here
     printf("start\n");
   }
@@ -232,16 +232,6 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
     printf("get_process_fps\n");
   }
 
-  void dump_raw_image(std::string& _return, const std::string& camera_name) {
-    // Your implementation goes here
-    printf("dump_raw_image\n");
-  }
-
-  void dump_rgb_image(std::string& _return, const std::string& camera_name) {
-    // Your implementation goes here
-    printf("dump_rgb_image\n");
-  }
-
   void save_feature(std::string& _return, const std::string& camera_name) {
     // Your implementation goes here
     printf("save_feature\n");
@@ -250,6 +240,11 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
   int32_t update_feature(const std::string& camera_name, const std::string& content) {
     // Your implementation goes here
     printf("update_feature\n");
+  }
+
+  int64_t ping_server(const int64_t seq) {
+    // Your implementation goes here
+    printf("ping_server\n");
   }
 
 };

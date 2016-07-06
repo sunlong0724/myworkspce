@@ -30,6 +30,9 @@
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServerService_server.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\std\ZmqTransportDataImpl.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServer_constants.h">
@@ -39,6 +42,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServerService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\ZmqTransportDataImpl.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

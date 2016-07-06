@@ -21,7 +21,7 @@ class AgentServerServiceIf {
   virtual int32_t del_cameras(const std::vector<std::string> & l) = 0;
   virtual int32_t open(const std::string& camera_name) = 0;
   virtual int32_t close(const std::string& camera_name) = 0;
-  virtual int32_t start(const std::string& camera_name) = 0;
+  virtual int32_t start(const std::string& camera_name, const int32_t display_frame_rate) = 0;
   virtual int32_t stop(const std::string& camera_name) = 0;
   virtual int32_t set_exposure_time(const std::string& camera_name, const double microseconds) = 0;
   virtual int32_t set_gain_by_sensor_all(const std::string& camera_name, const double gain) = 0;
@@ -57,10 +57,9 @@ class AgentServerServiceIf {
   virtual void get_current_ip_address(std::string& _return, const std::string& camera_name) = 0;
   virtual double get_grab_fps(const std::string& camera_name) = 0;
   virtual double get_process_fps(const std::string& camera_name) = 0;
-  virtual void dump_raw_image(std::string& _return, const std::string& camera_name) = 0;
-  virtual void dump_rgb_image(std::string& _return, const std::string& camera_name) = 0;
   virtual void save_feature(std::string& _return, const std::string& camera_name) = 0;
   virtual int32_t update_feature(const std::string& camera_name, const std::string& content) = 0;
+  virtual int64_t ping_server(const int64_t seq) = 0;
 };
 
 class AgentServerServiceIfFactory {
@@ -112,7 +111,7 @@ class AgentServerServiceNull : virtual public AgentServerServiceIf {
     int32_t _return = 0;
     return _return;
   }
-  int32_t start(const std::string& /* camera_name */) {
+  int32_t start(const std::string& /* camera_name */, const int32_t /* display_frame_rate */) {
     int32_t _return = 0;
     return _return;
   }
@@ -247,17 +246,15 @@ class AgentServerServiceNull : virtual public AgentServerServiceIf {
     double _return = (double)0;
     return _return;
   }
-  void dump_raw_image(std::string& /* _return */, const std::string& /* camera_name */) {
-    return;
-  }
-  void dump_rgb_image(std::string& /* _return */, const std::string& /* camera_name */) {
-    return;
-  }
   void save_feature(std::string& /* _return */, const std::string& /* camera_name */) {
     return;
   }
   int32_t update_feature(const std::string& /* camera_name */, const std::string& /* content */) {
     int32_t _return = 0;
+    return _return;
+  }
+  int64_t ping_server(const int64_t /* seq */) {
+    int64_t _return = 0;
     return _return;
   }
 };
@@ -883,19 +880,21 @@ class AgentServerService_close_presult {
 };
 
 typedef struct _AgentServerService_start_args__isset {
-  _AgentServerService_start_args__isset() : camera_name(false) {}
+  _AgentServerService_start_args__isset() : camera_name(false), display_frame_rate(false) {}
   bool camera_name;
+  bool display_frame_rate;
 } _AgentServerService_start_args__isset;
 
 class AgentServerService_start_args {
  public:
 
-  AgentServerService_start_args() : camera_name() {
+  AgentServerService_start_args() : camera_name(), display_frame_rate(0) {
   }
 
   virtual ~AgentServerService_start_args() throw() {}
 
   std::string camera_name;
+  int32_t display_frame_rate;
 
   _AgentServerService_start_args__isset __isset;
 
@@ -903,9 +902,15 @@ class AgentServerService_start_args {
     camera_name = val;
   }
 
+  void __set_display_frame_rate(const int32_t val) {
+    display_frame_rate = val;
+  }
+
   bool operator == (const AgentServerService_start_args & rhs) const
   {
     if (!(camera_name == rhs.camera_name))
+      return false;
+    if (!(display_frame_rate == rhs.display_frame_rate))
       return false;
     return true;
   }
@@ -928,6 +933,7 @@ class AgentServerService_start_pargs {
   virtual ~AgentServerService_start_pargs() throw() {}
 
   const std::string* camera_name;
+  const int32_t* display_frame_rate;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -4869,222 +4875,6 @@ class AgentServerService_get_process_fps_presult {
 
 };
 
-typedef struct _AgentServerService_dump_raw_image_args__isset {
-  _AgentServerService_dump_raw_image_args__isset() : camera_name(false) {}
-  bool camera_name;
-} _AgentServerService_dump_raw_image_args__isset;
-
-class AgentServerService_dump_raw_image_args {
- public:
-
-  AgentServerService_dump_raw_image_args() : camera_name() {
-  }
-
-  virtual ~AgentServerService_dump_raw_image_args() throw() {}
-
-  std::string camera_name;
-
-  _AgentServerService_dump_raw_image_args__isset __isset;
-
-  void __set_camera_name(const std::string& val) {
-    camera_name = val;
-  }
-
-  bool operator == (const AgentServerService_dump_raw_image_args & rhs) const
-  {
-    if (!(camera_name == rhs.camera_name))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_dump_raw_image_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_dump_raw_image_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class AgentServerService_dump_raw_image_pargs {
- public:
-
-
-  virtual ~AgentServerService_dump_raw_image_pargs() throw() {}
-
-  const std::string* camera_name;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_dump_raw_image_result__isset {
-  _AgentServerService_dump_raw_image_result__isset() : success(false) {}
-  bool success;
-} _AgentServerService_dump_raw_image_result__isset;
-
-class AgentServerService_dump_raw_image_result {
- public:
-
-  AgentServerService_dump_raw_image_result() : success() {
-  }
-
-  virtual ~AgentServerService_dump_raw_image_result() throw() {}
-
-  std::string success;
-
-  _AgentServerService_dump_raw_image_result__isset __isset;
-
-  void __set_success(const std::string& val) {
-    success = val;
-  }
-
-  bool operator == (const AgentServerService_dump_raw_image_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_dump_raw_image_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_dump_raw_image_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_dump_raw_image_presult__isset {
-  _AgentServerService_dump_raw_image_presult__isset() : success(false) {}
-  bool success;
-} _AgentServerService_dump_raw_image_presult__isset;
-
-class AgentServerService_dump_raw_image_presult {
- public:
-
-
-  virtual ~AgentServerService_dump_raw_image_presult() throw() {}
-
-  std::string* success;
-
-  _AgentServerService_dump_raw_image_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _AgentServerService_dump_rgb_image_args__isset {
-  _AgentServerService_dump_rgb_image_args__isset() : camera_name(false) {}
-  bool camera_name;
-} _AgentServerService_dump_rgb_image_args__isset;
-
-class AgentServerService_dump_rgb_image_args {
- public:
-
-  AgentServerService_dump_rgb_image_args() : camera_name() {
-  }
-
-  virtual ~AgentServerService_dump_rgb_image_args() throw() {}
-
-  std::string camera_name;
-
-  _AgentServerService_dump_rgb_image_args__isset __isset;
-
-  void __set_camera_name(const std::string& val) {
-    camera_name = val;
-  }
-
-  bool operator == (const AgentServerService_dump_rgb_image_args & rhs) const
-  {
-    if (!(camera_name == rhs.camera_name))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_dump_rgb_image_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_dump_rgb_image_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class AgentServerService_dump_rgb_image_pargs {
- public:
-
-
-  virtual ~AgentServerService_dump_rgb_image_pargs() throw() {}
-
-  const std::string* camera_name;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_dump_rgb_image_result__isset {
-  _AgentServerService_dump_rgb_image_result__isset() : success(false) {}
-  bool success;
-} _AgentServerService_dump_rgb_image_result__isset;
-
-class AgentServerService_dump_rgb_image_result {
- public:
-
-  AgentServerService_dump_rgb_image_result() : success() {
-  }
-
-  virtual ~AgentServerService_dump_rgb_image_result() throw() {}
-
-  std::string success;
-
-  _AgentServerService_dump_rgb_image_result__isset __isset;
-
-  void __set_success(const std::string& val) {
-    success = val;
-  }
-
-  bool operator == (const AgentServerService_dump_rgb_image_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_dump_rgb_image_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_dump_rgb_image_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_dump_rgb_image_presult__isset {
-  _AgentServerService_dump_rgb_image_presult__isset() : success(false) {}
-  bool success;
-} _AgentServerService_dump_rgb_image_presult__isset;
-
-class AgentServerService_dump_rgb_image_presult {
- public:
-
-
-  virtual ~AgentServerService_dump_rgb_image_presult() throw() {}
-
-  std::string* success;
-
-  _AgentServerService_dump_rgb_image_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
 typedef struct _AgentServerService_save_feature_args__isset {
   _AgentServerService_save_feature_args__isset() : camera_name(false) {}
   bool camera_name;
@@ -5310,6 +5100,114 @@ class AgentServerService_update_feature_presult {
 
 };
 
+typedef struct _AgentServerService_ping_server_args__isset {
+  _AgentServerService_ping_server_args__isset() : seq(false) {}
+  bool seq;
+} _AgentServerService_ping_server_args__isset;
+
+class AgentServerService_ping_server_args {
+ public:
+
+  AgentServerService_ping_server_args() : seq(0) {
+  }
+
+  virtual ~AgentServerService_ping_server_args() throw() {}
+
+  int64_t seq;
+
+  _AgentServerService_ping_server_args__isset __isset;
+
+  void __set_seq(const int64_t val) {
+    seq = val;
+  }
+
+  bool operator == (const AgentServerService_ping_server_args & rhs) const
+  {
+    if (!(seq == rhs.seq))
+      return false;
+    return true;
+  }
+  bool operator != (const AgentServerService_ping_server_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AgentServerService_ping_server_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class AgentServerService_ping_server_pargs {
+ public:
+
+
+  virtual ~AgentServerService_ping_server_pargs() throw() {}
+
+  const int64_t* seq;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AgentServerService_ping_server_result__isset {
+  _AgentServerService_ping_server_result__isset() : success(false) {}
+  bool success;
+} _AgentServerService_ping_server_result__isset;
+
+class AgentServerService_ping_server_result {
+ public:
+
+  AgentServerService_ping_server_result() : success(0) {
+  }
+
+  virtual ~AgentServerService_ping_server_result() throw() {}
+
+  int64_t success;
+
+  _AgentServerService_ping_server_result__isset __isset;
+
+  void __set_success(const int64_t val) {
+    success = val;
+  }
+
+  bool operator == (const AgentServerService_ping_server_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const AgentServerService_ping_server_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AgentServerService_ping_server_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AgentServerService_ping_server_presult__isset {
+  _AgentServerService_ping_server_presult__isset() : success(false) {}
+  bool success;
+} _AgentServerService_ping_server_presult__isset;
+
+class AgentServerService_ping_server_presult {
+ public:
+
+
+  virtual ~AgentServerService_ping_server_presult() throw() {}
+
+  int64_t* success;
+
+  _AgentServerService_ping_server_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class AgentServerServiceClient : virtual public AgentServerServiceIf {
  public:
   AgentServerServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
@@ -5348,8 +5246,8 @@ class AgentServerServiceClient : virtual public AgentServerServiceIf {
   int32_t close(const std::string& camera_name);
   void send_close(const std::string& camera_name);
   int32_t recv_close();
-  int32_t start(const std::string& camera_name);
-  void send_start(const std::string& camera_name);
+  int32_t start(const std::string& camera_name, const int32_t display_frame_rate);
+  void send_start(const std::string& camera_name, const int32_t display_frame_rate);
   int32_t recv_start();
   int32_t stop(const std::string& camera_name);
   void send_stop(const std::string& camera_name);
@@ -5456,18 +5354,15 @@ class AgentServerServiceClient : virtual public AgentServerServiceIf {
   double get_process_fps(const std::string& camera_name);
   void send_get_process_fps(const std::string& camera_name);
   double recv_get_process_fps();
-  void dump_raw_image(std::string& _return, const std::string& camera_name);
-  void send_dump_raw_image(const std::string& camera_name);
-  void recv_dump_raw_image(std::string& _return);
-  void dump_rgb_image(std::string& _return, const std::string& camera_name);
-  void send_dump_rgb_image(const std::string& camera_name);
-  void recv_dump_rgb_image(std::string& _return);
   void save_feature(std::string& _return, const std::string& camera_name);
   void send_save_feature(const std::string& camera_name);
   void recv_save_feature(std::string& _return);
   int32_t update_feature(const std::string& camera_name, const std::string& content);
   void send_update_feature(const std::string& camera_name, const std::string& content);
   int32_t recv_update_feature();
+  int64_t ping_server(const int64_t seq);
+  void send_ping_server(const int64_t seq);
+  int64_t recv_ping_server();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -5525,10 +5420,9 @@ class AgentServerServiceProcessor : public ::apache::thrift::TDispatchProcessor 
   void process_get_current_ip_address(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_grab_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_process_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_dump_raw_image(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_dump_rgb_image(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_save_feature(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_update_feature(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ping_server(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   AgentServerServiceProcessor(boost::shared_ptr<AgentServerServiceIf> iface) :
     iface_(iface) {
@@ -5574,10 +5468,9 @@ class AgentServerServiceProcessor : public ::apache::thrift::TDispatchProcessor 
     processMap_["get_current_ip_address"] = &AgentServerServiceProcessor::process_get_current_ip_address;
     processMap_["get_grab_fps"] = &AgentServerServiceProcessor::process_get_grab_fps;
     processMap_["get_process_fps"] = &AgentServerServiceProcessor::process_get_process_fps;
-    processMap_["dump_raw_image"] = &AgentServerServiceProcessor::process_dump_raw_image;
-    processMap_["dump_rgb_image"] = &AgentServerServiceProcessor::process_dump_rgb_image;
     processMap_["save_feature"] = &AgentServerServiceProcessor::process_save_feature;
     processMap_["update_feature"] = &AgentServerServiceProcessor::process_update_feature;
+    processMap_["ping_server"] = &AgentServerServiceProcessor::process_ping_server;
   }
 
   virtual ~AgentServerServiceProcessor() {}
@@ -5662,13 +5555,13 @@ class AgentServerServiceMultiface : virtual public AgentServerServiceIf {
     return ifaces_[i]->close(camera_name);
   }
 
-  int32_t start(const std::string& camera_name) {
+  int32_t start(const std::string& camera_name, const int32_t display_frame_rate) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->start(camera_name);
+      ifaces_[i]->start(camera_name, display_frame_rate);
     }
-    return ifaces_[i]->start(camera_name);
+    return ifaces_[i]->start(camera_name, display_frame_rate);
   }
 
   int32_t stop(const std::string& camera_name) {
@@ -5995,26 +5888,6 @@ class AgentServerServiceMultiface : virtual public AgentServerServiceIf {
     return ifaces_[i]->get_process_fps(camera_name);
   }
 
-  void dump_raw_image(std::string& _return, const std::string& camera_name) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->dump_raw_image(_return, camera_name);
-    }
-    ifaces_[i]->dump_raw_image(_return, camera_name);
-    return;
-  }
-
-  void dump_rgb_image(std::string& _return, const std::string& camera_name) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->dump_rgb_image(_return, camera_name);
-    }
-    ifaces_[i]->dump_rgb_image(_return, camera_name);
-    return;
-  }
-
   void save_feature(std::string& _return, const std::string& camera_name) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -6032,6 +5905,15 @@ class AgentServerServiceMultiface : virtual public AgentServerServiceIf {
       ifaces_[i]->update_feature(camera_name, content);
     }
     return ifaces_[i]->update_feature(camera_name, content);
+  }
+
+  int64_t ping_server(const int64_t seq) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->ping_server(seq);
+    }
+    return ifaces_[i]->ping_server(seq);
   }
 
 };

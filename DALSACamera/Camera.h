@@ -23,8 +23,8 @@ public:
 	CCamera(const char* serverName, int index);
 	virtual ~CCamera();
      
-	static BOOL FindCamera(std::map<std::string, std::pair<std::string, int>> & cameras);
-	static void RegisterServerCallback(std::vector<std::shared_ptr<CCamera>> & cameras);
+	static BOOL FindCamera(std::map<std::string, std::pair<std::string, int>> *cameras);
+	static void RegisterServerCallback(std::map<std::string, std::shared_ptr<CCamera>>	 *cameras);
 
 	void		SetSinkBayerDataCallback(SinkDataCallback cb, void* ctx);
 	void		SetSinkRGBDataCallback(SinkDataCallback cb, void* ctx);
@@ -91,9 +91,29 @@ public:
 	void		DumpRawImage();
 	void		DumpRgbImage();
 
+	//utility
+	void*		get_SinkBayerDataCallback_ctx(){
+		return m_ctx0;
+	}
+
+	void*		get_SinkRGBDataCallback_ctx() {
+		return m_ctx1;
+	}
+
 private:
 	BOOL				GetFeatureRange(const char* featureName, double* min, double* max);
+
+	enum ConnectionStatus
+	{
+		UNKNOWN,
+		DISCONNECTED,
+		CONNECTED,
+	};
+	ConnectionStatus	m_connection_status;
 	BOOL				m_grabbing;
+	void				set_reconnect_flag(BOOL flag = TRUE) {
+		m_reconnect_flag = flag;
+	}
 
 public:
 	SapAcqDevice		*m_AcqDevice;
@@ -117,6 +137,9 @@ public:
 	char				m_UserDefinedName[256];
 	char				m_AcqServerName[256];
 	BOOL				m_bEnableColorConvert;
+	BOOL				m_reconnect_flag;
+	BOOL				m_last_is_grabbing;
+	BOOL				m_last_is_connected;
 };
 
 #endif

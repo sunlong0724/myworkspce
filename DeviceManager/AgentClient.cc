@@ -1,5 +1,25 @@
 #include "AgentClient.h"
 
+
+#define CHECK_CONNECTION()			\
+	do{										\
+		if (camera_name.length() == 0) {	\
+		  return -1;						\
+		}									\
+		if (m_hold_camera_names.find(camera_name) == m_hold_camera_names.end()) {\
+		 return -2;							\
+		}									\
+	}while(0)
+
+
+AgentClient::AgentClient() {
+	m_custom_data = new CustomData;
+}
+
+AgentClient::~AgentClient() {
+	delete m_custom_data;
+}
+
 BOOL AgentClient::connect(const std::string& ip, const uint16_t port) {
 	try {
 		WORD wVersionRequested;
@@ -14,6 +34,8 @@ BOOL AgentClient::connect(const std::string& ip, const uint16_t port) {
 
 		m_client = new AgentServerServiceClient(m_protocol);
 		m_client->getInputProtocol().get()->getTransport()->open();
+
+		m_server_ip = ip;
 		return TRUE;
 	}
 	catch (TException& e) {
@@ -92,7 +114,7 @@ int32_t AgentClient::del_cameras(const std::vector<std::string> & l) {
 
 int32_t AgentClient::open_camera(const std::string& camera_name) {
 	try {
-		return m_client->open(camera_name);
+		return m_data_port = m_client->open(camera_name);
 	}
 	catch (TException& e) {
 		fprintf(stderr, "%s\n", e.what());
@@ -101,7 +123,7 @@ int32_t AgentClient::open_camera(const std::string& camera_name) {
 }
 int32_t AgentClient::close_camera(const std::string& camera_name) {
 	try {
-		return m_client->close(camera_name);;
+		return  m_client->close(camera_name);
 	}
 	catch (TException& e) {
 		fprintf(stderr, "%s\n", e.what());
@@ -109,18 +131,23 @@ int32_t AgentClient::close_camera(const std::string& camera_name) {
 	}
 }
 
-int32_t AgentClient::start_camera(const std::string& camera_name) {
+int32_t AgentClient::start_camera(const std::string& camera_name, const int32_t display_frame_rate) {
 	try {
-		return m_client->start(camera_name);;
+
+		set_display_frame_rate0(m_custom_data, display_frame_rate, m_client->get_frame_rate(camera_name));
+		create_zqm_ctx(m_custom_data, get_image_width(camera_name)* get_image_height(camera_name), m_server_ip, m_data_port, 2);
+		return m_client->start(camera_name, display_frame_rate);
 	}
 	catch (TException& e) {
 		fprintf(stderr, "%s\n", e.what());
 		return -1;
 	}
 }
+
 int32_t AgentClient::stop_camera(const std::string& camera_name) {
 	try {
-		return m_client->stop(camera_name);;
+		destroy_zqm_ctx(m_custom_data);
+		return m_client->stop(camera_name);
 	}
 	catch (TException& e) {
 		fprintf(stderr, "%s\n", e.what());
@@ -454,7 +481,32 @@ double AgentClient::get_process_fps(const std::string& camera_name) {
 		return .0f;
 	}
 }
-void dump_raw_image(std::string& _return, const std::string& camera_name);
-void dump_rgb_image(std::string& _return, const std::string& camera_name);
-void save_feature(std::string& _return, const std::string& camera_name);
-int32_t update_feature(const std::string& camera_name, const std::string& content);
+void AgentClient::save_feature(const std::string& camera_name, std::string& content) {
+	try {
+		m_client->save_feature( content, camera_name);
+	}
+	catch (TException& e) {
+		fprintf(stderr, "%s\n", e.what());
+	}
+}
+int32_t AgentClient::update_feature(const std::string& camera_name, const std::string& content) {
+	try {
+		m_client->update_feature(camera_name, content);
+		return TRUE;
+	}
+	catch (TException& e) {
+		fprintf(stderr, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int64_t	AgentClient::ping_server() {
+	static int64_t counter = 0;
+	try {
+		counter = m_client->ping_server(counter);
+	}
+	catch (TException& e) {
+		fprintf(stderr, "%s\n", e.what());
+		return -1;
+	}
+}

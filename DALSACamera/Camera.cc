@@ -13,7 +13,7 @@ void ProCallback(SapProCallbackInfo *pInfo);
 void SapManCallbackMy(SapManCallbackInfo *info);
 
 CCamera::CCamera(const char* _servName) : m_AcqDevice(NULL), m_Buffers(NULL), m_Xfer(NULL), m_sink_bayer_cb(NULL), m_ctx0(NULL),
-		m_sink_rgb_cb(NULL), m_ctx1(NULL), m_dummy_bayer_fp(NULL), m_dummy_rgb_fp(NULL), m_bEnableColorConvert(FALSE), m_grabbing(FALSE){
+		m_sink_rgb_cb(NULL), m_ctx1(NULL), m_dummy_bayer_fp(NULL), m_dummy_rgb_fp(NULL), m_bEnableColorConvert(FALSE), m_connection_status(UNKNOWN), m_grabbing(FALSE), m_reconnect_flag(FALSE){
 
 	m_AcqDevice = new SapAcqDevice(_servName);
 	m_Buffers = new SapBufferWithTrash(5, m_AcqDevice);
@@ -28,7 +28,7 @@ CCamera::CCamera(const char* _servName) : m_AcqDevice(NULL), m_Buffers(NULL), m_
 }
 
 CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffers(NULL), m_Xfer(NULL), m_sink_bayer_cb(NULL), m_ctx0(NULL),
-		m_sink_rgb_cb(NULL), m_ctx1(NULL), m_dummy_bayer_fp(NULL), m_dummy_rgb_fp(NULL), m_bEnableColorConvert(FALSE), m_grabbing(FALSE) {
+		m_sink_rgb_cb(NULL), m_ctx1(NULL), m_dummy_bayer_fp(NULL), m_dummy_rgb_fp(NULL), m_bEnableColorConvert(FALSE), m_connection_status(UNKNOWN) , m_grabbing(FALSE), m_reconnect_flag(FALSE) {
 
 	SapLocation loc(serverName, index);
 	m_AcqDevice = new SapAcqDevice(loc);
@@ -64,7 +64,7 @@ CCamera::~CCamera() {
 void CCamera::Start() {
 	if (!m_grabbing) {
 		if (m_Xfer->Grab()) {
-			m_grabbing = TRUE;
+			m_last_is_grabbing = m_grabbing = TRUE;
 			fprintf(stderr, "grab start!\n");
 		}
 	}
@@ -83,8 +83,7 @@ BOOL CCamera::CreateDevice() {
 		DestroyDevice();
 		return FALSE;
 	}
-
-	return TRUE;
+	return m_last_is_connected = TRUE;
 }
 BOOL CCamera::CreateOtherObjects(){
 	SapBayer::Align lBayerAlign = SapBayer::AlignRGGB;
@@ -182,19 +181,20 @@ void CCamera::DestroyOtherObjects() {
 
 }
 
-void CCamera::RegisterServerCallback(std::vector<std::shared_ptr<CCamera>> & cameras) {
-	SapManager::RegisterServerCallback(CORMAN_VAL_EVENT_TYPE_SERVER_DISCONNECTED | CORMAN_VAL_EVENT_TYPE_SERVER_CONNECTED, SapManCallbackMy, &cameras);
+void CCamera::RegisterServerCallback(std::map<std::string, std::shared_ptr<CCamera>> *cameras) {
+	SapManager::UnregisterServerCallback();
+	SapManager::RegisterServerCallback(CORMAN_VAL_EVENT_TYPE_SERVER_DISCONNECTED | CORMAN_VAL_EVENT_TYPE_SERVER_CONNECTED, SapManCallbackMy, cameras);
 }
 
 
-BOOL CCamera::FindCamera(std::map<std::string, std::pair<std::string, int>> & cameras){
+BOOL CCamera::FindCamera(std::map<std::string, std::pair<std::string, int>>  *cameras){
 
 	int serverCount = SapManager::GetServerCount();
 	if (serverCount <= 1) {
 		return FALSE;
 	}
 
-	cameras.clear();
+	cameras->clear();
 	for (int serverIndex = 1; serverIndex < serverCount; ++serverIndex) {
 		char serverName[CORSERVER_MAX_STRLEN];
 		SapManager::GetServerName(serverIndex, serverName, sizeof(serverName));//FIXME!!!
@@ -214,7 +214,7 @@ BOOL CCamera::FindCamera(std::map<std::string, std::pair<std::string, int>> & ca
 			printf("%d: %s\n", cameraIndex + 1, cameraName);
 			//cameras.push_back(cameraName);
 
-			cameras.insert(std::make_pair(std::string(cameraName), std::make_pair(std::string(serverName), cameraIndex) ) );
+			cameras->insert(std::make_pair(std::string(cameraName), std::make_pair(std::string(serverName), cameraIndex) ) );
 
 			//SapLocation loc(serverName, cameraIndex);
 			//std::shared_ptr<CCamera> sp_l(new CCamera(&loc));
@@ -230,33 +230,23 @@ BOOL CCamera::SetExposureTime(double microseconds) {
 }
 
 BOOL CCamera::SetGainBySensorAll(double val) {
-	if (m_grabbing) {
-		return FALSE;
-	}
 	m_AcqDevice->SetFeatureValue("GainSelector", "SensorAll");//FIXME:
 	return m_AcqDevice->SetFeatureValue("Gain", val);
 }
 
 BOOL CCamera::SetGainBySensorAnalog(double val) {
-	if (m_grabbing) {
-		return FALSE;
-	}
+
 	m_AcqDevice->SetFeatureValue("GainSelector", "SensorAnalog");//FIXME:
 	return m_AcqDevice->SetFeatureValue("Gain", val);
 }
 
 BOOL CCamera::SetGainBySensorDigital(double val) {
-	if (m_grabbing) {
-		return FALSE;
-	}
 	m_AcqDevice->SetFeatureValue("GainSelector", "SensorDigital");//FIXME:
 	return m_AcqDevice->SetFeatureValue("Gain", val);
 }
 
 BOOL CCamera::SetFrameRate(double val) {
-	if (m_grabbing) {
-		return FALSE;
-	}
+
 	return m_AcqDevice->SetFeatureValue("AcquisitionFrameRate", val);
 }
 
@@ -265,39 +255,29 @@ BOOL CCamera::EnableTurboTransfer(BOOL bEnable) {
 }
 
 BOOL CCamera::SetImageWidth(INT64 width) {
-	if (m_grabbing) {
-		return FALSE;
-	}
+
 	return m_AcqDevice->SetFeatureValue("Width", width) ;
 }
 
 
 BOOL CCamera::SetImageHeight(INT64 height) {
-	if (m_grabbing) {
-		return FALSE;
-	}
+
 	return m_AcqDevice->SetFeatureValue("Height", height);
 }
 
 BOOL CCamera::SetOffsetX(INT64 offset_x) {
-	if (m_grabbing) {
-		return FALSE;
-	}
+
 	return m_AcqDevice->SetFeatureValue("OffsetX", offset_x);
 }
 BOOL CCamera::SetOffsetY(INT64 offset_y) {
-	if (m_grabbing) {
-		return FALSE;
-	}
+
 	return m_AcqDevice->SetFeatureValue("OffsetY", offset_y);
 }
 
 
 BOOL CCamera::SetPixelFormat(const char* val, int len) { //BayerRG8 BayerRG10
 												   // determine the bayer alignement with the PixelFormat feature
-	if (m_grabbing) {
-		return FALSE;
-	}
+
 	BOOL bPixelFormatAvailable = FALSE;
 	if (0 != len && NULL != val) {
 		return m_AcqDevice->IsFeatureAvailable("PixelFormat", &bPixelFormatAvailable) && bPixelFormatAvailable && m_AcqDevice->SetFeatureValue("PixelFormat", val);
@@ -440,10 +420,10 @@ double CCamera::GetProcessFPS() {
 	return m_ProcessFPSCounter.GetFPS();
 }
 
-void   CCamera::DumpRawImage() {
+void  CCamera::DumpRawImage() {
 	if (m_dummy_bayer_fp)
 		return;
-	std::chrono::milliseconds now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
+	std::chrono::milliseconds now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 	char file_name[100] = {0};
 	snprintf(file_name, sizeof file_name, "%lld.raw", now.count());
 	m_dummy_bayer_fp = fopen(file_name, "wb");
@@ -452,7 +432,7 @@ void   CCamera::DumpRawImage() {
 void   CCamera::DumpRgbImage() {
 	if (m_dummy_rgb_fp)
 		return;
-	std::chrono::milliseconds now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
+	std::chrono::milliseconds now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 	char file_name[100] = { 0 };
 	snprintf(file_name, sizeof file_name, "%lld.rgb", now.count());
 	m_dummy_rgb_fp = fopen(file_name, "wb");
@@ -570,7 +550,8 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 		if (status) {
 			//fprintf(stderr, "%s %d %x\r\n", __FUNCTION__, status, pData);
 			if (camera->m_sink_bayer_cb) {
-				camera->m_sink_bayer_cb(pData, pBuffer->GetWidth() * pBuffer->GetHeight(), camera->m_ctx0);//FIXME: bufferlen 
+				int64_t ret = camera->m_sink_bayer_cb(pData, pBuffer->GetWidth() * pBuffer->GetHeight(), camera->m_ctx0);//FIXME: bufferlen 
+				//fprintf(stderr, "%s send %lld bytes!\r\n", __FUNCTION__,  ret);
 			}
 			if (camera->m_dummy_bayer_fp) {
 				fwrite(pData, 1, pBuffer->GetWidth() * pBuffer->GetHeight(), (FILE*)camera->m_dummy_bayer_fp);
@@ -625,24 +606,33 @@ void ProCallback(SapProCallbackInfo *pInfo) {
 }
 
 void SapManCallbackMy(SapManCallbackInfo *pInfo) {
-	std::vector<std::shared_ptr<CCamera>>* cameras = (std::vector<std::shared_ptr<CCamera>>*)pInfo->GetContext();
+	std::map<std::string, std::shared_ptr<CCamera>>	*cameras = (std::map<std::string, std::shared_ptr<CCamera>>*)pInfo->GetContext();
 	int type = pInfo->GetEventType();
 	fprintf(stderr, "connect status :%d\n", type);
 
 	if (type == SapManager::EventServerDisconnected) {
 		for (auto& a : *cameras) {
-			a->Stop();
-			a->DestroyOtherObjects();
-			a->DestroyDevice();
+			a.second->Stop();
+			a.second->DestroyOtherObjects();
+			a.second->DestroyDevice();
 		}
 	}
 	else if (type == SapManager::EventServerConnected) {//FIXME:
-		//CCamera::FindCamera(*cameras);
-		//for (auto& a : *cameras) {
-		//	a->CreateDevice();
-		//	a->CreateOtherObjects();
-		//	a->Start();
-		//}
+		std::map<std::string, std::pair<std::string, int>>		total_cameras;
+		CCamera::FindCamera(&total_cameras);
+		for (auto& a : *cameras) {//FIXME:
+			if (total_cameras.find(a.first) != total_cameras.end()) {
+				if (a.second->m_last_is_connected) {
+					fprintf(stderr, "%s m_last_is_connected %d\n", __FUNCTION__, a.second->m_last_is_connected);
+					a.second->CreateDevice();
+				}
+				if (a.second->m_last_is_grabbing) {
+					fprintf(stderr, "%s m_last_is_grabbing %d\n", __FUNCTION__, a.second->m_last_is_grabbing);
+					a.second->CreateOtherObjects();
+					a.second->Start();
+				}
+			}
+		}
 	}
 }
 

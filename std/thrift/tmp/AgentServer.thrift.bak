@@ -13,7 +13,9 @@ service AgentServerService{
  i32					del_cameras(1: list<string> l),
  i32 					open(1: string camera_name),
  i32 					close(1: string camera_name),
- i32 					start(1: string camera_name),
+ 
+ //i32					set_display_frame_rate(1: string camera_name, 2: i32 display_frame_rate, 3: i32 grab_frame_rate),
+ i32 					start(1: string camera_name, 2: i32 display_frame_rate),
  i32 					stop(1: string camera_name),
  
  i32 					set_exposure_time(1: string camera_name, 2: double microseconds),
@@ -41,6 +43,8 @@ service AgentServerService{
  MinMaxStruct get_gain_range_by_sensor_digital(1: string camera_name),
  MinMaxStruct get_frame_rate_range(1: string camera_name),
  
+ i32				  get_image_width(1: string camera_name),
+ i32					get_image_height(1: string camera_name),
  i32					get_height_max(1: string camera_name),
  i32					get_width_max(1: string camera_name),
  i32					get_offset_x(1: string camera_name),
@@ -54,11 +58,10 @@ service AgentServerService{
  double				get_grab_fps(1: string camera_name),
  double 			get_process_fps(1: string camera_name),
  
- string				dump_raw_image(1: string camera_name),
- string				dump_rgb_image(1: string camera_name),
- 
  string				save_feature(1: string camera_name),
  i32  				update_feature(1: string camera_name, 2: string content),
+ 
+ i64					ping_server(1: i64 seq),//_return = seq+1
  
 }
 

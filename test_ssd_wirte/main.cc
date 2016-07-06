@@ -1,4 +1,5 @@
 
+#if 0
 #include <windows.h>
 #include <signal.h>
 #include <stdio.h>
@@ -21,7 +22,7 @@ void sig_cb(int sig)
 #pragma comment(lib,"winmm.lib")
 #define ONE_GB 1024*1024*1024
 
-int main(int argc, char** argv) {
+int main0000(int argc, char** argv) {
 
 	BOOL result = SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 	result = SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
@@ -173,6 +174,37 @@ int main1111(int argc, char** argv)
 	SetFilePointer(hFile, FileSize.QuadPart, NULL, FILE_BEGIN);
 	SetEndOfFile(hFile);//实际上不需要写入了。
 	CloseHandle(hFile);
+
+	return 0;
+}
+
+#endif
+
+#include <string>
+#include <stdio.h>
+#include "ping.h"
+
+int main(void)
+{
+	CPing objPing;
+
+	PingReply reply;
+
+	std::string DestIP("192.168");
+
+	for (int i = 0; i < 1; ++i) {
+		for (int j = 1; j < 256; ++j) {
+			std::string tmp = DestIP;
+			tmp.append("." + std::to_string(i) + "." + std::to_string(j));
+
+			if (objPing.Ping((char*)tmp.c_str(), &reply, 10)) {
+				printf("Reply from %s: bytes=%ld time=%ldms TTL=%ld\n", tmp.c_str(), reply.m_dwBytes, reply.m_dwRoundTripTime, reply.m_dwTTL);
+			}
+			else {
+				printf("%s 请求超时。\n", tmp.c_str());
+			}
+		}
+	}
 
 	return 0;
 }

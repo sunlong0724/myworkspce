@@ -17,6 +17,7 @@
 #include "AgentServerService.h"
 #include "AgentServerService_server.cpp"
 
+
 using namespace std;
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
@@ -26,7 +27,7 @@ using namespace apache::thrift::concurrency;
 
 using namespace hawkeye;
 
-void cmd_run(uint16_t port) {
+void cmd_run(AgentServerServiceHandler* h, uint16_t port) {
 	WORD wVersionRequested;
 	WSADATA wsaData;
 	int err;
@@ -34,12 +35,12 @@ void cmd_run(uint16_t port) {
 	err = WSAStartup(wVersionRequested, &wsaData);
 
 	boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-	boost::shared_ptr<AgentServerServiceHandler> handler(new AgentServerServiceHandler());
+	boost::shared_ptr<AgentServerServiceHandler> handler(h);
 	boost::shared_ptr<TProcessor> processor(new AgentServerServiceProcessor(handler));
 	boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
 	boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
 
-	int workerCount = 4;
+	int workerCount = 1;
 	boost::shared_ptr<ThreadManager> threadManager = ThreadManager::newSimpleThreadManager(workerCount);
 	boost::shared_ptr<StdThreadFactory> threadFactory = boost::shared_ptr<StdThreadFactory>(new StdThreadFactory());
 	threadManager->threadFactory(threadFactory);
@@ -56,6 +57,7 @@ void cmd_run(uint16_t port) {
 }
 
 
+
 int main(int argc, char **argv) {
 
 	uint16_t server_port = 9090;
@@ -63,9 +65,11 @@ int main(int argc, char **argv) {
 		server_port = ::atoi(argv[1]);
 	}
 
-	std::thread cmd_thread(cmd_run, server_port);
-	cmd_thread.join();
+	AgentServerServiceHandler* handler = new AgentServerServiceHandler();
 
+	std::thread cmd_thread(cmd_run,handler, server_port);
+
+	cmd_thread.join();
 
 	
 	return 0;
