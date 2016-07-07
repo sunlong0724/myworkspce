@@ -10,8 +10,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
-
-#include "AgentServerService_server.cpp"
+		  
+#include "AcquireStoreService_server.cpp"
 
 
 using namespace std;
@@ -23,7 +23,7 @@ using namespace apache::thrift::concurrency;
 
 using namespace hawkeye;
 
-void cmd_run(AgentServerServiceHandler* h, uint16_t port) {
+void cmd_run(AcquireStoreServiceHandler* h, uint16_t port) {
 	WORD wVersionRequested;
 	WSADATA wsaData;
 	int err;
@@ -31,8 +31,8 @@ void cmd_run(AgentServerServiceHandler* h, uint16_t port) {
 	err = WSAStartup(wVersionRequested, &wsaData);
 
 	boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-	boost::shared_ptr<AgentServerServiceHandler> handler(h);
-	boost::shared_ptr<TProcessor> processor(new AgentServerServiceProcessor(handler));
+	boost::shared_ptr<AcquireStoreServiceHandler> handler(h);
+	boost::shared_ptr<TProcessor> processor(new AcquireStoreServiceProcessor(handler));
 	boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
 	boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
 
@@ -52,20 +52,51 @@ void cmd_run(AgentServerServiceHandler* h, uint16_t port) {
 	WSACleanup();
 }
 
-
-
-int main(int argc, char **argv) {
+int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_name camera_index data_port(eg. .\\AcqurieStore.exe 9090 name 1 55555)
 
 	uint16_t server_port = 9090;
-
+	char*	 gige_server_name = NULL;
+	uint16_t camera_index = 0;
+	uint16_t data_port = 55555;
+	
 	if (argc >= 2) {
 		server_port = ::atoi(argv[1]);
 	}
+	if (argc >= 3) {
+		gige_server_name = argv[2];
+	}
+	else {
+		fprintf(stderr, "No GigEServer found!\n!");
+		return 0;
+	}
+	if (argc >= 4) {
+		camera_index = ::atoi(argv[3]);
+	}
+	if (argc >= 5) {
+		data_port = ::atoi(argv[4]);
+	}
 
-	AgentServerServiceHandler* handler = new AgentServerServiceHandler();
 
-	std::thread cmd_thread(cmd_run, handler, server_port);
+	AcquireStoreServiceHandler* handler = new AcquireStoreServiceHandler();
+	CCamera* camera = new CCamera(gige_server_name, camera_index);
+	
+
+	if (!camera->CreateDevice()) {
+		fprintf(stderr, "CreateDevice failed!\n");
+		return 0;
+	}
+
+	CustomData* custom_data = new CustomData;
+	create_zqm_ctx(custom_data, camera->GetImageWidth() * camera->GetImageHeight(), "localhost", data_port, 1);
+	camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, custom_data);
+
+	handler->m_camera = camera;
+
+	std::thread cmd_thread(cmd_run,handler, server_port);
 	cmd_thread.join();
 
+	delete custom_data;
+	camera->DestroyDevice();
+	delete camera;
 	return 0;
 }

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+typedef void *HANDLE;//temp
+
 typedef struct _CustomData {
 
 	void		*context;
@@ -19,6 +21,12 @@ typedef struct _CustomData {
 	int64_t		last_recv_seq;
 
 
+	//store the local file
+	int32_t		store_file_flag;
+	char		path_name[256];
+	HANDLE		hFile;
+
+
 }CustomData;
 
 int64_t get_current_time_in_ms();
@@ -28,6 +36,8 @@ void create_zqm_ctx(CustomData* data, int32_t buffer_len,const std::string& ip, 
 void destroy_zqm_ctx(CustomData* data);
 
 int set_display_frame_rate0(CustomData* ctx, int64_t dispaly_rate, int64_t grab_rate);
+
+int set_store_flag(CustomData* ctx, BOOL flag);
 
 int32_t send_data(CustomData* ctx, char* data, int data_len);
 

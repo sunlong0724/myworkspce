@@ -17,13 +17,11 @@ typedef int (*SinkDataCallback)(unsigned char*, int, void*);
 
 class DLL_API CCamera {
 
-private:
-	CCamera(const char* _servName);
 public:
 	CCamera(const char* serverName, int index);
 	virtual ~CCamera();
      
-	static BOOL FindCamera(std::map<std::string, std::pair<std::string, int>> *cameras);
+	static BOOL FindCamera(std::map<std::string, std::map<int32_t, std::string>>  *cameras);
 	static void RegisterServerCallback(std::map<std::string, std::shared_ptr<CCamera>>	 *cameras);
 
 	void		SetSinkBayerDataCallback(SinkDataCallback cb, void* ctx);

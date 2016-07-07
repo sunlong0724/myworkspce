@@ -12,20 +12,6 @@ void XferCallback(SapXferCallbackInfo *pInfo);
 void ProCallback(SapProCallbackInfo *pInfo);
 void SapManCallbackMy(SapManCallbackInfo *info);
 
-CCamera::CCamera(const char* _servName) : m_AcqDevice(NULL), m_Buffers(NULL), m_Xfer(NULL), m_sink_bayer_cb(NULL), m_ctx0(NULL),
-		m_sink_rgb_cb(NULL), m_ctx1(NULL), m_dummy_bayer_fp(NULL), m_dummy_rgb_fp(NULL), m_bEnableColorConvert(FALSE), m_connection_status(UNKNOWN), m_grabbing(FALSE), m_reconnect_flag(FALSE){
-
-	m_AcqDevice = new SapAcqDevice(_servName);
-	m_Buffers = new SapBufferWithTrash(5, m_AcqDevice);
-	m_ColorConv = new SapColorConversion(m_Buffers);
-	m_Xfer = new SapAcqDeviceToBuf(m_AcqDevice, m_Buffers, XferCallback, this);
-	m_Pro = new SapMyProcessing(m_Buffers, m_ColorConv, ProCallback, this);
-	memset(m_UserDefinedName, 0x00, sizeof m_UserDefinedName);
-	memset(m_AcqServerName, 0x00, sizeof m_AcqServerName);
-
-	//init
-	strcpy(m_AcqServerName, _servName);
-}
 
 CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffers(NULL), m_Xfer(NULL), m_sink_bayer_cb(NULL), m_ctx0(NULL),
 		m_sink_rgb_cb(NULL), m_ctx1(NULL), m_dummy_bayer_fp(NULL), m_dummy_rgb_fp(NULL), m_bEnableColorConvert(FALSE), m_connection_status(UNKNOWN) , m_grabbing(FALSE), m_reconnect_flag(FALSE) {
@@ -187,14 +173,14 @@ void CCamera::RegisterServerCallback(std::map<std::string, std::shared_ptr<CCame
 }
 
 
-BOOL CCamera::FindCamera(std::map<std::string, std::pair<std::string, int>>  *cameras){
+BOOL CCamera::FindCamera(std::map<std::string, std::map<int32_t, std::string>>  *cameras){
 
 	int serverCount = SapManager::GetServerCount();
 	if (serverCount <= 1) {
 		return FALSE;
 	}
 
-	cameras->clear();
+	//cameras->clear();
 	for (int serverIndex = 1; serverIndex < serverCount; ++serverIndex) {
 		char serverName[CORSERVER_MAX_STRLEN];
 		SapManager::GetServerName(serverIndex, serverName, sizeof(serverName));//FIXME!!!
@@ -214,11 +200,9 @@ BOOL CCamera::FindCamera(std::map<std::string, std::pair<std::string, int>>  *ca
 			printf("%d: %s\n", cameraIndex + 1, cameraName);
 			//cameras.push_back(cameraName);
 
-			cameras->insert(std::make_pair(std::string(cameraName), std::make_pair(std::string(serverName), cameraIndex) ) );
-
-			//SapLocation loc(serverName, cameraIndex);
-			//std::shared_ptr<CCamera> sp_l(new CCamera(&loc));
-			//cameras.push_back(sp_l);
+			std::map<int, std::string> tmp;
+			tmp[cameraIndex] = std::string(serverName);
+			cameras->insert(std::make_pair(std::string(cameraName), tmp) );
 		}
 	}
 
@@ -618,7 +602,7 @@ void SapManCallbackMy(SapManCallbackInfo *pInfo) {
 		}
 	}
 	else if (type == SapManager::EventServerConnected) {//FIXME:
-		std::map<std::string, std::pair<std::string, int>>		total_cameras;
+		std::map<std::string, std::map<int, std::string>>		total_cameras;
 		CCamera::FindCamera(&total_cameras);
 		for (auto& a : *cameras) {//FIXME:
 			if (total_cameras.find(a.first) != total_cameras.end()) {

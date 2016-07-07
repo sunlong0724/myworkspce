@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8D0C67DC-593D-468D-9925-26307D7D4CC9}</ProjectGuid>
+    <ProjectGuid>{85CC5DDA-D475-40A2-9A79-65B54B2CEEF6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AgentServer</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -76,18 +76,18 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\output\</OutDir>
     <IntDir>$(OutDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\3rdParty\boost_1_59_0-x64;..\std\thrift\gen-cpp;..\..\3rdParty\thrift-0.9.1\lib\cpp\src;..\DALSACamera;..\..\Teledyne DALSA\Sapera\Classes\Basic;..\..\Teledyne DALSA\Sapera\Include;..\std;..\..\3rdParty\libzmq\include;.\</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(OutDir);..\..\3rdParty\thrift-0.9.1\lib\cpp\x64\Debug;..\..\3rdParty\boost_1_59_0-x64\stage\lib;..\..\3rdParty\libzmq\bin\x64\Release\v140\dynamic</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\3rdParty\boost_1_59_0-x64;..\std\thrift\gen-cpp;..\..\3rdParty\thrift-0.9.1\lib\cpp\src;..\DALSACamera;..\..\Teledyne DALSA\Sapera\Classes\Basic;..\..\Teledyne DALSA\Sapera\Include;..\std;..\..\3rdParty\libzmq\include;.\;..\..\3rdParty\opencv\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(OutDir);..\..\3rdParty\thrift-0.9.1\lib\cpp\x64\Debug;..\..\3rdParty\boost_1_59_0-x64\stage\lib;..\..\3rdParty\libzmq\bin\x64\Release\v140\dynamic;..\..\3rdParty\opencv\x64\vc10\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\3rdParty\boost_1_59_0-x64;..\std\thrift\gen-cpp;..\..\3rdParty\thrift-0.9.1\lib\cpp\src;..\DALSACamera;..\..\Teledyne DALSA\Sapera\Classes\Basic;..\..\Teledyne DALSA\Sapera\Include;..\std;..\..\3rdParty\libzmq\include;.\</IncludePath>
     <OutDir>..\output\</OutDir>
     <IntDir>$(OutDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(OutDir);..\..\3rdParty\thrift-0.9.1\lib\cpp\x64\Release;..\..\3rdParty\boost_1_59_0-x64\stage\lib;..\..\3rdParty\libzmq\bin\x64\Release\v140\dynamic</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\3rdParty\boost_1_59_0-x64;..\std\thrift\gen-cpp;..\..\3rdParty\thrift-0.9.1\lib\cpp\src;..\DALSACamera;..\..\Teledyne DALSA\Sapera\Classes\Basic;..\..\Teledyne DALSA\Sapera\Include;..\std;..\..\3rdParty\libzmq\include;.\;..\..\3rdParty\opencv\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(OutDir);..\..\3rdParty\thrift-0.9.1\lib\cpp\x64\Release;..\..\3rdParty\boost_1_59_0-x64\stage\lib;..\..\3rdParty\libzmq\bin\x64\Release\v140\dynamic;..\..\3rdParty\opencv\x64\vc10\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -156,14 +156,12 @@
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServerService_server.cpp" />
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServer_constants.cpp" />
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServer_types.cpp" />
-    <ClCompile Include="..\std\ZmqTransportDataImpl.cc" />
     <ClCompile Include="main.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServerService.h" />
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServer_constants.h" />
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServer_types.h" />
-    <ClInclude Include="..\std\ZmqTransportDataImpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

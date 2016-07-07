@@ -37,6 +37,17 @@ void create_zqm_ctx(CustomData* custom_data, int32_t buffer_len,const std::strin
 	custom_data->last_recv_seq = 0L;
 	std::vector<char> tmp(sizeof int64_t + sizeof int64_t + buffer_len, 0x00);
 	custom_data->buffer = tmp;
+
+	custom_data->store_file_flag = FALSE;
+	custom_data->hFile = NULL;
+
+	if (custom_data->hFile == NULL) {
+		custom_data->hFile = CreateFile(custom_data->path_name, GENERIC_WRITE | GENERIC_READ, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING, NULL);
+		if (!custom_data->hFile) {
+			fprintf(stderr, "fopen failed!!!\n");
+			//exit(0);
+		}
+	}
 }
 
 void destroy_zqm_ctx(CustomData* ctx) {
@@ -47,6 +58,10 @@ void destroy_zqm_ctx(CustomData* ctx) {
 int set_display_frame_rate0(CustomData* ctx, int64_t dispaly_rate, int64_t grab_rate) {
 	ctx->frame_gap = (grab_rate+1) / dispaly_rate;
 	return ctx->display_frame_rate = dispaly_rate;
+}
+
+int set_store_flag(CustomData* ctx, BOOL flag) {
+	return ctx->store_file_flag = flag;
 }
 
 int32_t send_data(CustomData* ctx, char* data, int data_len) {
@@ -103,6 +118,25 @@ int SinkBayerDatasCallbackImpl(unsigned char* buffer, int buffer_len, void* cont
 	memcpy(&ctx->buffer[0], &timestamp, sizeof timestamp);
 	memcpy(&ctx->buffer[sizeof int64_t], &ctx->counter, sizeof int64_t);
 	memcpy(&ctx->buffer[sizeof int64_t + sizeof int64_t], buffer, buffer_len);
+
+	//store
+	if (ctx->store_file_flag) {
+		DWORD nBytesWritten = 0;
+		BOOL ret = WriteFile(ctx->hFile, ctx->buffer.data(), ctx->buffer.size(), &nBytesWritten, NULL);
+
+		LARGE_INTEGER FileSize;
+		BOOL r = GetFileSizeEx(ctx->hFile, &FileSize);
+		if (!r) {
+			printf("GetFileSizeEx failed\n");
+			return FALSE;
+		}
+
+		const static int64_t MAX_RAW_VIDEO_FILE_SIZE = 1024 * 1024 * 1024 * 10;//10GB
+		if (FileSize.QuadPart >= MAX_RAW_VIDEO_FILE_SIZE) {
+			SetFilePointer(ctx->hFile, 0, NULL, FILE_BEGIN);
+		}
+	}
+
 	int ret = send_data(ctx, (char*)buffer, buffer_len);
 	if (ret < 0) {
 		int a = 0;

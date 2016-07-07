@@ -4,10 +4,14 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "AgentServer_types.h"
-
-#include <algorithm>
+#include "AgentServer_constants.h"
 
 namespace hawkeye {
 
+const AgentServerConstants g_AgentServer_constants;
+
+AgentServerConstants::AgentServerConstants() {
+}
+
 } // namespace
+
