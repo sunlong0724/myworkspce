@@ -7,6 +7,6 @@ service AgentServerService{
  list<string> get_hold_cameras(),
  i32					del_cameras(1: list<string> l),
  i32					exec_acquire_store(1: string cmdline),
- i32					kill_acquire_store(),
+ i32					kill_acquire_store(1: i64 process_id),
 }
 

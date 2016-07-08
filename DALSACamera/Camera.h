@@ -12,6 +12,13 @@
 #include <chrono>
 #include "FPSCounter.h"
 
+extern FILE* g_err_fp;
+
+#ifdef FPRINTF_
+#define stdout	g_err_fp
+#endif
+
+
 typedef int (*SinkDataCallback)(unsigned char*, int, void*);
 
 

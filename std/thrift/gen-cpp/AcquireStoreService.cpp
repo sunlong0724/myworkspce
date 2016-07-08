@@ -30,8 +30,8 @@ uint32_t AcquireStoreService_start_args::read(::apache::thrift::protocol::TProto
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->display_frame_rate);
-          this->__isset.display_frame_rate = true;
+          xfer += iprot->readI32(this->snd_frame_rate);
+          this->__isset.snd_frame_rate = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -52,8 +52,8 @@ uint32_t AcquireStoreService_start_args::write(::apache::thrift::protocol::TProt
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("AcquireStoreService_start_args");
 
-  xfer += oprot->writeFieldBegin("display_frame_rate", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->display_frame_rate);
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->snd_frame_rate);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -65,8 +65,8 @@ uint32_t AcquireStoreService_start_pargs::write(::apache::thrift::protocol::TPro
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("AcquireStoreService_start_pargs");
 
-  xfer += oprot->writeFieldBegin("display_frame_rate", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->display_frame_rate)));
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->snd_frame_rate)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -311,7 +311,7 @@ uint32_t AcquireStoreService_stop_presult::read(::apache::thrift::protocol::TPro
   return xfer;
 }
 
-uint32_t AcquireStoreService_set_display_frame_rate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AcquireStoreService_set_snd_frame_rate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -333,16 +333,16 @@ uint32_t AcquireStoreService_set_display_frame_rate_args::read(::apache::thrift:
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->display_frame_rate);
-          this->__isset.display_frame_rate = true;
+          xfer += iprot->readI32(this->snd_frame_rate);
+          this->__isset.snd_frame_rate = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->grab_frame_rate);
-          this->__isset.grab_frame_rate = true;
+          xfer += iprot->readI32(this->full_frame_rate);
+          this->__isset.full_frame_rate = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -359,16 +359,16 @@ uint32_t AcquireStoreService_set_display_frame_rate_args::read(::apache::thrift:
   return xfer;
 }
 
-uint32_t AcquireStoreService_set_display_frame_rate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AcquireStoreService_set_snd_frame_rate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AcquireStoreService_set_display_frame_rate_args");
+  xfer += oprot->writeStructBegin("AcquireStoreService_set_snd_frame_rate_args");
 
-  xfer += oprot->writeFieldBegin("display_frame_rate", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->display_frame_rate);
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->snd_frame_rate);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("grab_frame_rate", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->grab_frame_rate);
+  xfer += oprot->writeFieldBegin("full_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->full_frame_rate);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -376,16 +376,16 @@ uint32_t AcquireStoreService_set_display_frame_rate_args::write(::apache::thrift
   return xfer;
 }
 
-uint32_t AcquireStoreService_set_display_frame_rate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AcquireStoreService_set_snd_frame_rate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AcquireStoreService_set_display_frame_rate_pargs");
+  xfer += oprot->writeStructBegin("AcquireStoreService_set_snd_frame_rate_pargs");
 
-  xfer += oprot->writeFieldBegin("display_frame_rate", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->display_frame_rate)));
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->snd_frame_rate)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("grab_frame_rate", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32((*(this->grab_frame_rate)));
+  xfer += oprot->writeFieldBegin("full_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->full_frame_rate)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -393,7 +393,7 @@ uint32_t AcquireStoreService_set_display_frame_rate_pargs::write(::apache::thrif
   return xfer;
 }
 
-uint32_t AcquireStoreService_set_display_frame_rate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AcquireStoreService_set_snd_frame_rate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -433,11 +433,11 @@ uint32_t AcquireStoreService_set_display_frame_rate_result::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AcquireStoreService_set_display_frame_rate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AcquireStoreService_set_snd_frame_rate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AcquireStoreService_set_display_frame_rate_result");
+  xfer += oprot->writeStructBegin("AcquireStoreService_set_snd_frame_rate_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -449,7 +449,7 @@ uint32_t AcquireStoreService_set_display_frame_rate_result::write(::apache::thri
   return xfer;
 }
 
-uint32_t AcquireStoreService_set_display_frame_rate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AcquireStoreService_set_snd_frame_rate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -507,7 +507,28 @@ uint32_t AcquireStoreService_set_store_file_args::read(::apache::thrift::protoco
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->flag);
+          this->__isset.flag = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->file_name);
+          this->__isset.file_name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -520,6 +541,14 @@ uint32_t AcquireStoreService_set_store_file_args::write(::apache::thrift::protoc
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("AcquireStoreService_set_store_file_args");
 
+  xfer += oprot->writeFieldBegin("flag", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->flag);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("file_name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->file_name);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -528,6 +557,14 @@ uint32_t AcquireStoreService_set_store_file_args::write(::apache::thrift::protoc
 uint32_t AcquireStoreService_set_store_file_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("AcquireStoreService_set_store_file_pargs");
+
+  xfer += oprot->writeFieldBegin("flag", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->flag)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("file_name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->file_name)));
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -753,6 +790,718 @@ uint32_t AcquireStoreService_do_pause_result::write(::apache::thrift::protocol::
 }
 
 uint32_t AcquireStoreService_do_pause_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->snd_frame_rate);
+          this->__isset.snd_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_forward_play_args");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->snd_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_forward_play_pargs");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->snd_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("AcquireStoreService_forward_play_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->snd_frame_rate);
+          this->__isset.snd_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_backward_play_args");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->snd_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_backward_play_pargs");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->snd_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("AcquireStoreService_backward_play_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_temporary_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->snd_frame_rate);
+          this->__isset.snd_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_temporary_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_forward_play_temporary_args");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->snd_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_temporary_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_forward_play_temporary_pargs");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->snd_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_temporary_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_temporary_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("AcquireStoreService_forward_play_temporary_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_forward_play_temporary_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_temporary_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->snd_frame_rate);
+          this->__isset.snd_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_temporary_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_backward_play_temporary_args");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->snd_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_temporary_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("AcquireStoreService_backward_play_temporary_pargs");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("snd_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->snd_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_temporary_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_temporary_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("AcquireStoreService_backward_play_temporary_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t AcquireStoreService_backward_play_temporary_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6120,19 +6869,19 @@ uint32_t AcquireStoreService_update_feature_presult::read(::apache::thrift::prot
   return xfer;
 }
 
-int32_t AcquireStoreServiceClient::start(const int32_t display_frame_rate)
+int32_t AcquireStoreServiceClient::start(const int32_t snd_frame_rate)
 {
-  send_start(display_frame_rate);
+  send_start(snd_frame_rate);
   return recv_start();
 }
 
-void AcquireStoreServiceClient::send_start(const int32_t display_frame_rate)
+void AcquireStoreServiceClient::send_start(const int32_t snd_frame_rate)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("start", ::apache::thrift::protocol::T_CALL, cseqid);
 
   AcquireStoreService_start_pargs args;
-  args.display_frame_rate = &display_frame_rate;
+  args.snd_frame_rate = &snd_frame_rate;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -6235,20 +6984,20 @@ int32_t AcquireStoreServiceClient::recv_stop()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop failed: unknown result");
 }
 
-int32_t AcquireStoreServiceClient::set_display_frame_rate(const int32_t display_frame_rate, const int32_t grab_frame_rate)
+int32_t AcquireStoreServiceClient::set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate)
 {
-  send_set_display_frame_rate(display_frame_rate, grab_frame_rate);
-  return recv_set_display_frame_rate();
+  send_set_snd_frame_rate(snd_frame_rate, full_frame_rate);
+  return recv_set_snd_frame_rate();
 }
 
-void AcquireStoreServiceClient::send_set_display_frame_rate(const int32_t display_frame_rate, const int32_t grab_frame_rate)
+void AcquireStoreServiceClient::send_set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("set_display_frame_rate", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("set_snd_frame_rate", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AcquireStoreService_set_display_frame_rate_pargs args;
-  args.display_frame_rate = &display_frame_rate;
-  args.grab_frame_rate = &grab_frame_rate;
+  AcquireStoreService_set_snd_frame_rate_pargs args;
+  args.snd_frame_rate = &snd_frame_rate;
+  args.full_frame_rate = &full_frame_rate;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -6256,7 +7005,7 @@ void AcquireStoreServiceClient::send_set_display_frame_rate(const int32_t displa
   oprot_->getTransport()->flush();
 }
 
-int32_t AcquireStoreServiceClient::recv_set_display_frame_rate()
+int32_t AcquireStoreServiceClient::recv_set_snd_frame_rate()
 {
 
   int32_t rseqid = 0;
@@ -6276,13 +7025,13 @@ int32_t AcquireStoreServiceClient::recv_set_display_frame_rate()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("set_display_frame_rate") != 0) {
+  if (fname.compare("set_snd_frame_rate") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AcquireStoreService_set_display_frame_rate_presult result;
+  AcquireStoreService_set_snd_frame_rate_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -6291,21 +7040,23 @@ int32_t AcquireStoreServiceClient::recv_set_display_frame_rate()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_display_frame_rate failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_snd_frame_rate failed: unknown result");
 }
 
-int32_t AcquireStoreServiceClient::set_store_file()
+int32_t AcquireStoreServiceClient::set_store_file(const int32_t flag, const std::string& file_name)
 {
-  send_set_store_file();
+  send_set_store_file(flag, file_name);
   return recv_set_store_file();
 }
 
-void AcquireStoreServiceClient::send_set_store_file()
+void AcquireStoreServiceClient::send_set_store_file(const int32_t flag, const std::string& file_name)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_store_file", ::apache::thrift::protocol::T_CALL, cseqid);
 
   AcquireStoreService_set_store_file_pargs args;
+  args.flag = &flag;
+  args.file_name = &file_name;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -6407,6 +7158,242 @@ int32_t AcquireStoreServiceClient::recv_do_pause()
     return _return;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "do_pause failed: unknown result");
+}
+
+int32_t AcquireStoreServiceClient::forward_play(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  send_forward_play(frame_seq, snd_frame_rate);
+  return recv_forward_play();
+}
+
+void AcquireStoreServiceClient::send_forward_play(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("forward_play", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  AcquireStoreService_forward_play_pargs args;
+  args.frame_seq = &frame_seq;
+  args.snd_frame_rate = &snd_frame_rate;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t AcquireStoreServiceClient::recv_forward_play()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("forward_play") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  AcquireStoreService_forward_play_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "forward_play failed: unknown result");
+}
+
+int32_t AcquireStoreServiceClient::backward_play(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  send_backward_play(frame_seq, snd_frame_rate);
+  return recv_backward_play();
+}
+
+void AcquireStoreServiceClient::send_backward_play(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("backward_play", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  AcquireStoreService_backward_play_pargs args;
+  args.frame_seq = &frame_seq;
+  args.snd_frame_rate = &snd_frame_rate;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t AcquireStoreServiceClient::recv_backward_play()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("backward_play") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  AcquireStoreService_backward_play_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "backward_play failed: unknown result");
+}
+
+int32_t AcquireStoreServiceClient::forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  send_forward_play_temporary(frame_seq, snd_frame_rate);
+  return recv_forward_play_temporary();
+}
+
+void AcquireStoreServiceClient::send_forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("forward_play_temporary", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  AcquireStoreService_forward_play_temporary_pargs args;
+  args.frame_seq = &frame_seq;
+  args.snd_frame_rate = &snd_frame_rate;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t AcquireStoreServiceClient::recv_forward_play_temporary()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("forward_play_temporary") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  AcquireStoreService_forward_play_temporary_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "forward_play_temporary failed: unknown result");
+}
+
+int32_t AcquireStoreServiceClient::backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  send_backward_play_temporary(frame_seq, snd_frame_rate);
+  return recv_backward_play_temporary();
+}
+
+void AcquireStoreServiceClient::send_backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("backward_play_temporary", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  AcquireStoreService_backward_play_temporary_pargs args;
+  args.frame_seq = &frame_seq;
+  args.snd_frame_rate = &snd_frame_rate;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t AcquireStoreServiceClient::recv_backward_play_temporary()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("backward_play_temporary") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  AcquireStoreService_backward_play_temporary_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "backward_play_temporary failed: unknown result");
 }
 
 int32_t AcquireStoreServiceClient::set_exposure_time(const double microseconds)
@@ -8515,7 +9502,7 @@ void AcquireStoreServiceProcessor::process_start(int32_t seqid, ::apache::thrift
 
   AcquireStoreService_start_result result;
   try {
-    result.success = iface_->start(args.display_frame_rate);
+    result.success = iface_->start(args.snd_frame_rate);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -8600,38 +9587,38 @@ void AcquireStoreServiceProcessor::process_stop(int32_t seqid, ::apache::thrift:
   }
 }
 
-void AcquireStoreServiceProcessor::process_set_display_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void AcquireStoreServiceProcessor::process_set_snd_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AcquireStoreService.set_display_frame_rate", callContext);
+    ctx = this->eventHandler_->getContext("AcquireStoreService.set_snd_frame_rate", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AcquireStoreService.set_display_frame_rate");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AcquireStoreService.set_snd_frame_rate");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AcquireStoreService.set_display_frame_rate");
+    this->eventHandler_->preRead(ctx, "AcquireStoreService.set_snd_frame_rate");
   }
 
-  AcquireStoreService_set_display_frame_rate_args args;
+  AcquireStoreService_set_snd_frame_rate_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AcquireStoreService.set_display_frame_rate", bytes);
+    this->eventHandler_->postRead(ctx, "AcquireStoreService.set_snd_frame_rate", bytes);
   }
 
-  AcquireStoreService_set_display_frame_rate_result result;
+  AcquireStoreService_set_snd_frame_rate_result result;
   try {
-    result.success = iface_->set_display_frame_rate(args.display_frame_rate, args.grab_frame_rate);
+    result.success = iface_->set_snd_frame_rate(args.snd_frame_rate, args.full_frame_rate);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AcquireStoreService.set_display_frame_rate");
+      this->eventHandler_->handlerError(ctx, "AcquireStoreService.set_snd_frame_rate");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("set_display_frame_rate", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("set_snd_frame_rate", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -8640,17 +9627,17 @@ void AcquireStoreServiceProcessor::process_set_display_frame_rate(int32_t seqid,
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AcquireStoreService.set_display_frame_rate");
+    this->eventHandler_->preWrite(ctx, "AcquireStoreService.set_snd_frame_rate");
   }
 
-  oprot->writeMessageBegin("set_display_frame_rate", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("set_snd_frame_rate", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AcquireStoreService.set_display_frame_rate", bytes);
+    this->eventHandler_->postWrite(ctx, "AcquireStoreService.set_snd_frame_rate", bytes);
   }
 }
 
@@ -8677,7 +9664,7 @@ void AcquireStoreServiceProcessor::process_set_store_file(int32_t seqid, ::apach
 
   AcquireStoreService_set_store_file_result result;
   try {
-    result.success = iface_->set_store_file();
+    result.success = iface_->set_store_file(args.flag, args.file_name);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -8759,6 +9746,222 @@ void AcquireStoreServiceProcessor::process_do_pause(int32_t seqid, ::apache::thr
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "AcquireStoreService.do_pause", bytes);
+  }
+}
+
+void AcquireStoreServiceProcessor::process_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("AcquireStoreService.forward_play", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AcquireStoreService.forward_play");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "AcquireStoreService.forward_play");
+  }
+
+  AcquireStoreService_forward_play_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "AcquireStoreService.forward_play", bytes);
+  }
+
+  AcquireStoreService_forward_play_result result;
+  try {
+    result.success = iface_->forward_play(args.frame_seq, args.snd_frame_rate);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "AcquireStoreService.forward_play");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("forward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "AcquireStoreService.forward_play");
+  }
+
+  oprot->writeMessageBegin("forward_play", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "AcquireStoreService.forward_play", bytes);
+  }
+}
+
+void AcquireStoreServiceProcessor::process_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("AcquireStoreService.backward_play", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AcquireStoreService.backward_play");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "AcquireStoreService.backward_play");
+  }
+
+  AcquireStoreService_backward_play_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "AcquireStoreService.backward_play", bytes);
+  }
+
+  AcquireStoreService_backward_play_result result;
+  try {
+    result.success = iface_->backward_play(args.frame_seq, args.snd_frame_rate);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "AcquireStoreService.backward_play");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("backward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "AcquireStoreService.backward_play");
+  }
+
+  oprot->writeMessageBegin("backward_play", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "AcquireStoreService.backward_play", bytes);
+  }
+}
+
+void AcquireStoreServiceProcessor::process_forward_play_temporary(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("AcquireStoreService.forward_play_temporary", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AcquireStoreService.forward_play_temporary");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "AcquireStoreService.forward_play_temporary");
+  }
+
+  AcquireStoreService_forward_play_temporary_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "AcquireStoreService.forward_play_temporary", bytes);
+  }
+
+  AcquireStoreService_forward_play_temporary_result result;
+  try {
+    result.success = iface_->forward_play_temporary(args.frame_seq, args.snd_frame_rate);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "AcquireStoreService.forward_play_temporary");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("forward_play_temporary", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "AcquireStoreService.forward_play_temporary");
+  }
+
+  oprot->writeMessageBegin("forward_play_temporary", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "AcquireStoreService.forward_play_temporary", bytes);
+  }
+}
+
+void AcquireStoreServiceProcessor::process_backward_play_temporary(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("AcquireStoreService.backward_play_temporary", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AcquireStoreService.backward_play_temporary");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "AcquireStoreService.backward_play_temporary");
+  }
+
+  AcquireStoreService_backward_play_temporary_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "AcquireStoreService.backward_play_temporary", bytes);
+  }
+
+  AcquireStoreService_backward_play_temporary_result result;
+  try {
+    result.success = iface_->backward_play_temporary(args.frame_seq, args.snd_frame_rate);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "AcquireStoreService.backward_play_temporary");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("backward_play_temporary", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "AcquireStoreService.backward_play_temporary");
+  }
+
+  oprot->writeMessageBegin("backward_play_temporary", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "AcquireStoreService.backward_play_temporary", bytes);
   }
 }
 

@@ -15,11 +15,15 @@ namespace hawkeye {
 class AcquireStoreServiceIf {
  public:
   virtual ~AcquireStoreServiceIf() {}
-  virtual int32_t start(const int32_t display_frame_rate) = 0;
+  virtual int32_t start(const int32_t snd_frame_rate) = 0;
   virtual int32_t stop() = 0;
-  virtual int32_t set_display_frame_rate(const int32_t display_frame_rate, const int32_t grab_frame_rate) = 0;
-  virtual int32_t set_store_file() = 0;
+  virtual int32_t set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate) = 0;
+  virtual int32_t set_store_file(const int32_t flag, const std::string& file_name) = 0;
   virtual int32_t do_pause(const int32_t flag) = 0;
+  virtual int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate) = 0;
+  virtual int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate) = 0;
+  virtual int32_t forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) = 0;
+  virtual int32_t backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) = 0;
   virtual int32_t set_exposure_time(const double microseconds) = 0;
   virtual int32_t set_gain_by_sensor_all(const double gain) = 0;
   virtual int32_t set_gain_by_sensor_analog(const double gain) = 0;
@@ -85,7 +89,7 @@ class AcquireStoreServiceIfSingletonFactory : virtual public AcquireStoreService
 class AcquireStoreServiceNull : virtual public AcquireStoreServiceIf {
  public:
   virtual ~AcquireStoreServiceNull() {}
-  int32_t start(const int32_t /* display_frame_rate */) {
+  int32_t start(const int32_t /* snd_frame_rate */) {
     int32_t _return = 0;
     return _return;
   }
@@ -93,15 +97,31 @@ class AcquireStoreServiceNull : virtual public AcquireStoreServiceIf {
     int32_t _return = 0;
     return _return;
   }
-  int32_t set_display_frame_rate(const int32_t /* display_frame_rate */, const int32_t /* grab_frame_rate */) {
+  int32_t set_snd_frame_rate(const int32_t /* snd_frame_rate */, const int32_t /* full_frame_rate */) {
     int32_t _return = 0;
     return _return;
   }
-  int32_t set_store_file() {
+  int32_t set_store_file(const int32_t /* flag */, const std::string& /* file_name */) {
     int32_t _return = 0;
     return _return;
   }
   int32_t do_pause(const int32_t /* flag */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t forward_play(const int64_t /* frame_seq */, const int32_t /* snd_frame_rate */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t backward_play(const int64_t /* frame_seq */, const int32_t /* snd_frame_rate */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t forward_play_temporary(const int64_t /* frame_seq */, const int32_t /* snd_frame_rate */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t backward_play_temporary(const int64_t /* frame_seq */, const int32_t /* snd_frame_rate */) {
     int32_t _return = 0;
     return _return;
   }
@@ -242,29 +262,29 @@ class AcquireStoreServiceNull : virtual public AcquireStoreServiceIf {
 };
 
 typedef struct _AcquireStoreService_start_args__isset {
-  _AcquireStoreService_start_args__isset() : display_frame_rate(false) {}
-  bool display_frame_rate;
+  _AcquireStoreService_start_args__isset() : snd_frame_rate(false) {}
+  bool snd_frame_rate;
 } _AcquireStoreService_start_args__isset;
 
 class AcquireStoreService_start_args {
  public:
 
-  AcquireStoreService_start_args() : display_frame_rate(0) {
+  AcquireStoreService_start_args() : snd_frame_rate(0) {
   }
 
   virtual ~AcquireStoreService_start_args() throw() {}
 
-  int32_t display_frame_rate;
+  int32_t snd_frame_rate;
 
   _AcquireStoreService_start_args__isset __isset;
 
-  void __set_display_frame_rate(const int32_t val) {
-    display_frame_rate = val;
+  void __set_snd_frame_rate(const int32_t val) {
+    snd_frame_rate = val;
   }
 
   bool operator == (const AcquireStoreService_start_args & rhs) const
   {
-    if (!(display_frame_rate == rhs.display_frame_rate))
+    if (!(snd_frame_rate == rhs.snd_frame_rate))
       return false;
     return true;
   }
@@ -286,7 +306,7 @@ class AcquireStoreService_start_pargs {
 
   virtual ~AcquireStoreService_start_pargs() throw() {}
 
-  const int32_t* display_frame_rate;
+  const int32_t* snd_frame_rate;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -443,46 +463,46 @@ class AcquireStoreService_stop_presult {
 
 };
 
-typedef struct _AcquireStoreService_set_display_frame_rate_args__isset {
-  _AcquireStoreService_set_display_frame_rate_args__isset() : display_frame_rate(false), grab_frame_rate(false) {}
-  bool display_frame_rate;
-  bool grab_frame_rate;
-} _AcquireStoreService_set_display_frame_rate_args__isset;
+typedef struct _AcquireStoreService_set_snd_frame_rate_args__isset {
+  _AcquireStoreService_set_snd_frame_rate_args__isset() : snd_frame_rate(false), full_frame_rate(false) {}
+  bool snd_frame_rate;
+  bool full_frame_rate;
+} _AcquireStoreService_set_snd_frame_rate_args__isset;
 
-class AcquireStoreService_set_display_frame_rate_args {
+class AcquireStoreService_set_snd_frame_rate_args {
  public:
 
-  AcquireStoreService_set_display_frame_rate_args() : display_frame_rate(0), grab_frame_rate(0) {
+  AcquireStoreService_set_snd_frame_rate_args() : snd_frame_rate(0), full_frame_rate(0) {
   }
 
-  virtual ~AcquireStoreService_set_display_frame_rate_args() throw() {}
+  virtual ~AcquireStoreService_set_snd_frame_rate_args() throw() {}
 
-  int32_t display_frame_rate;
-  int32_t grab_frame_rate;
+  int32_t snd_frame_rate;
+  int32_t full_frame_rate;
 
-  _AcquireStoreService_set_display_frame_rate_args__isset __isset;
+  _AcquireStoreService_set_snd_frame_rate_args__isset __isset;
 
-  void __set_display_frame_rate(const int32_t val) {
-    display_frame_rate = val;
+  void __set_snd_frame_rate(const int32_t val) {
+    snd_frame_rate = val;
   }
 
-  void __set_grab_frame_rate(const int32_t val) {
-    grab_frame_rate = val;
+  void __set_full_frame_rate(const int32_t val) {
+    full_frame_rate = val;
   }
 
-  bool operator == (const AcquireStoreService_set_display_frame_rate_args & rhs) const
+  bool operator == (const AcquireStoreService_set_snd_frame_rate_args & rhs) const
   {
-    if (!(display_frame_rate == rhs.display_frame_rate))
+    if (!(snd_frame_rate == rhs.snd_frame_rate))
       return false;
-    if (!(grab_frame_rate == rhs.grab_frame_rate))
+    if (!(full_frame_rate == rhs.full_frame_rate))
       return false;
     return true;
   }
-  bool operator != (const AcquireStoreService_set_display_frame_rate_args &rhs) const {
+  bool operator != (const AcquireStoreService_set_snd_frame_rate_args &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const AcquireStoreService_set_display_frame_rate_args & ) const;
+  bool operator < (const AcquireStoreService_set_snd_frame_rate_args & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -490,88 +510,109 @@ class AcquireStoreService_set_display_frame_rate_args {
 };
 
 
-class AcquireStoreService_set_display_frame_rate_pargs {
+class AcquireStoreService_set_snd_frame_rate_pargs {
  public:
 
 
-  virtual ~AcquireStoreService_set_display_frame_rate_pargs() throw() {}
+  virtual ~AcquireStoreService_set_snd_frame_rate_pargs() throw() {}
 
-  const int32_t* display_frame_rate;
-  const int32_t* grab_frame_rate;
+  const int32_t* snd_frame_rate;
+  const int32_t* full_frame_rate;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _AcquireStoreService_set_display_frame_rate_result__isset {
-  _AcquireStoreService_set_display_frame_rate_result__isset() : success(false) {}
+typedef struct _AcquireStoreService_set_snd_frame_rate_result__isset {
+  _AcquireStoreService_set_snd_frame_rate_result__isset() : success(false) {}
   bool success;
-} _AcquireStoreService_set_display_frame_rate_result__isset;
+} _AcquireStoreService_set_snd_frame_rate_result__isset;
 
-class AcquireStoreService_set_display_frame_rate_result {
+class AcquireStoreService_set_snd_frame_rate_result {
  public:
 
-  AcquireStoreService_set_display_frame_rate_result() : success(0) {
+  AcquireStoreService_set_snd_frame_rate_result() : success(0) {
   }
 
-  virtual ~AcquireStoreService_set_display_frame_rate_result() throw() {}
+  virtual ~AcquireStoreService_set_snd_frame_rate_result() throw() {}
 
   int32_t success;
 
-  _AcquireStoreService_set_display_frame_rate_result__isset __isset;
+  _AcquireStoreService_set_snd_frame_rate_result__isset __isset;
 
   void __set_success(const int32_t val) {
     success = val;
   }
 
-  bool operator == (const AcquireStoreService_set_display_frame_rate_result & rhs) const
+  bool operator == (const AcquireStoreService_set_snd_frame_rate_result & rhs) const
   {
     if (!(success == rhs.success))
       return false;
     return true;
   }
-  bool operator != (const AcquireStoreService_set_display_frame_rate_result &rhs) const {
+  bool operator != (const AcquireStoreService_set_snd_frame_rate_result &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const AcquireStoreService_set_display_frame_rate_result & ) const;
+  bool operator < (const AcquireStoreService_set_snd_frame_rate_result & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _AcquireStoreService_set_display_frame_rate_presult__isset {
-  _AcquireStoreService_set_display_frame_rate_presult__isset() : success(false) {}
+typedef struct _AcquireStoreService_set_snd_frame_rate_presult__isset {
+  _AcquireStoreService_set_snd_frame_rate_presult__isset() : success(false) {}
   bool success;
-} _AcquireStoreService_set_display_frame_rate_presult__isset;
+} _AcquireStoreService_set_snd_frame_rate_presult__isset;
 
-class AcquireStoreService_set_display_frame_rate_presult {
+class AcquireStoreService_set_snd_frame_rate_presult {
  public:
 
 
-  virtual ~AcquireStoreService_set_display_frame_rate_presult() throw() {}
+  virtual ~AcquireStoreService_set_snd_frame_rate_presult() throw() {}
 
   int32_t* success;
 
-  _AcquireStoreService_set_display_frame_rate_presult__isset __isset;
+  _AcquireStoreService_set_snd_frame_rate_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
 };
 
+typedef struct _AcquireStoreService_set_store_file_args__isset {
+  _AcquireStoreService_set_store_file_args__isset() : flag(false), file_name(false) {}
+  bool flag;
+  bool file_name;
+} _AcquireStoreService_set_store_file_args__isset;
 
 class AcquireStoreService_set_store_file_args {
  public:
 
-  AcquireStoreService_set_store_file_args() {
+  AcquireStoreService_set_store_file_args() : flag(0), file_name() {
   }
 
   virtual ~AcquireStoreService_set_store_file_args() throw() {}
 
+  int32_t flag;
+  std::string file_name;
 
-  bool operator == (const AcquireStoreService_set_store_file_args & /* rhs */) const
+  _AcquireStoreService_set_store_file_args__isset __isset;
+
+  void __set_flag(const int32_t val) {
+    flag = val;
+  }
+
+  void __set_file_name(const std::string& val) {
+    file_name = val;
+  }
+
+  bool operator == (const AcquireStoreService_set_store_file_args & rhs) const
   {
+    if (!(flag == rhs.flag))
+      return false;
+    if (!(file_name == rhs.file_name))
+      return false;
     return true;
   }
   bool operator != (const AcquireStoreService_set_store_file_args &rhs) const {
@@ -592,6 +633,8 @@ class AcquireStoreService_set_store_file_pargs {
 
   virtual ~AcquireStoreService_set_store_file_pargs() throw() {}
 
+  const int32_t* flag;
+  const std::string* file_name;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -757,6 +800,474 @@ class AcquireStoreService_do_pause_presult {
   int32_t* success;
 
   _AcquireStoreService_do_pause_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _AcquireStoreService_forward_play_args__isset {
+  _AcquireStoreService_forward_play_args__isset() : frame_seq(false), snd_frame_rate(false) {}
+  bool frame_seq;
+  bool snd_frame_rate;
+} _AcquireStoreService_forward_play_args__isset;
+
+class AcquireStoreService_forward_play_args {
+ public:
+
+  AcquireStoreService_forward_play_args() : frame_seq(0), snd_frame_rate(0) {
+  }
+
+  virtual ~AcquireStoreService_forward_play_args() throw() {}
+
+  int64_t frame_seq;
+  int32_t snd_frame_rate;
+
+  _AcquireStoreService_forward_play_args__isset __isset;
+
+  void __set_frame_seq(const int64_t val) {
+    frame_seq = val;
+  }
+
+  void __set_snd_frame_rate(const int32_t val) {
+    snd_frame_rate = val;
+  }
+
+  bool operator == (const AcquireStoreService_forward_play_args & rhs) const
+  {
+    if (!(frame_seq == rhs.frame_seq))
+      return false;
+    if (!(snd_frame_rate == rhs.snd_frame_rate))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_forward_play_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_forward_play_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class AcquireStoreService_forward_play_pargs {
+ public:
+
+
+  virtual ~AcquireStoreService_forward_play_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* snd_frame_rate;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_forward_play_result__isset {
+  _AcquireStoreService_forward_play_result__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_forward_play_result__isset;
+
+class AcquireStoreService_forward_play_result {
+ public:
+
+  AcquireStoreService_forward_play_result() : success(0) {
+  }
+
+  virtual ~AcquireStoreService_forward_play_result() throw() {}
+
+  int32_t success;
+
+  _AcquireStoreService_forward_play_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const AcquireStoreService_forward_play_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_forward_play_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_forward_play_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_forward_play_presult__isset {
+  _AcquireStoreService_forward_play_presult__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_forward_play_presult__isset;
+
+class AcquireStoreService_forward_play_presult {
+ public:
+
+
+  virtual ~AcquireStoreService_forward_play_presult() throw() {}
+
+  int32_t* success;
+
+  _AcquireStoreService_forward_play_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _AcquireStoreService_backward_play_args__isset {
+  _AcquireStoreService_backward_play_args__isset() : frame_seq(false), snd_frame_rate(false) {}
+  bool frame_seq;
+  bool snd_frame_rate;
+} _AcquireStoreService_backward_play_args__isset;
+
+class AcquireStoreService_backward_play_args {
+ public:
+
+  AcquireStoreService_backward_play_args() : frame_seq(0), snd_frame_rate(0) {
+  }
+
+  virtual ~AcquireStoreService_backward_play_args() throw() {}
+
+  int64_t frame_seq;
+  int32_t snd_frame_rate;
+
+  _AcquireStoreService_backward_play_args__isset __isset;
+
+  void __set_frame_seq(const int64_t val) {
+    frame_seq = val;
+  }
+
+  void __set_snd_frame_rate(const int32_t val) {
+    snd_frame_rate = val;
+  }
+
+  bool operator == (const AcquireStoreService_backward_play_args & rhs) const
+  {
+    if (!(frame_seq == rhs.frame_seq))
+      return false;
+    if (!(snd_frame_rate == rhs.snd_frame_rate))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_backward_play_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_backward_play_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class AcquireStoreService_backward_play_pargs {
+ public:
+
+
+  virtual ~AcquireStoreService_backward_play_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* snd_frame_rate;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_backward_play_result__isset {
+  _AcquireStoreService_backward_play_result__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_backward_play_result__isset;
+
+class AcquireStoreService_backward_play_result {
+ public:
+
+  AcquireStoreService_backward_play_result() : success(0) {
+  }
+
+  virtual ~AcquireStoreService_backward_play_result() throw() {}
+
+  int32_t success;
+
+  _AcquireStoreService_backward_play_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const AcquireStoreService_backward_play_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_backward_play_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_backward_play_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_backward_play_presult__isset {
+  _AcquireStoreService_backward_play_presult__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_backward_play_presult__isset;
+
+class AcquireStoreService_backward_play_presult {
+ public:
+
+
+  virtual ~AcquireStoreService_backward_play_presult() throw() {}
+
+  int32_t* success;
+
+  _AcquireStoreService_backward_play_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _AcquireStoreService_forward_play_temporary_args__isset {
+  _AcquireStoreService_forward_play_temporary_args__isset() : frame_seq(false), snd_frame_rate(false) {}
+  bool frame_seq;
+  bool snd_frame_rate;
+} _AcquireStoreService_forward_play_temporary_args__isset;
+
+class AcquireStoreService_forward_play_temporary_args {
+ public:
+
+  AcquireStoreService_forward_play_temporary_args() : frame_seq(0), snd_frame_rate(0) {
+  }
+
+  virtual ~AcquireStoreService_forward_play_temporary_args() throw() {}
+
+  int64_t frame_seq;
+  int32_t snd_frame_rate;
+
+  _AcquireStoreService_forward_play_temporary_args__isset __isset;
+
+  void __set_frame_seq(const int64_t val) {
+    frame_seq = val;
+  }
+
+  void __set_snd_frame_rate(const int32_t val) {
+    snd_frame_rate = val;
+  }
+
+  bool operator == (const AcquireStoreService_forward_play_temporary_args & rhs) const
+  {
+    if (!(frame_seq == rhs.frame_seq))
+      return false;
+    if (!(snd_frame_rate == rhs.snd_frame_rate))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_forward_play_temporary_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_forward_play_temporary_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class AcquireStoreService_forward_play_temporary_pargs {
+ public:
+
+
+  virtual ~AcquireStoreService_forward_play_temporary_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* snd_frame_rate;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_forward_play_temporary_result__isset {
+  _AcquireStoreService_forward_play_temporary_result__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_forward_play_temporary_result__isset;
+
+class AcquireStoreService_forward_play_temporary_result {
+ public:
+
+  AcquireStoreService_forward_play_temporary_result() : success(0) {
+  }
+
+  virtual ~AcquireStoreService_forward_play_temporary_result() throw() {}
+
+  int32_t success;
+
+  _AcquireStoreService_forward_play_temporary_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const AcquireStoreService_forward_play_temporary_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_forward_play_temporary_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_forward_play_temporary_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_forward_play_temporary_presult__isset {
+  _AcquireStoreService_forward_play_temporary_presult__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_forward_play_temporary_presult__isset;
+
+class AcquireStoreService_forward_play_temporary_presult {
+ public:
+
+
+  virtual ~AcquireStoreService_forward_play_temporary_presult() throw() {}
+
+  int32_t* success;
+
+  _AcquireStoreService_forward_play_temporary_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _AcquireStoreService_backward_play_temporary_args__isset {
+  _AcquireStoreService_backward_play_temporary_args__isset() : frame_seq(false), snd_frame_rate(false) {}
+  bool frame_seq;
+  bool snd_frame_rate;
+} _AcquireStoreService_backward_play_temporary_args__isset;
+
+class AcquireStoreService_backward_play_temporary_args {
+ public:
+
+  AcquireStoreService_backward_play_temporary_args() : frame_seq(0), snd_frame_rate(0) {
+  }
+
+  virtual ~AcquireStoreService_backward_play_temporary_args() throw() {}
+
+  int64_t frame_seq;
+  int32_t snd_frame_rate;
+
+  _AcquireStoreService_backward_play_temporary_args__isset __isset;
+
+  void __set_frame_seq(const int64_t val) {
+    frame_seq = val;
+  }
+
+  void __set_snd_frame_rate(const int32_t val) {
+    snd_frame_rate = val;
+  }
+
+  bool operator == (const AcquireStoreService_backward_play_temporary_args & rhs) const
+  {
+    if (!(frame_seq == rhs.frame_seq))
+      return false;
+    if (!(snd_frame_rate == rhs.snd_frame_rate))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_backward_play_temporary_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_backward_play_temporary_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class AcquireStoreService_backward_play_temporary_pargs {
+ public:
+
+
+  virtual ~AcquireStoreService_backward_play_temporary_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* snd_frame_rate;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_backward_play_temporary_result__isset {
+  _AcquireStoreService_backward_play_temporary_result__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_backward_play_temporary_result__isset;
+
+class AcquireStoreService_backward_play_temporary_result {
+ public:
+
+  AcquireStoreService_backward_play_temporary_result() : success(0) {
+  }
+
+  virtual ~AcquireStoreService_backward_play_temporary_result() throw() {}
+
+  int32_t success;
+
+  _AcquireStoreService_backward_play_temporary_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const AcquireStoreService_backward_play_temporary_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const AcquireStoreService_backward_play_temporary_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AcquireStoreService_backward_play_temporary_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _AcquireStoreService_backward_play_temporary_presult__isset {
+  _AcquireStoreService_backward_play_temporary_presult__isset() : success(false) {}
+  bool success;
+} _AcquireStoreService_backward_play_temporary_presult__isset;
+
+class AcquireStoreService_backward_play_temporary_presult {
+ public:
+
+
+  virtual ~AcquireStoreService_backward_play_temporary_presult() throw() {}
+
+  int32_t* success;
+
+  _AcquireStoreService_backward_play_temporary_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -4334,21 +4845,33 @@ class AcquireStoreServiceClient : virtual public AcquireStoreServiceIf {
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  int32_t start(const int32_t display_frame_rate);
-  void send_start(const int32_t display_frame_rate);
+  int32_t start(const int32_t snd_frame_rate);
+  void send_start(const int32_t snd_frame_rate);
   int32_t recv_start();
   int32_t stop();
   void send_stop();
   int32_t recv_stop();
-  int32_t set_display_frame_rate(const int32_t display_frame_rate, const int32_t grab_frame_rate);
-  void send_set_display_frame_rate(const int32_t display_frame_rate, const int32_t grab_frame_rate);
-  int32_t recv_set_display_frame_rate();
-  int32_t set_store_file();
-  void send_set_store_file();
+  int32_t set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate);
+  void send_set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate);
+  int32_t recv_set_snd_frame_rate();
+  int32_t set_store_file(const int32_t flag, const std::string& file_name);
+  void send_set_store_file(const int32_t flag, const std::string& file_name);
   int32_t recv_set_store_file();
   int32_t do_pause(const int32_t flag);
   void send_do_pause(const int32_t flag);
   int32_t recv_do_pause();
+  int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
+  void send_forward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
+  int32_t recv_forward_play();
+  int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
+  void send_backward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
+  int32_t recv_backward_play();
+  int32_t forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate);
+  void send_forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate);
+  int32_t recv_forward_play_temporary();
+  int32_t backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate);
+  void send_backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate);
+  int32_t recv_backward_play_temporary();
   int32_t set_exposure_time(const double microseconds);
   void send_set_exposure_time(const double microseconds);
   int32_t recv_set_exposure_time();
@@ -4474,9 +4997,13 @@ class AcquireStoreServiceProcessor : public ::apache::thrift::TDispatchProcessor
   ProcessMap processMap_;
   void process_start(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_stop(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_set_display_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_set_snd_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_store_file(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_do_pause(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_forward_play_temporary(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_backward_play_temporary(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_gain_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -4518,9 +5045,13 @@ class AcquireStoreServiceProcessor : public ::apache::thrift::TDispatchProcessor
     iface_(iface) {
     processMap_["start"] = &AcquireStoreServiceProcessor::process_start;
     processMap_["stop"] = &AcquireStoreServiceProcessor::process_stop;
-    processMap_["set_display_frame_rate"] = &AcquireStoreServiceProcessor::process_set_display_frame_rate;
+    processMap_["set_snd_frame_rate"] = &AcquireStoreServiceProcessor::process_set_snd_frame_rate;
     processMap_["set_store_file"] = &AcquireStoreServiceProcessor::process_set_store_file;
     processMap_["do_pause"] = &AcquireStoreServiceProcessor::process_do_pause;
+    processMap_["forward_play"] = &AcquireStoreServiceProcessor::process_forward_play;
+    processMap_["backward_play"] = &AcquireStoreServiceProcessor::process_backward_play;
+    processMap_["forward_play_temporary"] = &AcquireStoreServiceProcessor::process_forward_play_temporary;
+    processMap_["backward_play_temporary"] = &AcquireStoreServiceProcessor::process_backward_play_temporary;
     processMap_["set_exposure_time"] = &AcquireStoreServiceProcessor::process_set_exposure_time;
     processMap_["set_gain_by_sensor_all"] = &AcquireStoreServiceProcessor::process_set_gain_by_sensor_all;
     processMap_["set_gain_by_sensor_analog"] = &AcquireStoreServiceProcessor::process_set_gain_by_sensor_analog;
@@ -4585,13 +5116,13 @@ class AcquireStoreServiceMultiface : virtual public AcquireStoreServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  int32_t start(const int32_t display_frame_rate) {
+  int32_t start(const int32_t snd_frame_rate) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->start(display_frame_rate);
+      ifaces_[i]->start(snd_frame_rate);
     }
-    return ifaces_[i]->start(display_frame_rate);
+    return ifaces_[i]->start(snd_frame_rate);
   }
 
   int32_t stop() {
@@ -4603,22 +5134,22 @@ class AcquireStoreServiceMultiface : virtual public AcquireStoreServiceIf {
     return ifaces_[i]->stop();
   }
 
-  int32_t set_display_frame_rate(const int32_t display_frame_rate, const int32_t grab_frame_rate) {
+  int32_t set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->set_display_frame_rate(display_frame_rate, grab_frame_rate);
+      ifaces_[i]->set_snd_frame_rate(snd_frame_rate, full_frame_rate);
     }
-    return ifaces_[i]->set_display_frame_rate(display_frame_rate, grab_frame_rate);
+    return ifaces_[i]->set_snd_frame_rate(snd_frame_rate, full_frame_rate);
   }
 
-  int32_t set_store_file() {
+  int32_t set_store_file(const int32_t flag, const std::string& file_name) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->set_store_file();
+      ifaces_[i]->set_store_file(flag, file_name);
     }
-    return ifaces_[i]->set_store_file();
+    return ifaces_[i]->set_store_file(flag, file_name);
   }
 
   int32_t do_pause(const int32_t flag) {
@@ -4628,6 +5159,42 @@ class AcquireStoreServiceMultiface : virtual public AcquireStoreServiceIf {
       ifaces_[i]->do_pause(flag);
     }
     return ifaces_[i]->do_pause(flag);
+  }
+
+  int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->forward_play(frame_seq, snd_frame_rate);
+    }
+    return ifaces_[i]->forward_play(frame_seq, snd_frame_rate);
+  }
+
+  int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->backward_play(frame_seq, snd_frame_rate);
+    }
+    return ifaces_[i]->backward_play(frame_seq, snd_frame_rate);
+  }
+
+  int32_t forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->forward_play_temporary(frame_seq, snd_frame_rate);
+    }
+    return ifaces_[i]->forward_play_temporary(frame_seq, snd_frame_rate);
+  }
+
+  int32_t backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->backward_play_temporary(frame_seq, snd_frame_rate);
+    }
+    return ifaces_[i]->backward_play_temporary(frame_seq, snd_frame_rate);
   }
 
   int32_t set_exposure_time(const double microseconds) {

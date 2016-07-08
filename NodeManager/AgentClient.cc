@@ -1,12 +1,15 @@
 #include "AgentClient.h"
-
+#include "ping.h"
 
 AgentClient::AgentClient() {
-	m_custom_data = new CustomData;
 }
 
 AgentClient::~AgentClient() {
-	delete m_custom_data;
+}
+
+//can scan 192.168.0.1~192.168.1.255 eg.
+std::vector<std::string> AgentClient::scan_ip(std::string& start_ip, std::string& end_ip) {
+	return scan_ip(start_ip, end_ip);
 }
 
 BOOL AgentClient::connect(const std::string& ip, const uint16_t port) {
@@ -21,9 +24,9 @@ BOOL AgentClient::connect(const std::string& ip, const uint16_t port) {
 
 		m_socket = boost::shared_ptr<TTransport>(p);
 
-		p->setConnTimeout(30000);
-		p->setSendTimeout(30000);
-		p->setRecvTimeout(30000);
+		p->setConnTimeout(300);
+		p->setSendTimeout(300);
+		p->setRecvTimeout(300);
 
 		m_transport = boost::shared_ptr<TTransport>(new TBufferedTransport(m_socket));
 		m_protocol = boost::shared_ptr<TProtocol>(new TBinaryProtocol(m_transport));
@@ -35,7 +38,7 @@ BOOL AgentClient::connect(const std::string& ip, const uint16_t port) {
 		return TRUE;
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return FALSE;
 	}
 }
@@ -51,7 +54,7 @@ BOOL AgentClient::close() {
 		return TRUE;
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return FALSE;
 	}
 }
@@ -61,7 +64,7 @@ BOOL AgentClient::is_connected() {
 		return m_client->getInputProtocol().get()->getTransport()->isOpen();
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return FALSE;
 	}
 }
@@ -72,7 +75,7 @@ BOOL AgentClient::find_cameras(std::map<std::string, std::map<int, std::string>>
 		return	TRUE;
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return FALSE;
 	}
 }
@@ -82,7 +85,7 @@ int32_t AgentClient::add_cameras(const std::vector<std::string> & l) {
 		return m_client->add_cameras(l);
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return -1;
 	}
 }
@@ -92,7 +95,7 @@ BOOL AgentClient::get_hold_cameras(std::vector<std::string> & cameras) {
 		m_client->get_hold_cameras( cameras);
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return FALSE;
 	}
 	return TRUE;
@@ -103,26 +106,30 @@ int32_t AgentClient::del_cameras(const std::vector<std::string> & l) {
 		return m_client->del_cameras(l);
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return -1;
 	}
 }
 
-int32_t AgentClient::exec_acquire_store(const std::string& cmdline) {
+int32_t AgentClient::exec_program(const std::string& cmdline) {
+	// Your implementation goes here
 	try {
-		return m_client->exec_acquire_store(cmdline);
+		return m_client->exec_program(cmdline);
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return -1;
 	}
+
 }
-int32_t AgentClient::kill_acquire_store(const int64_t process_id) {
+
+int32_t AgentClient::kill_program(const int64_t process_id) {
+	// Your implementation goes here
 	try {
-		return m_client->kill_acquire_store(process_id);
+		return m_client->kill_program(process_id);
 	}
 	catch (TException& e) {
-		fprintf(stderr, "%s\n", e.what());
+		fprintf(stdout, "%s\n", e.what());
 		return -1;
 	}
 }

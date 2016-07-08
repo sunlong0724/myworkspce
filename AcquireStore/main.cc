@@ -13,6 +13,7 @@
 		  
 #include "AcquireStoreService_server.cpp"
 
+std::string	CStoreFile::m_file_name = "";
 
 using namespace std;
 using namespace apache::thrift;
@@ -66,7 +67,7 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 		gige_server_name = argv[2];
 	}
 	else {
-		fprintf(stderr, "No GigEServer found!\n!");
+		fprintf(stdout, "No GigEServer found!\n!");
 		return 0;
 	}
 	if (argc >= 4) {
@@ -82,20 +83,20 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	
 
 	if (!camera->CreateDevice()) {
-		fprintf(stderr, "CreateDevice failed!\n");
+		fprintf(stdout, "CreateDevice failed!\n");
 		return 0;
 	}
 
-	CustomData* custom_data = new CustomData;
-	create_zqm_ctx(custom_data, camera->GetImageWidth() * camera->GetImageHeight(), "localhost", data_port, 1);
-	camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, custom_data);
+	CPostProcessor* pProcessor = new CPostProcessor;
+	pProcessor->create_zmq_context(1, data_port, "localhost", camera->GetImageWidth() * camera->GetImageHeight());
+	camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, pProcessor);
 
 	handler->m_camera = camera;
 
 	std::thread cmd_thread(cmd_run,handler, server_port);
 	cmd_thread.join();
 
-	delete custom_data;
+	delete pProcessor;
 	camera->DestroyDevice();
 	delete camera;
 	return 0;

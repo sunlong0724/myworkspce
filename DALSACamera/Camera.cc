@@ -27,6 +27,8 @@ CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffer
 
 	//init
 	strcpy(m_AcqServerName, loc.GetServerName());
+
+	g_err_fp = fopen("log.txt", "w");
 }
 
 void CCamera::SetSinkBayerDataCallback(SinkDataCallback cb, void* ctx) {
@@ -45,13 +47,14 @@ CCamera::~CCamera() {
 		delete m_ColorConv;
 		delete m_Buffers;
 		delete m_AcqDevice;
+		fclose(g_err_fp);
 	}
 
 void CCamera::Start() {
 	if (!m_grabbing) {
 		if (m_Xfer->Grab()) {
 			m_last_is_grabbing = m_grabbing = TRUE;
-			fprintf(stderr, "grab start!\n");
+			fprintf(stdout, "grab start!\n");
 		}
 	}
 }
@@ -76,7 +79,7 @@ BOOL CCamera::CreateOtherObjects(){
 	if (m_AcqDevice) {
 		//check bayer availability
 		if (m_AcqDevice->IsRawBayerOutput() == FALSE) {
-			fprintf(stderr, "Software bayer not supported on this camera!\n");
+			fprintf(stdout, "Software bayer not supported on this camera!\n");
 			DestroyOtherObjects();
 			return FALSE;
 		}
@@ -95,7 +98,7 @@ BOOL CCamera::CreateOtherObjects(){
 		if (m_ColorConv && m_ColorConv->Enable(TRUE, FALSE)) {
 			
 		}else {
-			fprintf(stderr, "Color Convert Enable(TRUE, FALSE) failed!\n");
+			fprintf(stdout, "Color Convert Enable(TRUE, FALSE) failed!\n");
 		}
 	}
 	
@@ -193,7 +196,7 @@ BOOL CCamera::FindCamera(std::map<std::string, std::map<int32_t, std::string>>  
 
 			//"Module #1, not available"
 			if (std::string(cameraName).find("not available") != std::string::npos) {
-				fprintf(stderr, "%s, a camera not available!\n", __FUNCTION__);
+				fprintf(stdout, "%s, a camera not available!\n", __FUNCTION__);
 				continue;
 			}
 
@@ -273,7 +276,7 @@ BOOL CCamera::SetPixelFormat(const char* val, int len) { //BayerRG8 BayerRG10
 double CCamera::GetExposureTime() {
 	double val = .0f;
 	if (m_AcqDevice->GetFeatureValue("ExposureTime", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -282,7 +285,7 @@ double CCamera::GetGainBySensorAll() {
 	double val = .0f;
 	m_AcqDevice->SetFeatureValue("GainSelector", "SensorAll");//FIXME:
 	if (m_AcqDevice->GetFeatureValue("Gain", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -292,7 +295,7 @@ double CCamera::GetGainBySensorAnalog() {
 	double val = .0f;
 	m_AcqDevice->SetFeatureValue("GainSelector", "SensorAnalog");//FIXME:
 	if (m_AcqDevice->GetFeatureValue("Gain", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -301,7 +304,7 @@ double CCamera::GetGainBySensorDigital() {
 	double val = .0f;
 	m_AcqDevice->SetFeatureValue("GainSelector", "SensorDigital");//FIXME:
 	if (m_AcqDevice->GetFeatureValue("Gain", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -309,7 +312,7 @@ double CCamera::GetGainBySensorDigital() {
 double CCamera::GetFrameRate() {
 	double val = .0f;
 	if (m_AcqDevice->GetFeatureValue("AcquisitionFrameRate", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -317,7 +320,7 @@ double CCamera::GetFrameRate() {
 INT64 CCamera::GetHeightMax() {
 	INT64 val = 0;
 	if (m_AcqDevice->GetFeatureValue("HeightMax", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -325,7 +328,7 @@ INT64 CCamera::GetHeightMax() {
 INT64 CCamera::GetWidthMax() {
 	INT64 val = 0;
 	if (m_AcqDevice->GetFeatureValue("WidthMax", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -333,7 +336,7 @@ INT64 CCamera::GetWidthMax() {
 INT64	CCamera::GetImageWidth() {
 	INT64 val = 0;
 	if (m_AcqDevice->GetFeatureValue("Width", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -341,7 +344,7 @@ INT64	CCamera::GetImageWidth() {
 INT64	CCamera::GetImageHeight() {
 	INT64 val = 0;
 	if (m_AcqDevice->GetFeatureValue("Height", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -349,14 +352,14 @@ INT64	CCamera::GetImageHeight() {
 INT64 CCamera::GetOffsetX() {
 	INT64 val = 0;
 	if (m_AcqDevice->GetFeatureValue("OffsetX", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
 INT64 CCamera::GetOffsetY() {
 	INT64 val = 0;
 	if (m_AcqDevice->GetFeatureValue("OffsetY", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
@@ -364,13 +367,13 @@ INT64 CCamera::GetOffsetY() {
 BOOL CCamera::IsEnabledTurboTransfer() {
 	BOOL val = 0;
 	if (m_AcqDevice->GetFeatureValue("turboTransferEnable", &val) == FALSE) {
-		fprintf(stderr, "%s Failed!\n", __FUNCTION__);
+		fprintf(stdout, "%s Failed!\n", __FUNCTION__);
 	}
 	return val;
 }
 
 BOOL CCamera::GetUserDefinedName(char* buf, int len) {
-	fprintf(stderr, "%s \n", __FUNCTION__);
+	fprintf(stdout, "%s \n", __FUNCTION__);
 	return  m_AcqDevice->GetFeatureValue("DeviceUserID", buf, len);
 }
 const char*	CCamera::GetUserDefinedName() {
@@ -383,7 +386,7 @@ const char*	CCamera::GetUserDefinedName() {
 
 
 BOOL CCamera::GetDeviceSerialNumber(char* val, int len) {
-	fprintf(stderr, "%s \n", __FUNCTION__);
+	fprintf(stdout, "%s \n", __FUNCTION__);
 	return  m_AcqDevice->GetFeatureValue("DeviceSerialNumber", val, len);
 }
 
@@ -508,8 +511,6 @@ BOOL CCamera::GetDeviceModelName(char* val, int len) {
 	BOOL bAvailable = FALSE;
 	if (0 != len && NULL != val) {
 		if (m_AcqDevice->IsFeatureAvailable("DeviceModelName", &bAvailable) && bAvailable) {
-			INT64 ip = 0;
-			in_addr addr;
 			m_AcqDevice->GetFeatureValue("DeviceModelName", val, len);
 			return TRUE;
 		}
@@ -522,8 +523,8 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 	// If grabbing in trash buffer, do not display the image, update the
 	// appropriate number of frames on the status bar instead
 	if (pInfo->IsTrash()) {
-		//fprintf(stderr, "%s 1 Failed!\n", __FUNCTION__);
-		//fprintf(stderr, "Frames acquired in trash buffer: %03d\r", pInfo->GetEventCount());
+		//fprintf(stdout, "%s 1 Failed!\n", __FUNCTION__);
+		//fprintf(stdout, "Frames acquired in trash buffer: %03d\r", pInfo->GetEventCount());
 	}
 	else {
 		PUINT8 pData;
@@ -532,10 +533,10 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 
 		BOOL status = pBuffer->GetAddress(pBuffer->GetIndex(), (void**)&pData);
 		if (status) {
-			//fprintf(stderr, "%s %d %x\r\n", __FUNCTION__, status, pData);
+			//fprintf(stdout, "%s %d %x\r\n", __FUNCTION__, status, pData);
 			if (camera->m_sink_bayer_cb) {
 				int64_t ret = camera->m_sink_bayer_cb(pData, pBuffer->GetWidth() * pBuffer->GetHeight(), camera->m_ctx0);//FIXME: bufferlen 
-				//fprintf(stderr, "%s send %lld bytes!\r\n", __FUNCTION__,  ret);
+				//fprintf(stdout, "%s send %lld bytes!\r\n", __FUNCTION__,  ret);
 			}
 			if (camera->m_dummy_bayer_fp) {
 				fwrite(pData, 1, pBuffer->GetWidth() * pBuffer->GetHeight(), (FILE*)camera->m_dummy_bayer_fp);
@@ -544,7 +545,7 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 			}
 		}
 		else {
-			fprintf(stderr, "%s %d %p\r\n", __FUNCTION__, status, pData);
+			fprintf(stdout, "%s %d %p\r\n", __FUNCTION__, status, pData);
 		}
 
 		pBuffer->ReleaseAddress(pData);
@@ -564,7 +565,7 @@ void ProCallback(SapProCallbackInfo *pInfo) {
 	if (camera->m_ColorConv->IsSoftwareEnabled())
 	{
 		// Show current buffer index and execution time in millisecond
-		//fprintf(stderr, "%s Color conversion = %5.2f ms\n", __FUNCTION__, camera->m_Pro->GetTime());
+		//fprintf(stdout, "%s Color conversion = %5.2f ms\n", __FUNCTION__, camera->m_Pro->GetTime());
 	}
 
 	SapBuffer* pBuffer = NULL;
@@ -573,7 +574,7 @@ void ProCallback(SapProCallbackInfo *pInfo) {
 	BOOL status = pBuffer->GetAddress(pBuffer->GetIndex(), (void**)&pData);
 
 	if (status) {
-		//fprintf(stderr, "%s %d %x\r\n", __FUNCTION__, status, pData);
+		//fprintf(stdout, "%s %d %x\r\n", __FUNCTION__, status, pData);
 		if (camera->m_sink_rgb_cb) {
 			camera->m_sink_rgb_cb(pData, pBuffer->GetPitch() * pBuffer->GetHeight(), camera->m_ctx1);//FIXME: bufferlen 
 		}
@@ -592,7 +593,7 @@ void ProCallback(SapProCallbackInfo *pInfo) {
 void SapManCallbackMy(SapManCallbackInfo *pInfo) {
 	std::map<std::string, std::shared_ptr<CCamera>>	*cameras = (std::map<std::string, std::shared_ptr<CCamera>>*)pInfo->GetContext();
 	int type = pInfo->GetEventType();
-	fprintf(stderr, "connect status :%d\n", type);
+	fprintf(stdout, "connect status :%d\n", type);
 
 	if (type == SapManager::EventServerDisconnected) {
 		for (auto& a : *cameras) {
@@ -607,11 +608,11 @@ void SapManCallbackMy(SapManCallbackInfo *pInfo) {
 		for (auto& a : *cameras) {//FIXME:
 			if (total_cameras.find(a.first) != total_cameras.end()) {
 				if (a.second->m_last_is_connected) {
-					fprintf(stderr, "%s m_last_is_connected %d\n", __FUNCTION__, a.second->m_last_is_connected);
+					fprintf(stdout, "%s m_last_is_connected %d\n", __FUNCTION__, a.second->m_last_is_connected);
 					a.second->CreateDevice();
 				}
 				if (a.second->m_last_is_grabbing) {
-					fprintf(stderr, "%s m_last_is_grabbing %d\n", __FUNCTION__, a.second->m_last_is_grabbing);
+					fprintf(stdout, "%s m_last_is_grabbing %d\n", __FUNCTION__, a.second->m_last_is_grabbing);
 					a.second->CreateOtherObjects();
 					a.second->Start();
 				}

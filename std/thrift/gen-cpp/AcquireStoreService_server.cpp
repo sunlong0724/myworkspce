@@ -31,16 +31,16 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 
   CCamera	*m_camera;
 
-
-  int32_t start(const int32_t display_frame_rate) {
+  int32_t start(const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("start\n");
-	  set_display_frame_rate0((CustomData*)m_camera->get_SinkBayerDataCallback_ctx(), display_frame_rate, m_camera->GetFrameRate());
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
 	  if (m_camera->CreateOtherObjects()) {
 		  m_camera->Start();
-		  return 1;
+		  return TRUE;
 	  }
-	  return 0;
+	  return FALSE;
   }
 
   int32_t stop() {
@@ -48,21 +48,28 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  printf("stop\n");
 	  m_camera->Stop();
 	  m_camera->DestroyOtherObjects();
-	  return 1;
-  }
-
-
-  int32_t set_display_frame_rate(const int32_t display_frame_rate, const int32_t grab_frame_rate) {
-	  // Your implementation goes here
-	  printf("set_display_frame_rate\n");
-	  set_display_frame_rate0((CustomData*)m_camera->get_SinkBayerDataCallback_ctx(), display_frame_rate, grab_frame_rate);
 	  return TRUE;
   }
 
-  int32_t set_store_file() {
+  int32_t set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate) {
+	  // Your implementation goes here
+	  printf("set_snd_frame_rate\n");
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  return pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
+  }
+
+  int32_t set_store_file(const int32_t flag, const std::string& file_name) {
 	  // Your implementation goes here
 	  printf("set_store_file\n");
-	  return set_store_flag((CustomData*)m_camera->get_SinkBayerDataCallback_ctx());
+	  if (0 == CStoreFile::m_file_name.size()) {
+		  char ip[30] = { 0 };
+		  if (m_camera->GetCurrentIPAddress(ip, sizeof ip)) {
+			  std::string name(ip);
+			  CStoreFile::m_file_name = name + ".raw";
+		  }
+	  }
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  return pProcessor->m_store_file_flag = flag;
   }
 
   int32_t do_pause(const int32_t flag) {
@@ -75,6 +82,30 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 		  m_camera->Start();
 	  }
 	  return TRUE;
+  }
+
+  int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
+	  // Your implementation goes here
+	  printf("forward_play\n");
+	  return 0;
+  }
+
+  int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
+	  // Your implementation goes here
+	  printf("backward_play\n");
+	  return 0;
+  }
+
+  int32_t forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
+	  // Your implementation goes here
+	  printf("forward_play_temporary\n");
+	  return 0;
+  }
+
+  int32_t backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
+	  // Your implementation goes here
+	  printf("backward_play_temporary\n");
+	  return 0;
   }
 
   int32_t set_exposure_time(const double microseconds) {

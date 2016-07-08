@@ -14,7 +14,7 @@ bool g_running_flag = true;
 void sig_cb(int sig)
 {
 	if (sig == SIGINT) {
-		fprintf(stderr, "%s\n", __FUNCTION__);
+		fprintf(stdout, "%s\n", __FUNCTION__);
 		g_running_flag = false;
 	}
 }
@@ -34,9 +34,9 @@ int main0000(int argc, char** argv) {
 	static int sleep_time = 5;
 	static int write_block = 1024;
 
-	fprintf(stderr, "%s [file max size] [file name prefix]\n", argv[0]);
-	fprintf(stderr, "   [file max size(GB):default 10GB] \n", argv[0]);
-	fprintf(stderr, "   [file name prefix:default %s] \n", prefix);
+	fprintf(stdout, "%s [file max size] [file name prefix]\n", argv[0]);
+	fprintf(stdout, "   [file max size(GB):default 10GB] \n", argv[0]);
+	fprintf(stdout, "   [file name prefix:default %s] \n", prefix);
 	
 	if (argc >= 2) {
 		raw_file_max_size =::atol(argv[1]);
@@ -68,7 +68,7 @@ int main0000(int argc, char** argv) {
 	if (!hFile) {
 			hFile = CreateFile(pszPathName, GENERIC_WRITE | GENERIC_READ, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING, NULL);
 			if (!hFile) {
-				fprintf(stderr, "fopen failed!!!\n");
+				fprintf(stdout, "fopen failed!!!\n");
 				exit(0);
 			}
 		}

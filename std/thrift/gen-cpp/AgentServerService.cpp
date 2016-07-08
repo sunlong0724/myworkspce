@@ -780,7 +780,7 @@ uint32_t AgentServerService_del_cameras_presult::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_exec_acquire_store_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AgentServerService_exec_program_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -820,9 +820,9 @@ uint32_t AgentServerService_exec_acquire_store_args::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_exec_acquire_store_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AgentServerService_exec_program_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_exec_acquire_store_args");
+  xfer += oprot->writeStructBegin("AgentServerService_exec_program_args");
 
   xfer += oprot->writeFieldBegin("cmdline", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString(this->cmdline);
@@ -833,9 +833,9 @@ uint32_t AgentServerService_exec_acquire_store_args::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_exec_acquire_store_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AgentServerService_exec_program_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_exec_acquire_store_pargs");
+  xfer += oprot->writeStructBegin("AgentServerService_exec_program_pargs");
 
   xfer += oprot->writeFieldBegin("cmdline", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString((*(this->cmdline)));
@@ -846,7 +846,7 @@ uint32_t AgentServerService_exec_acquire_store_pargs::write(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_exec_acquire_store_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AgentServerService_exec_program_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -886,11 +886,11 @@ uint32_t AgentServerService_exec_acquire_store_result::read(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_exec_acquire_store_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AgentServerService_exec_program_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_exec_acquire_store_result");
+  xfer += oprot->writeStructBegin("AgentServerService_exec_program_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -902,7 +902,7 @@ uint32_t AgentServerService_exec_acquire_store_result::write(::apache::thrift::p
   return xfer;
 }
 
-uint32_t AgentServerService_exec_acquire_store_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AgentServerService_exec_program_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -942,7 +942,7 @@ uint32_t AgentServerService_exec_acquire_store_presult::read(::apache::thrift::p
   return xfer;
 }
 
-uint32_t AgentServerService_kill_acquire_store_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AgentServerService_kill_program_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -982,9 +982,9 @@ uint32_t AgentServerService_kill_acquire_store_args::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_kill_acquire_store_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AgentServerService_kill_program_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_kill_acquire_store_args");
+  xfer += oprot->writeStructBegin("AgentServerService_kill_program_args");
 
   xfer += oprot->writeFieldBegin("process_id", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64(this->process_id);
@@ -995,9 +995,9 @@ uint32_t AgentServerService_kill_acquire_store_args::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_kill_acquire_store_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AgentServerService_kill_program_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_kill_acquire_store_pargs");
+  xfer += oprot->writeStructBegin("AgentServerService_kill_program_pargs");
 
   xfer += oprot->writeFieldBegin("process_id", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64((*(this->process_id)));
@@ -1008,7 +1008,7 @@ uint32_t AgentServerService_kill_acquire_store_pargs::write(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_kill_acquire_store_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AgentServerService_kill_program_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1048,11 +1048,11 @@ uint32_t AgentServerService_kill_acquire_store_result::read(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_kill_acquire_store_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AgentServerService_kill_program_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_kill_acquire_store_result");
+  xfer += oprot->writeStructBegin("AgentServerService_kill_program_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -1064,7 +1064,7 @@ uint32_t AgentServerService_kill_acquire_store_result::write(::apache::thrift::p
   return xfer;
 }
 
-uint32_t AgentServerService_kill_acquire_store_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AgentServerService_kill_program_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1334,18 +1334,18 @@ int32_t AgentServerServiceClient::recv_del_cameras()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "del_cameras failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::exec_acquire_store(const std::string& cmdline)
+int32_t AgentServerServiceClient::exec_program(const std::string& cmdline)
 {
-  send_exec_acquire_store(cmdline);
-  return recv_exec_acquire_store();
+  send_exec_program(cmdline);
+  return recv_exec_program();
 }
 
-void AgentServerServiceClient::send_exec_acquire_store(const std::string& cmdline)
+void AgentServerServiceClient::send_exec_program(const std::string& cmdline)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("exec_acquire_store", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("exec_program", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_exec_acquire_store_pargs args;
+  AgentServerService_exec_program_pargs args;
   args.cmdline = &cmdline;
   args.write(oprot_);
 
@@ -1354,7 +1354,7 @@ void AgentServerServiceClient::send_exec_acquire_store(const std::string& cmdlin
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_exec_acquire_store()
+int32_t AgentServerServiceClient::recv_exec_program()
 {
 
   int32_t rseqid = 0;
@@ -1374,13 +1374,13 @@ int32_t AgentServerServiceClient::recv_exec_acquire_store()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("exec_acquire_store") != 0) {
+  if (fname.compare("exec_program") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_exec_acquire_store_presult result;
+  AgentServerService_exec_program_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -1389,21 +1389,21 @@ int32_t AgentServerServiceClient::recv_exec_acquire_store()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "exec_acquire_store failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "exec_program failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::kill_acquire_store(const int64_t process_id)
+int32_t AgentServerServiceClient::kill_program(const int64_t process_id)
 {
-  send_kill_acquire_store(process_id);
-  return recv_kill_acquire_store();
+  send_kill_program(process_id);
+  return recv_kill_program();
 }
 
-void AgentServerServiceClient::send_kill_acquire_store(const int64_t process_id)
+void AgentServerServiceClient::send_kill_program(const int64_t process_id)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("kill_acquire_store", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("kill_program", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_kill_acquire_store_pargs args;
+  AgentServerService_kill_program_pargs args;
   args.process_id = &process_id;
   args.write(oprot_);
 
@@ -1412,7 +1412,7 @@ void AgentServerServiceClient::send_kill_acquire_store(const int64_t process_id)
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_kill_acquire_store()
+int32_t AgentServerServiceClient::recv_kill_program()
 {
 
   int32_t rseqid = 0;
@@ -1432,13 +1432,13 @@ int32_t AgentServerServiceClient::recv_kill_acquire_store()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("kill_acquire_store") != 0) {
+  if (fname.compare("kill_program") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_kill_acquire_store_presult result;
+  AgentServerService_kill_program_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -1447,7 +1447,7 @@ int32_t AgentServerServiceClient::recv_kill_acquire_store()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "kill_acquire_store failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "kill_program failed: unknown result");
 }
 
 bool AgentServerServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
@@ -1685,38 +1685,38 @@ void AgentServerServiceProcessor::process_del_cameras(int32_t seqid, ::apache::t
   }
 }
 
-void AgentServerServiceProcessor::process_exec_acquire_store(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void AgentServerServiceProcessor::process_exec_program(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.exec_acquire_store", callContext);
+    ctx = this->eventHandler_->getContext("AgentServerService.exec_program", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.exec_acquire_store");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.exec_program");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.exec_acquire_store");
+    this->eventHandler_->preRead(ctx, "AgentServerService.exec_program");
   }
 
-  AgentServerService_exec_acquire_store_args args;
+  AgentServerService_exec_program_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.exec_acquire_store", bytes);
+    this->eventHandler_->postRead(ctx, "AgentServerService.exec_program", bytes);
   }
 
-  AgentServerService_exec_acquire_store_result result;
+  AgentServerService_exec_program_result result;
   try {
-    result.success = iface_->exec_acquire_store(args.cmdline);
+    result.success = iface_->exec_program(args.cmdline);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.exec_acquire_store");
+      this->eventHandler_->handlerError(ctx, "AgentServerService.exec_program");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("exec_acquire_store", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("exec_program", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -1725,52 +1725,52 @@ void AgentServerServiceProcessor::process_exec_acquire_store(int32_t seqid, ::ap
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.exec_acquire_store");
+    this->eventHandler_->preWrite(ctx, "AgentServerService.exec_program");
   }
 
-  oprot->writeMessageBegin("exec_acquire_store", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("exec_program", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.exec_acquire_store", bytes);
+    this->eventHandler_->postWrite(ctx, "AgentServerService.exec_program", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_kill_acquire_store(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void AgentServerServiceProcessor::process_kill_program(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.kill_acquire_store", callContext);
+    ctx = this->eventHandler_->getContext("AgentServerService.kill_program", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.kill_acquire_store");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.kill_program");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.kill_acquire_store");
+    this->eventHandler_->preRead(ctx, "AgentServerService.kill_program");
   }
 
-  AgentServerService_kill_acquire_store_args args;
+  AgentServerService_kill_program_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.kill_acquire_store", bytes);
+    this->eventHandler_->postRead(ctx, "AgentServerService.kill_program", bytes);
   }
 
-  AgentServerService_kill_acquire_store_result result;
+  AgentServerService_kill_program_result result;
   try {
-    result.success = iface_->kill_acquire_store(args.process_id);
+    result.success = iface_->kill_program(args.process_id);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.kill_acquire_store");
+      this->eventHandler_->handlerError(ctx, "AgentServerService.kill_program");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("kill_acquire_store", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("kill_program", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -1779,17 +1779,17 @@ void AgentServerServiceProcessor::process_kill_acquire_store(int32_t seqid, ::ap
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.kill_acquire_store");
+    this->eventHandler_->preWrite(ctx, "AgentServerService.kill_program");
   }
 
-  oprot->writeMessageBegin("kill_acquire_store", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("kill_program", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.kill_acquire_store", bytes);
+    this->eventHandler_->postWrite(ctx, "AgentServerService.kill_program", bytes);
   }
 }
 

@@ -6,11 +6,13 @@
 #include <vector>
 #include <functional>
 
+FILE* g_err_fp;
+
 bool g_running_flag = true;
 void sig_cb(int sig)
 {
 	if (sig == SIGINT) {
-		fprintf(stderr, "%s\n", __FUNCTION__);
+		fprintf(stdout, "%s\n", __FUNCTION__);
 		g_running_flag = false;
 	}
 }
@@ -68,7 +70,7 @@ int main(int argc, char** argv) {
 	//			//a->SetExposureTime(1000);
 	//			//a->SetFrameRate(20.0f);
 	//		
-	//			//fprintf(stderr, "turboTransferEnable:%d\n", a->IsEnabledTurboTransfer());
+	//			//fprintf(stdout, "turboTransferEnable:%d\n", a->IsEnabledTurboTransfer());
 	//			//a->EnableTurboTransfer();
 
 	//			//a->SetImageWidth(960);

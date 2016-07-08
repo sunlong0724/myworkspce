@@ -42,14 +42,14 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
     printf("del_cameras\n");
   }
 
-  int32_t exec_acquire_store(const std::string& cmdline) {
+  int32_t exec_program(const std::string& cmdline) {
     // Your implementation goes here
-    printf("exec_acquire_store\n");
+    printf("exec_program\n");
   }
 
-  int32_t kill_acquire_store(const int64_t process_id) {
+  int32_t kill_program(const int64_t process_id) {
     // Your implementation goes here
-    printf("kill_acquire_store\n");
+    printf("kill_program\n");
   }
 
 };

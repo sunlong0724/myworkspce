@@ -4,7 +4,6 @@
 #define DLL_API __declspec(dllexport)  
 
 #include "AgentServerService.h"
-#include "ZmqTransportDataImpl.h"
 
 #include <thrift/Thrift.h>
 #include <thrift/protocol/TBinaryProtocol.h>
@@ -22,6 +21,8 @@ public:
 	AgentClient();
 	~AgentClient();
 
+	static std::vector<std::string> scan_ip(std::string& start_ip, std::string& end_ip);
+
 	BOOL			connect(const std::string& ip, const uint16_t port);
 	BOOL			close();
 	BOOL			is_connected();
@@ -31,10 +32,10 @@ public:
 	int32_t			add_cameras(const std::vector<std::string> & l);
 	int32_t			del_cameras(const std::vector<std::string> & l);
 
-	int32_t exec_acquire_store(const std::string& cmdline);
-	int32_t kill_acquire_store(const int64_t process_id);
+	// .\\AcqurieStore.exe server_port gige_server_name camera_index data_port(eg. .\\AcqurieStore.exe 9090 name 1 55555)
+	int32_t			exec_program(const std::string& cmdline);
+	int32_t			kill_program(const int64_t process_id);
 	
-	CustomData						*m_custom_data;
 private:
 	AgentServerServiceClient		*m_client;
 	boost::shared_ptr<TTransport>	m_socket;

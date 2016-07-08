@@ -19,8 +19,8 @@ BOOL SapMyProcessing::Run(){
 	if (m_ColorConv->IsEnabled() && m_ColorConv->IsSoftwareEnabled()){
 		m_ColorConv->Convert(GetIndex());
 		//SapFormat sf = m_ColorConv->GetOutputFormat();//RGB888
-		//fprintf(stderr, "%s %d\r\n", __FUNCTION__, sf);
-		//fprintf(stderr, "%s index:%d\r\n", __FUNCTION__, index);
+		//fprintf(stdout, "%s %d\r\n", __FUNCTION__, sf);
+		//fprintf(stdout, "%s index:%d\r\n", __FUNCTION__, index);
 	}
 
 	return TRUE;

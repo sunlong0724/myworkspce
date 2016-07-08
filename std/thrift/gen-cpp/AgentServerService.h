@@ -19,8 +19,8 @@ class AgentServerServiceIf {
   virtual int32_t add_cameras(const std::vector<std::string> & l) = 0;
   virtual void get_hold_cameras(std::vector<std::string> & _return) = 0;
   virtual int32_t del_cameras(const std::vector<std::string> & l) = 0;
-  virtual int32_t exec_acquire_store(const std::string& cmdline) = 0;
-  virtual int32_t kill_acquire_store(const int64_t process_id) = 0;
+  virtual int32_t exec_program(const std::string& cmdline) = 0;
+  virtual int32_t kill_program(const int64_t process_id) = 0;
 };
 
 class AgentServerServiceIfFactory {
@@ -64,11 +64,11 @@ class AgentServerServiceNull : virtual public AgentServerServiceIf {
     int32_t _return = 0;
     return _return;
   }
-  int32_t exec_acquire_store(const std::string& /* cmdline */) {
+  int32_t exec_program(const std::string& /* cmdline */) {
     int32_t _return = 0;
     return _return;
   }
-  int32_t kill_acquire_store(const int64_t /* process_id */) {
+  int32_t kill_program(const int64_t /* process_id */) {
     int32_t _return = 0;
     return _return;
   }
@@ -478,38 +478,38 @@ class AgentServerService_del_cameras_presult {
 
 };
 
-typedef struct _AgentServerService_exec_acquire_store_args__isset {
-  _AgentServerService_exec_acquire_store_args__isset() : cmdline(false) {}
+typedef struct _AgentServerService_exec_program_args__isset {
+  _AgentServerService_exec_program_args__isset() : cmdline(false) {}
   bool cmdline;
-} _AgentServerService_exec_acquire_store_args__isset;
+} _AgentServerService_exec_program_args__isset;
 
-class AgentServerService_exec_acquire_store_args {
+class AgentServerService_exec_program_args {
  public:
 
-  AgentServerService_exec_acquire_store_args() : cmdline() {
+  AgentServerService_exec_program_args() : cmdline() {
   }
 
-  virtual ~AgentServerService_exec_acquire_store_args() throw() {}
+  virtual ~AgentServerService_exec_program_args() throw() {}
 
   std::string cmdline;
 
-  _AgentServerService_exec_acquire_store_args__isset __isset;
+  _AgentServerService_exec_program_args__isset __isset;
 
   void __set_cmdline(const std::string& val) {
     cmdline = val;
   }
 
-  bool operator == (const AgentServerService_exec_acquire_store_args & rhs) const
+  bool operator == (const AgentServerService_exec_program_args & rhs) const
   {
     if (!(cmdline == rhs.cmdline))
       return false;
     return true;
   }
-  bool operator != (const AgentServerService_exec_acquire_store_args &rhs) const {
+  bool operator != (const AgentServerService_exec_program_args &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const AgentServerService_exec_acquire_store_args & ) const;
+  bool operator < (const AgentServerService_exec_program_args & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -517,11 +517,11 @@ class AgentServerService_exec_acquire_store_args {
 };
 
 
-class AgentServerService_exec_acquire_store_pargs {
+class AgentServerService_exec_program_pargs {
  public:
 
 
-  virtual ~AgentServerService_exec_acquire_store_pargs() throw() {}
+  virtual ~AgentServerService_exec_program_pargs() throw() {}
 
   const std::string* cmdline;
 
@@ -529,95 +529,95 @@ class AgentServerService_exec_acquire_store_pargs {
 
 };
 
-typedef struct _AgentServerService_exec_acquire_store_result__isset {
-  _AgentServerService_exec_acquire_store_result__isset() : success(false) {}
+typedef struct _AgentServerService_exec_program_result__isset {
+  _AgentServerService_exec_program_result__isset() : success(false) {}
   bool success;
-} _AgentServerService_exec_acquire_store_result__isset;
+} _AgentServerService_exec_program_result__isset;
 
-class AgentServerService_exec_acquire_store_result {
+class AgentServerService_exec_program_result {
  public:
 
-  AgentServerService_exec_acquire_store_result() : success(0) {
+  AgentServerService_exec_program_result() : success(0) {
   }
 
-  virtual ~AgentServerService_exec_acquire_store_result() throw() {}
+  virtual ~AgentServerService_exec_program_result() throw() {}
 
   int32_t success;
 
-  _AgentServerService_exec_acquire_store_result__isset __isset;
+  _AgentServerService_exec_program_result__isset __isset;
 
   void __set_success(const int32_t val) {
     success = val;
   }
 
-  bool operator == (const AgentServerService_exec_acquire_store_result & rhs) const
+  bool operator == (const AgentServerService_exec_program_result & rhs) const
   {
     if (!(success == rhs.success))
       return false;
     return true;
   }
-  bool operator != (const AgentServerService_exec_acquire_store_result &rhs) const {
+  bool operator != (const AgentServerService_exec_program_result &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const AgentServerService_exec_acquire_store_result & ) const;
+  bool operator < (const AgentServerService_exec_program_result & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _AgentServerService_exec_acquire_store_presult__isset {
-  _AgentServerService_exec_acquire_store_presult__isset() : success(false) {}
+typedef struct _AgentServerService_exec_program_presult__isset {
+  _AgentServerService_exec_program_presult__isset() : success(false) {}
   bool success;
-} _AgentServerService_exec_acquire_store_presult__isset;
+} _AgentServerService_exec_program_presult__isset;
 
-class AgentServerService_exec_acquire_store_presult {
+class AgentServerService_exec_program_presult {
  public:
 
 
-  virtual ~AgentServerService_exec_acquire_store_presult() throw() {}
+  virtual ~AgentServerService_exec_program_presult() throw() {}
 
   int32_t* success;
 
-  _AgentServerService_exec_acquire_store_presult__isset __isset;
+  _AgentServerService_exec_program_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
 };
 
-typedef struct _AgentServerService_kill_acquire_store_args__isset {
-  _AgentServerService_kill_acquire_store_args__isset() : process_id(false) {}
+typedef struct _AgentServerService_kill_program_args__isset {
+  _AgentServerService_kill_program_args__isset() : process_id(false) {}
   bool process_id;
-} _AgentServerService_kill_acquire_store_args__isset;
+} _AgentServerService_kill_program_args__isset;
 
-class AgentServerService_kill_acquire_store_args {
+class AgentServerService_kill_program_args {
  public:
 
-  AgentServerService_kill_acquire_store_args() : process_id(0) {
+  AgentServerService_kill_program_args() : process_id(0) {
   }
 
-  virtual ~AgentServerService_kill_acquire_store_args() throw() {}
+  virtual ~AgentServerService_kill_program_args() throw() {}
 
   int64_t process_id;
 
-  _AgentServerService_kill_acquire_store_args__isset __isset;
+  _AgentServerService_kill_program_args__isset __isset;
 
   void __set_process_id(const int64_t val) {
     process_id = val;
   }
 
-  bool operator == (const AgentServerService_kill_acquire_store_args & rhs) const
+  bool operator == (const AgentServerService_kill_program_args & rhs) const
   {
     if (!(process_id == rhs.process_id))
       return false;
     return true;
   }
-  bool operator != (const AgentServerService_kill_acquire_store_args &rhs) const {
+  bool operator != (const AgentServerService_kill_program_args &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const AgentServerService_kill_acquire_store_args & ) const;
+  bool operator < (const AgentServerService_kill_program_args & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -625,11 +625,11 @@ class AgentServerService_kill_acquire_store_args {
 };
 
 
-class AgentServerService_kill_acquire_store_pargs {
+class AgentServerService_kill_program_pargs {
  public:
 
 
-  virtual ~AgentServerService_kill_acquire_store_pargs() throw() {}
+  virtual ~AgentServerService_kill_program_pargs() throw() {}
 
   const int64_t* process_id;
 
@@ -637,58 +637,58 @@ class AgentServerService_kill_acquire_store_pargs {
 
 };
 
-typedef struct _AgentServerService_kill_acquire_store_result__isset {
-  _AgentServerService_kill_acquire_store_result__isset() : success(false) {}
+typedef struct _AgentServerService_kill_program_result__isset {
+  _AgentServerService_kill_program_result__isset() : success(false) {}
   bool success;
-} _AgentServerService_kill_acquire_store_result__isset;
+} _AgentServerService_kill_program_result__isset;
 
-class AgentServerService_kill_acquire_store_result {
+class AgentServerService_kill_program_result {
  public:
 
-  AgentServerService_kill_acquire_store_result() : success(0) {
+  AgentServerService_kill_program_result() : success(0) {
   }
 
-  virtual ~AgentServerService_kill_acquire_store_result() throw() {}
+  virtual ~AgentServerService_kill_program_result() throw() {}
 
   int32_t success;
 
-  _AgentServerService_kill_acquire_store_result__isset __isset;
+  _AgentServerService_kill_program_result__isset __isset;
 
   void __set_success(const int32_t val) {
     success = val;
   }
 
-  bool operator == (const AgentServerService_kill_acquire_store_result & rhs) const
+  bool operator == (const AgentServerService_kill_program_result & rhs) const
   {
     if (!(success == rhs.success))
       return false;
     return true;
   }
-  bool operator != (const AgentServerService_kill_acquire_store_result &rhs) const {
+  bool operator != (const AgentServerService_kill_program_result &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const AgentServerService_kill_acquire_store_result & ) const;
+  bool operator < (const AgentServerService_kill_program_result & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _AgentServerService_kill_acquire_store_presult__isset {
-  _AgentServerService_kill_acquire_store_presult__isset() : success(false) {}
+typedef struct _AgentServerService_kill_program_presult__isset {
+  _AgentServerService_kill_program_presult__isset() : success(false) {}
   bool success;
-} _AgentServerService_kill_acquire_store_presult__isset;
+} _AgentServerService_kill_program_presult__isset;
 
-class AgentServerService_kill_acquire_store_presult {
+class AgentServerService_kill_program_presult {
  public:
 
 
-  virtual ~AgentServerService_kill_acquire_store_presult() throw() {}
+  virtual ~AgentServerService_kill_program_presult() throw() {}
 
   int32_t* success;
 
-  _AgentServerService_kill_acquire_store_presult__isset __isset;
+  _AgentServerService_kill_program_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -726,12 +726,12 @@ class AgentServerServiceClient : virtual public AgentServerServiceIf {
   int32_t del_cameras(const std::vector<std::string> & l);
   void send_del_cameras(const std::vector<std::string> & l);
   int32_t recv_del_cameras();
-  int32_t exec_acquire_store(const std::string& cmdline);
-  void send_exec_acquire_store(const std::string& cmdline);
-  int32_t recv_exec_acquire_store();
-  int32_t kill_acquire_store(const int64_t process_id);
-  void send_kill_acquire_store(const int64_t process_id);
-  int32_t recv_kill_acquire_store();
+  int32_t exec_program(const std::string& cmdline);
+  void send_exec_program(const std::string& cmdline);
+  int32_t recv_exec_program();
+  int32_t kill_program(const int64_t process_id);
+  void send_kill_program(const int64_t process_id);
+  int32_t recv_kill_program();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -751,8 +751,8 @@ class AgentServerServiceProcessor : public ::apache::thrift::TDispatchProcessor 
   void process_add_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_hold_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_del_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_exec_acquire_store(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_kill_acquire_store(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_exec_program(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_kill_program(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   AgentServerServiceProcessor(boost::shared_ptr<AgentServerServiceIf> iface) :
     iface_(iface) {
@@ -760,8 +760,8 @@ class AgentServerServiceProcessor : public ::apache::thrift::TDispatchProcessor 
     processMap_["add_cameras"] = &AgentServerServiceProcessor::process_add_cameras;
     processMap_["get_hold_cameras"] = &AgentServerServiceProcessor::process_get_hold_cameras;
     processMap_["del_cameras"] = &AgentServerServiceProcessor::process_del_cameras;
-    processMap_["exec_acquire_store"] = &AgentServerServiceProcessor::process_exec_acquire_store;
-    processMap_["kill_acquire_store"] = &AgentServerServiceProcessor::process_kill_acquire_store;
+    processMap_["exec_program"] = &AgentServerServiceProcessor::process_exec_program;
+    processMap_["kill_program"] = &AgentServerServiceProcessor::process_kill_program;
   }
 
   virtual ~AgentServerServiceProcessor() {}
@@ -828,22 +828,22 @@ class AgentServerServiceMultiface : virtual public AgentServerServiceIf {
     return ifaces_[i]->del_cameras(l);
   }
 
-  int32_t exec_acquire_store(const std::string& cmdline) {
+  int32_t exec_program(const std::string& cmdline) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->exec_acquire_store(cmdline);
+      ifaces_[i]->exec_program(cmdline);
     }
-    return ifaces_[i]->exec_acquire_store(cmdline);
+    return ifaces_[i]->exec_program(cmdline);
   }
 
-  int32_t kill_acquire_store(const int64_t process_id) {
+  int32_t kill_program(const int64_t process_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->kill_acquire_store(process_id);
+      ifaces_[i]->kill_program(process_id);
     }
-    return ifaces_[i]->kill_acquire_store(process_id);
+    return ifaces_[i]->kill_program(process_id);
   }
 
 };

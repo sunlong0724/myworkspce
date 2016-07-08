@@ -83,7 +83,7 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 	  PROCESS_INFORMATION pi;
 	  si.dwFlags = STARTF_USESHOWWINDOW;
 	  si.wShowWindow = TRUE;
-	  fprintf(stderr, "%s cmd:%s\n", __FUNCTION__, cmdline.c_str());
+	  fprintf(stdout, "%s cmd:%s\n", __FUNCTION__, cmdline.c_str());
 	  BOOL bRet = ::CreateProcess(NULL, (char*)cmdline.c_str(), NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi);
 	  int error = GetLastError();
 	  if (bRet) {
