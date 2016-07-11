@@ -79,24 +79,21 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 
 
 	AcquireStoreServiceHandler* handler = new AcquireStoreServiceHandler();
-	CCamera* camera = new CCamera(gige_server_name, camera_index);
-	
+	handler->m_data_port = data_port;
 
+	CCamera* camera = new CCamera(gige_server_name, camera_index);
 	if (!camera->CreateDevice()) {
 		fprintf(stdout, "CreateDevice failed!\n");
 		return 0;
 	}
 
-	CPostProcessor* pProcessor = new CPostProcessor;
-	pProcessor->create_zmq_context(1, data_port, "localhost", camera->GetImageWidth() * camera->GetImageHeight());
-	camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, pProcessor);
+
 
 	handler->m_camera = camera;
 
 	std::thread cmd_thread(cmd_run,handler, server_port);
 	cmd_thread.join();
 
-	delete pProcessor;
 	camera->DestroyDevice();
 	delete camera;
 	return 0;

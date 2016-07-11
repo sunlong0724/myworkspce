@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <string>
 
+#include <map>
 #include <thread>
 #include <signal.h>
 #include "AgentClient.h"

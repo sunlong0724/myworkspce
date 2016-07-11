@@ -1,9 +1,18 @@
 
 #include "AcquireStoreClient.h"	
 
-CAcquireStoreClient::CAcquireStoreClient() {
-
+CAcquireStoreClient::CAcquireStoreClient():m_pProcessor(new CPostProcessor()){
 }
+
+CAcquireStoreClient::~CAcquireStoreClient() {
+	delete m_pProcessor;
+}
+
+
+std::vector<std::string> CAcquireStoreClient::scan_ip(std::string& start_ip, std::string& end_ip) {
+	return scan_ip(start_ip, end_ip);
+}
+
 
 BOOL CAcquireStoreClient::connect(const std::string& ip, const uint16_t port) {
 	try {
@@ -13,6 +22,7 @@ BOOL CAcquireStoreClient::connect(const std::string& ip, const uint16_t port) {
 		wVersionRequested = MAKEWORD(2, 2);
 		err = WSAStartup(wVersionRequested, &wsaData);
 
+		m_server_ip = ip;
 		TSocket* p = new TSocket(ip, port);
 
 		m_socket = boost::shared_ptr<TTransport>(p);
@@ -65,8 +75,12 @@ BOOL CAcquireStoreClient::is_connected() {
 
 int32_t CAcquireStoreClient::start(const int32_t snd_frame_rate) {
 	try {
-		m_client->start(snd_frame_rate);
-		return	snd_frame_rate;
+		int ret = m_client->start(snd_frame_rate);
+		if (FALSE != ret ) {
+			m_pProcessor->create_zmq_context(2, ret, m_server_ip, m_client->get_image_width() * m_client->get_image_height());
+			return	ret;
+		}
+		
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -76,6 +90,7 @@ int32_t CAcquireStoreClient::start(const int32_t snd_frame_rate) {
 int32_t CAcquireStoreClient::stop() {
 	try {
 		m_client->stop();
+		m_pProcessor->destroy_zmq_contex();
 		return	TRUE;
 	}
 	catch (TException& e) {

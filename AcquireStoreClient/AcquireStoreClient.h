@@ -9,6 +9,8 @@
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
 
+#include "ZmqTransportDataImpl.h"
+
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
@@ -20,6 +22,8 @@ public:
 
 	CAcquireStoreClient();
 	~CAcquireStoreClient();
+
+	std::vector<std::string> scan_ip(std::string& start_ip, std::string& end_ip);
 
 	BOOL			connect(const std::string& ip, const uint16_t port);
 	BOOL			close();
@@ -75,6 +79,7 @@ public:
 	void save_feature(std::string& _return) ;
 	int32_t update_feature(const std::string& content) ;
 
+	CPostProcessor					*m_pProcessor;
 private:
 	AcquireStoreServiceClient*		m_client;
 
@@ -82,8 +87,8 @@ private:
 	boost::shared_ptr<TTransport>	m_transport;
 	boost::shared_ptr<TProtocol>	m_protocol;
 
-	uint16_t						m_data_port;
 	std::string						m_server_ip;
+
 
 };
 #endif // !__ACQUIRE_STORE_CLIENT_H__

@@ -27,18 +27,26 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
  public:
   AcquireStoreServiceHandler() {
     // Your initialization goes here
+	  m_pProcessor = new CPostProcessor;
+	  m_data_port = 0;
+	  m_camera = NULL;
   }
 
-  CCamera	*m_camera;
+  CCamera			*m_camera;
+  uint16_t			m_data_port;
+  CPostProcessor	*m_pProcessor;
 
   int32_t start(const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("start\n");
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  CPostProcessor* pProcessor = new CPostProcessor;
+	  pProcessor->create_zmq_context(1, m_data_port, "localhost", m_camera->GetImageWidth() * m_camera->GetImageHeight());
 	  pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
+
+	  m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, pProcessor);
 	  if (m_camera->CreateOtherObjects()) {
 		  m_camera->Start();
-		  return TRUE;
+		  return m_data_port;
 	  }
 	  return FALSE;
   }
@@ -48,6 +56,10 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  printf("stop\n");
 	  m_camera->Stop();
 	  m_camera->DestroyOtherObjects();
+
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  pProcessor->destroy_zmq_contex();
+
 	  return TRUE;
   }
 

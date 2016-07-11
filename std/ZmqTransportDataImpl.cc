@@ -42,9 +42,7 @@ int SinkBayerDatasCallbackImpl(unsigned char* buffer, int buffer_len, void* cont
 	if (ret < 0) {
 		int a = 0;
 	}
-	printf("snd %d bytes, seq:%lld, sndno:%lld,timestamp:%lld\n", ret, pProcessor->m_frame_counter, pProcessor->m_frame_counter, timestamp);
-	pProcessor->m_snd_frame_rate = pProcessor->m_frame_counter;
-	++pProcessor->m_frame_counter;
+
 
 	if (pProcessor->m_store_file_flag) {
 
