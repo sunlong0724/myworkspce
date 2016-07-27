@@ -22,6 +22,16 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
     // Your initialization goes here
   }
 
+  int32_t init() {
+    // Your implementation goes here
+    printf("init\n");
+  }
+
+  int32_t uninit() {
+    // Your implementation goes here
+    printf("uninit\n");
+  }
+
   int32_t start(const int32_t snd_frame_rate) {
     // Your implementation goes here
     printf("start\n");
@@ -32,9 +42,14 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
     printf("stop\n");
   }
 
-  int32_t set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate) {
+  int32_t set_snd_frame_rate(const int32_t snd_frame_rate) {
     // Your implementation goes here
     printf("set_snd_frame_rate\n");
+  }
+
+  int32_t set_snd_frame_resolution(const int32_t w, const int32_t h) {
+    // Your implementation goes here
+    printf("set_snd_frame_resolution\n");
   }
 
   int32_t set_store_file(const int32_t flag, const std::string& file_name) {
@@ -55,16 +70,6 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
   int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
     // Your implementation goes here
     printf("backward_play\n");
-  }
-
-  int32_t forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
-    // Your implementation goes here
-    printf("forward_play_temporary\n");
-  }
-
-  int32_t backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
-    // Your implementation goes here
-    printf("backward_play_temporary\n");
   }
 
   int32_t set_exposure_time(const double microseconds) {

@@ -16,6 +16,8 @@ void SapManCallbackMy(SapManCallbackInfo *info);
 CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffers(NULL), m_Xfer(NULL), m_sink_bayer_cb(NULL), m_ctx0(NULL),
 		m_sink_rgb_cb(NULL), m_ctx1(NULL), m_dummy_bayer_fp(NULL), m_dummy_rgb_fp(NULL), m_bEnableColorConvert(FALSE), m_connection_status(UNKNOWN) , m_grabbing(FALSE), m_reconnect_flag(FALSE) {
 
+	SapManager::SetDisplayStatusMode(SapManager::StatusLog);//FIXME: set err report mode 
+
 	SapLocation loc(serverName, index);
 	m_AcqDevice = new SapAcqDevice(loc);
 	m_Buffers = new SapBufferWithTrash(5, m_AcqDevice);
@@ -27,6 +29,7 @@ CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffer
 
 	//init
 	strcpy(m_AcqServerName, loc.GetServerName());
+	m_index = index;
 
 	g_err_fp = fopen("log.txt", "w");
 }
@@ -170,14 +173,14 @@ void CCamera::DestroyOtherObjects() {
 
 }
 
-void CCamera::RegisterServerCallback(std::map<std::string, std::shared_ptr<CCamera>> *cameras) {
-	SapManager::UnregisterServerCallback();
-	SapManager::RegisterServerCallback(CORMAN_VAL_EVENT_TYPE_SERVER_DISCONNECTED | CORMAN_VAL_EVENT_TYPE_SERVER_CONNECTED, SapManCallbackMy, cameras);
+void CCamera::RegisterConnectionEventCallback() {
+	SapManager::RegisterServerCallback(CORMAN_VAL_EVENT_TYPE_SERVER_DISCONNECTED | CORMAN_VAL_EVENT_TYPE_SERVER_CONNECTED, SapManCallbackMy, this);
 }
 
 
 BOOL CCamera::FindCamera(std::map<std::string, std::map<int32_t, std::string>>  *cameras){
-
+	
+	
 	int serverCount = SapManager::GetServerCount();
 	if (serverCount <= 1) {
 		return FALSE;
@@ -201,7 +204,6 @@ BOOL CCamera::FindCamera(std::map<std::string, std::map<int32_t, std::string>>  
 			}
 
 			printf("%d: %s\n", cameraIndex + 1, cameraName);
-			//cameras.push_back(cameraName);
 
 			std::map<int, std::string> tmp;
 			tmp[cameraIndex] = std::string(serverName);
@@ -524,7 +526,7 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 	// appropriate number of frames on the status bar instead
 	if (pInfo->IsTrash()) {
 		//fprintf(stdout, "%s 1 Failed!\n", __FUNCTION__);
-		//fprintf(stdout, "Frames acquired in trash buffer: %03d\r", pInfo->GetEventCount());
+		fprintf(stdout, "Frames acquired in trash buffer: %03d\n", pInfo->GetEventCount());
 	}
 	else {
 		PUINT8 pData;
@@ -566,57 +568,53 @@ void ProCallback(SapProCallbackInfo *pInfo) {
 	{
 		// Show current buffer index and execution time in millisecond
 		//fprintf(stdout, "%s Color conversion = %5.2f ms\n", __FUNCTION__, camera->m_Pro->GetTime());
-	}
 
-	SapBuffer* pBuffer = NULL;
-	pBuffer = camera->m_ColorConv->GetOutputBuffer();
-	PUINT8 pData = NULL;
-	BOOL status = pBuffer->GetAddress(pBuffer->GetIndex(), (void**)&pData);
+		SapBuffer* pBuffer = NULL;
+		pBuffer = camera->m_ColorConv->GetOutputBuffer();
+		PUINT8 pData = NULL;
+		BOOL status = pBuffer->GetAddress(pBuffer->GetIndex(), (void**)&pData);
 
-	if (status) {
-		//fprintf(stdout, "%s %d %x\r\n", __FUNCTION__, status, pData);
-		if (camera->m_sink_rgb_cb) {
-			camera->m_sink_rgb_cb(pData, pBuffer->GetPitch() * pBuffer->GetHeight(), camera->m_ctx1);//FIXME: bufferlen 
+		if (status) {
+			//fprintf(stdout, "%s %d %x\r\n", __FUNCTION__, status, pData);
+			if (camera->m_sink_rgb_cb) {
+				camera->m_sink_rgb_cb(pData, pBuffer->GetPitch() * pBuffer->GetHeight(), camera->m_ctx1);//FIXME: bufferlen 
+			}
+
+			if (camera->m_dummy_rgb_fp) {
+				fwrite(pData, 1, pBuffer->GetPitch()  * pBuffer->GetHeight(), (FILE*)camera->m_dummy_rgb_fp);
+				fclose((FILE*)(camera->m_dummy_rgb_fp));
+				camera->m_dummy_rgb_fp = NULL;
+			}
+			camera->m_ProcessFPSCounter.statistics(__FUNCTION__, FALSE);
 		}
 
-		if (camera->m_dummy_rgb_fp) {
-			fwrite(pData, 1, pBuffer->GetPitch()  * pBuffer->GetHeight(), (FILE*)camera->m_dummy_rgb_fp);
-			fclose((FILE*)(camera->m_dummy_rgb_fp));
-			camera->m_dummy_rgb_fp = NULL;
-		}
-		camera->m_ProcessFPSCounter.statistics(__FUNCTION__, FALSE);
+		pBuffer->ReleaseAddress(pData);
 	}
-
-	pBuffer->ReleaseAddress(pData);
 }
 
 void SapManCallbackMy(SapManCallbackInfo *pInfo) {
-	std::map<std::string, std::shared_ptr<CCamera>>	*cameras = (std::map<std::string, std::shared_ptr<CCamera>>*)pInfo->GetContext();
 	int type = pInfo->GetEventType();
+	CCamera* camera = (CCamera*)pInfo->GetContext();
+
 	fprintf(stdout, "connect status :%d\n", type);
 
-	if (type == SapManager::EventServerDisconnected) {
-		for (auto& a : *cameras) {
-			a.second->Stop();
-			a.second->DestroyOtherObjects();
-			a.second->DestroyDevice();
-		}
+	char serverName[30];
+	SapManager::GetServerName(pInfo->GetServerIndex(), serverName, sizeof(serverName));
+
+	if (pInfo->GetResourceIndex() != camera->m_index || strcmp(serverName, camera->m_AcqServerName) != 0) {
+		return;
 	}
-	else if (type == SapManager::EventServerConnected) {//FIXME:
-		std::map<std::string, std::map<int, std::string>>		total_cameras;
-		CCamera::FindCamera(&total_cameras);
-		for (auto& a : *cameras) {//FIXME:
-			if (total_cameras.find(a.first) != total_cameras.end()) {
-				if (a.second->m_last_is_connected) {
-					fprintf(stdout, "%s m_last_is_connected %d\n", __FUNCTION__, a.second->m_last_is_connected);
-					a.second->CreateDevice();
-				}
-				if (a.second->m_last_is_grabbing) {
-					fprintf(stdout, "%s m_last_is_grabbing %d\n", __FUNCTION__, a.second->m_last_is_grabbing);
-					a.second->CreateOtherObjects();
-					a.second->Start();
-				}
-			}
+
+	if (type == SapManager::EventServerDisconnected) {
+		camera->Stop();
+	}
+	else if (type == SapManager::EventServerConnected) {
+		if (camera->m_last_is_connected) {
+			fprintf(stdout, "%s m_last_is_connected %d\n", __FUNCTION__, camera->m_last_is_connected);
+		}
+		if (camera->m_last_is_grabbing) {
+			fprintf(stdout, "%s m_last_is_grabbing %d\n", __FUNCTION__, camera->m_last_is_grabbing);
+			camera->Start();
 		}
 	}
 }

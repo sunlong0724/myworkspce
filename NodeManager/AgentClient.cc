@@ -1,18 +1,18 @@
 #include "AgentClient.h"
-#include "ping.h"
+#include "utils.h"
 
-AgentClient::AgentClient() {
+CAgentClient::CAgentClient() {
 }
 
-AgentClient::~AgentClient() {
+CAgentClient::~CAgentClient() {
 }
 
 //can scan 192.168.0.1~192.168.1.255 eg.
-std::vector<std::string> AgentClient::scan_ip(std::string& start_ip, std::string& end_ip) {
-	return scan_ip(start_ip, end_ip);
+std::vector<std::string> CAgentClient::scan_ip(std::string& start_ip, std::string& end_ip) {
+	return scan_ip0(start_ip, end_ip);
 }
 
-BOOL AgentClient::connect(const std::string& ip, const uint16_t port) {
+BOOL CAgentClient::connect(const std::string& ip, const uint16_t port) {
 	try {
 		WORD wVersionRequested;
 		WSADATA wsaData;
@@ -43,7 +43,7 @@ BOOL AgentClient::connect(const std::string& ip, const uint16_t port) {
 	}
 }
 
-BOOL AgentClient::close() {
+BOOL CAgentClient::close() {
 	try {
 		m_client->getInputProtocol().get()->getTransport()->close();
 		delete m_client;
@@ -59,7 +59,7 @@ BOOL AgentClient::close() {
 	}
 }
 
-BOOL AgentClient::is_connected() {
+BOOL CAgentClient::is_connected() {
 	try {
 		return m_client->getInputProtocol().get()->getTransport()->isOpen();
 	}
@@ -69,7 +69,7 @@ BOOL AgentClient::is_connected() {
 	}
 }
 
-BOOL AgentClient::find_cameras(std::map<std::string, std::map<int, std::string>>& _return){
+BOOL CAgentClient::find_cameras(std::map<std::string, std::map<int, std::string>>& _return){
 	try {
 		m_client->find_cameras(_return);
 		return	TRUE;
@@ -80,7 +80,7 @@ BOOL AgentClient::find_cameras(std::map<std::string, std::map<int, std::string>>
 	}
 }
 
-int32_t AgentClient::add_cameras(const std::vector<std::string> & l) {
+int32_t CAgentClient::add_cameras(const std::vector<std::string> & l) {
 	try {
 		return m_client->add_cameras(l);
 	}
@@ -90,7 +90,7 @@ int32_t AgentClient::add_cameras(const std::vector<std::string> & l) {
 	}
 }
 
-BOOL AgentClient::get_hold_cameras(std::vector<std::string> & cameras) {
+BOOL CAgentClient::get_hold_cameras(std::vector<std::string> & cameras) {
 	try {
 		m_client->get_hold_cameras( cameras);
 	}
@@ -101,7 +101,7 @@ BOOL AgentClient::get_hold_cameras(std::vector<std::string> & cameras) {
 	return TRUE;
 }
 
-int32_t AgentClient::del_cameras(const std::vector<std::string> & l) {
+int32_t CAgentClient::del_cameras(const std::vector<std::string> & l) {
 	try {
 		return m_client->del_cameras(l);
 	}
@@ -111,7 +111,7 @@ int32_t AgentClient::del_cameras(const std::vector<std::string> & l) {
 	}
 }
 
-int32_t AgentClient::exec_program(const std::string& cmdline) {
+int32_t CAgentClient::exec_program(const std::string& cmdline) {
 	// Your implementation goes here
 	try {
 		return m_client->exec_program(cmdline);
@@ -123,7 +123,7 @@ int32_t AgentClient::exec_program(const std::string& cmdline) {
 
 }
 
-int32_t AgentClient::kill_program(const int64_t process_id) {
+int32_t CAgentClient::kill_program(const int64_t process_id) {
 	// Your implementation goes here
 	try {
 		return m_client->kill_program(process_id);

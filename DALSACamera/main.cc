@@ -18,16 +18,29 @@ void sig_cb(int sig)
 }
 
 int main(int argc, char** argv) {
-	//BOOL result = SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
-	//result = SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+	BOOL result = SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
+	result = SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 
-	//signal(SIGINT, sig_cb);
-	//
+	signal(SIGINT, sig_cb);
+	
 	//std::vector<std::shared_ptr<CCamera>> cameras;
 
-	//CCamera::RegisterServerCallback(cameras);
+	std::map<std::string, std::map<int32_t, std::string>>  cameras;
 
-	//BOOL ret = CCamera::FindCamera(cameras);
+	BOOL ret = CCamera::FindCamera(&cameras);
+	CCamera* camera = new CCamera(cameras.begin()->second.begin()->second.c_str(), cameras.begin()->second.begin()->first);
+	camera->RegisterConnectionEventCallback();
+
+	if (camera->CreateDevice() && camera->CreateOtherObjects()) {
+		camera->Start();
+	}
+
+	while (1) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
+
+	//camera->EnableColorConvert(TRUE);
+
 	//if (ret){
 	//	for (auto& a : cameras) {
 	//		if (a->CreateDevice()) {

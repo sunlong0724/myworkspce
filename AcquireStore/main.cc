@@ -13,7 +13,12 @@
 		  
 #include "AcquireStoreService_server.cpp"
 
+#include <opencv2\opencv.hpp>
+
+IplImage* image;
+
 std::string	CStoreFile::m_file_name = "";
+ long long CStoreFile::m_max_file_size = ONE_GB;
 
 using namespace std;
 using namespace apache::thrift;
@@ -53,31 +58,38 @@ void cmd_run(AcquireStoreServiceHandler* h, uint16_t port) {
 	WSACleanup();
 }
 
-int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_name camera_index data_port(eg. .\\AcqurieStore.exe 9090 name 1 55555)
+int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_name camera_index data_port(eg. .\\AcquireStore.exe 9090 name 1 55555)
 
 	uint16_t server_port = 9090;
 	char*	 gige_server_name = NULL;
 	uint16_t camera_index = 0;
 	uint16_t data_port = 55555;
+	static long long raw_file_max_size_in_GB = 10;
 	
-	if (argc >= 2) {
+	if (argc >= 2) {//thrift server port
 		server_port = ::atoi(argv[1]);
 	}
-	if (argc >= 3) {
+	if (argc >= 3) {//gige_server_name
 		gige_server_name = argv[2];
 	}
 	else {
 		fprintf(stdout, "No GigEServer found!\n!");
 		return 0;
 	}
-	if (argc >= 4) {
+	if (argc >= 4) {//the index of the camera on the gigeServer
 		camera_index = ::atoi(argv[3]);
 	}
-	if (argc >= 5) {
+	if (argc >= 5) {//data port 
 		data_port = ::atoi(argv[4]);
 	}
 
+	if (argc >= 6) {//raw_file_max_size in GB
+		raw_file_max_size_in_GB = ::atoll(argv[5]);
+	}
 
+
+
+	CStoreFile::m_max_file_size = raw_file_max_size_in_GB* ONE_GB;
 	AcquireStoreServiceHandler* handler = new AcquireStoreServiceHandler();
 	handler->m_data_port = data_port;
 
@@ -86,11 +98,9 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 		fprintf(stdout, "CreateDevice failed!\n");
 		return 0;
 	}
-
-
+	camera->RegisterConnectionEventCallback();
 
 	handler->m_camera = camera;
-
 	std::thread cmd_thread(cmd_run,handler, server_port);
 	cmd_thread.join();
 

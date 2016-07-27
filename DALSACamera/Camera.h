@@ -29,7 +29,7 @@ public:
 	virtual ~CCamera();
      
 	static BOOL FindCamera(std::map<std::string, std::map<int32_t, std::string>>  *cameras);
-	static void RegisterServerCallback(std::map<std::string, std::shared_ptr<CCamera>>	 *cameras);
+	void		RegisterConnectionEventCallback();
 
 	void		SetSinkBayerDataCallback(SinkDataCallback cb, void* ctx);
 	void		SetSinkRGBDataCallback(SinkDataCallback cb, void* ctx);
@@ -145,6 +145,8 @@ public:
 	BOOL				m_reconnect_flag;
 	BOOL				m_last_is_grabbing;
 	BOOL				m_last_is_connected;
+
+	int					m_index;
 };
 
 #endif

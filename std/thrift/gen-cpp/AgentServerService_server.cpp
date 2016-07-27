@@ -24,7 +24,7 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
   }
 
   std::map<std::string, std::map<int32_t, std::string>>		    m_total_cameras;
-  std::set<std::string>										m_hold_camera_names;
+  std::set<std::string>										m_hold_s;
   std::map<std::string, std::shared_ptr<CCamera>>			m_hold_cameras;
 
   void find_cameras(std::map<std::string, std::map<int32_t, std::string> > & _return) {
@@ -32,7 +32,6 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 	printf("find_cameras\n");
 	m_total_cameras.clear();
 	CCamera::FindCamera(&m_total_cameras);
-	CCamera::RegisterServerCallback(&m_hold_cameras);
 	
 	_return = m_total_cameras;
   }
@@ -45,7 +44,7 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 		  for (auto& it = m_total_cameras.begin(); it != m_total_cameras.end(); ++it) {
 			  if (strcmp(l[i].c_str(), it->first.c_str()) == 0) {
 				  ++count;
-				  m_hold_camera_names.insert(it->first);
+				  m_hold_s.insert(it->first);
 			  }
 		  }
 	  }
@@ -56,7 +55,7 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 	  // Your implementation goes here
 	  printf("get_hold_cameras\n");
 	  _return.clear();
-	  for (auto& a : m_hold_camera_names) {
+	  for (auto& a : m_hold_s) {
 		  _return.push_back(a);
 	  }
   }
@@ -67,17 +66,17 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 
 	  int count = 0;
 	  for (int i = 0; i < l.size(); ++i) {
-		  std::set<std::string>::iterator it = m_hold_camera_names.find(l[i]);
-		  if (it != m_hold_camera_names.end()) {
-			  m_hold_camera_names.erase(it);
+		  std::set<std::string>::iterator it = m_hold_s.find(l[i]);
+		  if (it != m_hold_s.end()) {
+			  m_hold_s.erase(it);
 			  ++count;
 		  }
 	  }
 	  return count;
   }
-  int32_t exec_acquire_store(const std::string& cmdline) {
+  int32_t exec_program(const std::string& cmdline) {
 	  // Your implementation goes here
-	  printf("exec_acquire_store\n");
+	  printf("exec_program\n");
 #if 1
 	  STARTUPINFO si = { sizeof(si) };
 	  PROCESS_INFORMATION pi;
@@ -100,9 +99,9 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 #endif	
   }
 
-  int32_t kill_acquire_store(const int64_t process_id) {
+  int32_t kill_program(const int64_t process_id) {
 	  // Your implementation goes here
-	  printf("kill_acquire_store\n");
+	  printf("kill_program\n");
 	  HANDLE hPrc;
 	  if (0 == process_id) return FALSE;
 

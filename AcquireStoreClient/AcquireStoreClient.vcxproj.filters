@@ -30,6 +30,9 @@
     <ClCompile Include="..\std\thrift\gen-cpp\AcquireStoreService_types.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\std\ping\Ping.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AcquireStoreClient.h">
@@ -45,6 +48,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\std\utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\ping\Ping.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -50,5 +50,8 @@
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServerService.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\std\utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

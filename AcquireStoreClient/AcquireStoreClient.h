@@ -29,20 +29,22 @@ public:
 	BOOL			close();
 	BOOL			is_connected();
 
+	int32_t	init();
+	int32_t uninit();
+	//PLAYBACK
 	int32_t start(const int32_t snd_frame_rate);
 	int32_t stop();
-	int32_t set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate);
+	int32_t	set_snd_frame_resolution(const int32_t width, const int32_t height);//FIXME:  
+	int32_t set_snd_frame_rate(const int32_t snd_frame_rate);
 	int32_t set_store_file(const int32_t flag, const std::string& file_name);
 	int32_t do_pause(const int32_t flag);
 	int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
 	int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
-	int32_t forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate);
-	int32_t backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) ;
 
+	//CAMERA
 	int32_t set_exposure_time(const double microseconds) ;
 	int32_t set_gain_by_sensor_all(const double gain) ;
 	int32_t set_gain_by_sensor_analog(const double gain) ;
-
 	int32_t set_gain_by_sensor_digital(const double gain) ;
 
 	int32_t set_frame_rate(const double rate) ;
@@ -58,11 +60,11 @@ public:
 	double get_gain_by_sensor_analog() ;
 	double get_gain_by_sensor_digital() ;
 	double get_frame_rate() ;
-	void get_exposure_time_range(MinMaxStruct& _return) ;
-	void get_gain_range_by_sensor_all(MinMaxStruct& _return) ;
-	void get_gain_range_by_sensor_analog(MinMaxStruct& _return) ;
-	void get_gain_range_by_sensor_digital(MinMaxStruct& _return) ;
-	void get_frame_rate_range(MinMaxStruct& _return) ;
+	void get_exposure_time_range(double* min, double* max) ;
+	void get_gain_range_by_sensor_all(double* min, double* max) ;
+	void get_gain_range_by_sensor_analog(double* min, double* max) ;
+	void get_gain_range_by_sensor_digital(double* min, double* max) ;
+	void get_frame_rate_range(double* min, double* max) ;
 	int32_t get_image_width() ;
 	int32_t get_image_height() ;
 	int32_t get_height_max() ;
@@ -78,6 +80,10 @@ public:
 	double get_process_fps() ;
 	void save_feature(std::string& _return) ;
 	int32_t update_feature(const std::string& content) ;
+
+	//WATCH
+	//int32_t	query_camrea_status();
+
 
 	CPostProcessor					*m_pProcessor;
 private:

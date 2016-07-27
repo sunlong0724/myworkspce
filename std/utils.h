@@ -3,14 +3,10 @@
 
 #include <vector>
 #include <string>
-#include <chrono>
 #include "ping/Ping.h"
 
-inline int64_t get_current_time_in_ms() {
-	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-}
 
-std::vector<std::string> scan_ip(std::string& start_ip, std::string& end_ip) {
+std::vector<std::string> scan_ip0(std::string& start_ip, std::string& end_ip) {
 
 	std::vector<std::string> result;
 

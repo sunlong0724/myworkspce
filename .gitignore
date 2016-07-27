@@ -27,3 +27,6 @@
 */Debug
 */*.db
 *.db
+*.bak
+/DALSACamera/Release
+*/log.txt

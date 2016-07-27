@@ -30,23 +30,53 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  m_pProcessor = new CPostProcessor;
 	  m_data_port = 0;
 	  m_camera = NULL;
+
+	  m_init = FALSE;
   }
 
   CCamera			*m_camera;
   uint16_t			m_data_port;
   CPostProcessor	*m_pProcessor;
 
-  int32_t start(const int32_t snd_frame_rate) {
+  BOOL				m_init;
+
+  //-----------------------------------------PLAY BACK---------------------------------------------------
+
+
+  int32_t init() {
 	  // Your implementation goes here
-	  printf("start\n");
+	  printf("init\n");
 	  CPostProcessor* pProcessor = new CPostProcessor;
-	  pProcessor->create_zmq_context(1, m_data_port, "localhost", m_camera->GetImageWidth() * m_camera->GetImageHeight());
-	  pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
+	  pProcessor->create_zmq_context(1, m_data_port, "localhost", m_camera->GetImageWidth(), m_camera->GetImageHeight());
 
 	  m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, pProcessor);
 	  if (m_camera->CreateOtherObjects()) {
+		  return m_init = TRUE;
+	  }
+	  return m_init = FALSE;
+  }
+
+  int32_t uninit() {
+	  // Your implementation goes here
+	  printf("uninit\n");
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  pProcessor->destroy_zmq_contex();
+	  m_camera->DestroyOtherObjects();
+	  return TRUE;
+  }
+
+  int32_t start(const int32_t snd_frame_rate) {
+	  // Your implementation goes here
+	  printf("start\n");
+	  //CPostProcessor* pProcessor = new CPostProcessor;
+	  //pProcessor->create_zmq_context(1, m_data_port, "localhost", m_camera->GetImageWidth() , m_camera->GetImageHeight());
+	  //pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
+	  //pProcessor->m_snd_frame_flag = TRUE;
+
+	  //m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, pProcessor);
+	  if (m_init) {
 		  m_camera->Start();
-		  return m_data_port;
+		  return TRUE;
 	  }
 	  return FALSE;
   }
@@ -55,15 +85,25 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  // Your implementation goes here
 	  printf("stop\n");
 	  m_camera->Stop();
-	  m_camera->DestroyOtherObjects();
+	  //m_camera->DestroyOtherObjects();
 
 	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  pProcessor->destroy_zmq_contex();
+	  pProcessor->m_snd_frame_flag = FALSE;
 
 	  return TRUE;
   }
 
-  int32_t set_snd_frame_rate(const int32_t snd_frame_rate, const int32_t full_frame_rate) {
+  int32_t set_snd_frame_resolution(const int32_t w, const int32_t h) {
+	  // Your implementation goes here
+	  printf("set_snd_frame_resolution\n");
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  pProcessor->m_snd_frame_w = w;
+	  pProcessor->m_snd_frame_h = h;
+
+	  return 1;
+  }
+
+  int32_t set_snd_frame_rate(const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("set_snd_frame_rate\n");
 	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
@@ -80,46 +120,88 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 			  CStoreFile::m_file_name = name + ".raw";
 		  }
 	  }
+	  //FIXME:
 	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
 	  return pProcessor->m_store_file_flag = flag;
   }
 
+  //important!!!! FIXEME:
   int32_t do_pause(const int32_t flag) {
 	  // Your implementation goes here
 	  printf("do_pause\n");
 	  if (flag == TRUE) {
 		  m_camera->Stop();
+		  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+		  if (pProcessor && TRUE == pProcessor->m_play_extied) {
+			  pProcessor->m_play_extied = FALSE;
+			  pProcessor->m_play_thread = std::thread(&CPostProcessor::play_run, pProcessor);
+		  }
 	  }
 	  else if (flag == FALSE) {
+		  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+		  if (pProcessor && FALSE == pProcessor->m_play_extied) {
+			  pProcessor->m_play_extied = TRUE;
+			  pProcessor->m_play_thread.join();
+		  }
 		  m_camera->Start();
 	  }
 	  return TRUE;
   }
 
+  int32_t do_pause_dummy(const int32_t flag) {
+	  // Your implementation goes here
+	  printf("do_pause\n");
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  if (pProcessor) {
+		  if (flag == TRUE) {
+			  if (TRUE == pProcessor->m_play_extied) {
+				  pProcessor->m_snd_frame_flag = FALSE;
+				  pProcessor->m_play_extied = FALSE;
+				  pProcessor->m_play_thread = std::thread(&CPostProcessor::play_run, pProcessor);
+			  }
+		  }
+		  else if (flag == FALSE) {
+			  if (FALSE == pProcessor->m_play_extied) {
+				  pProcessor->m_play_extied = TRUE;
+				  pProcessor->m_play_thread.join();
+				  pProcessor->m_snd_frame_flag = TRUE;
+			  }
+		  }
+		  return TRUE;
+	  }
+	  return FALSE;
+  }
+  
+
   int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("forward_play\n");
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
+	  if (pProcessor && pProcessor->m_is_forward == TRUE && pProcessor->m_start_play_frame_no == frame_seq) {
+		  return 0;
+	  }
+	  if (pProcessor)
+		pProcessor->set_play_parameters(frame_seq, TRUE);
 	  return 0;
   }
 
   int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("backward_play\n");
+	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
+	  pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
+	  if (pProcessor && pProcessor->m_is_forward == FALSE && pProcessor->m_start_play_frame_no == frame_seq) {
+		  return 0;
+	  }
+	  if (pProcessor)
+		pProcessor->set_play_parameters(frame_seq, FALSE);
 	  return 0;
   }
 
-  int32_t forward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
-	  // Your implementation goes here
-	  printf("forward_play_temporary\n");
-	  return 0;
-  }
 
-  int32_t backward_play_temporary(const int64_t frame_seq, const int32_t snd_frame_rate) {
-	  // Your implementation goes here
-	  printf("backward_play_temporary\n");
-	  return 0;
-  }
-
+  //----------------------------------------CAMERA-----------------------------------------------------
+  
   int32_t set_exposure_time(const double microseconds) {
 	  // Your implementation goes here
 	  printf("set_exposure_time\n");

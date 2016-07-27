@@ -16,10 +16,10 @@ using namespace apache::thrift::transport;
 
 using namespace hawkeye;
 
-class DLL_API AgentClient {
+class DLL_API CAgentClient {
 public:
-	AgentClient();
-	~AgentClient();
+	CAgentClient();
+	~CAgentClient();
 
 	static std::vector<std::string> scan_ip(std::string& start_ip, std::string& end_ip);
 
