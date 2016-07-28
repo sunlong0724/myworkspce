@@ -77,8 +77,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(OutDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>..\output\</OutDir>
+    <IntDir>$(OutDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);DALSA\Classes\Basic;DALSA\Include;..\std</IncludePath>
     <LibraryPath>DALSA\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\std\SinkBayerDatasCallbackImpl.cc" />
+    <ClCompile Include="main.cc" />
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService.cpp">
+      <Filter>thrift</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.cpp">
+      <Filter>thrift</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.cpp">
+      <Filter>thrift</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_server.cpp">
+      <Filter>thrift</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\lcthw\bstrlib.c">
+      <Filter>lcthw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\lcthw\ringbuffer.c">
+      <Filter>lcthw</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\std\FileStorage.h" />
+    <ClInclude Include="PlaybackCtrl.h" />
+    <ClInclude Include="PostProcessor.h" />
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService.h">
+      <Filter>thrift</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.h">
+      <Filter>thrift</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.h">
+      <Filter>thrift</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\lcthw\bstrlib.h">
+      <Filter>lcthw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\lcthw\dbg.h">
+      <Filter>lcthw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\lcthw\ringbuffer.h">
+      <Filter>lcthw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\defs.h">
+      <Filter>std</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\MyThread.h">
+      <Filter>std</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\utils.h">
+      <Filter>std</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\TransportData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="thrift">
+      <UniqueIdentifier>{c288018e-d015-4280-8419-002c4f978f59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lcthw">
+      <UniqueIdentifier>{94b9edb4-31cf-4632-a384-fb1765101ea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="std">
+      <UniqueIdentifier>{fc340217-9224-41cc-a8bb-acf2b04ce7cf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

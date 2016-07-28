@@ -153,19 +153,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\std\ping\Ping.cc" />
-    <ClCompile Include="..\std\thrift\gen-cpp\AcquireStoreService.cpp" />
-    <ClCompile Include="..\std\thrift\gen-cpp\AcquireStoreService_constants.cpp" />
-    <ClCompile Include="..\std\thrift\gen-cpp\AcquireStoreService_types.cpp" />
-    <ClCompile Include="AcquireStoreClient.cc" />
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService.cpp" />
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.cpp" />
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.cpp" />
+    <ClCompile Include="PlaybackCtrlClient.cc" />
     <ClCompile Include="main.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\std\ping\Ping.h" />
-    <ClInclude Include="..\std\thrift\gen-cpp\AcquireStoreService.h" />
-    <ClInclude Include="..\std\thrift\gen-cpp\AcquireStoreService_constants.h" />
-    <ClInclude Include="..\std\thrift\gen-cpp\AcquireStoreService_types.h" />
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService.h" />
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.h" />
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.h" />
     <ClInclude Include="..\std\utils.h" />
-    <ClInclude Include="AcquireStoreClient.h" />
+    <ClInclude Include="PlaybackCtrlClient.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

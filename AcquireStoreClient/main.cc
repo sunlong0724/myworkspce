@@ -1,9 +1,19 @@
 
-#include "AcquireStoreClient.h"
+#include "PlaybackCtrlClient.h"
+#include "defs.h"
+
+
+int recv_data_cb(unsigned char* data, int data_len, void* ctx) {
+	int64_t frame_no;
+	memcpy(&frame_no, &data[FRAME_SEQ_START], sizeof int64_t);
+	fprintf(stdout, "%s recv frame no:%lld\n", __FUNCTION__,frame_no);
+
+	return 0;
+}
+
 int main(int argc, char** argv) {
 
-
-	CAcquireStoreClient client;
+	CPlaybackCtrlClient client;
 	std::vector<std::string> ips = client.scan_ip(std::string("192.168.0.18"), std::string("192.168.0.19"));
 
 	for (auto& a : ips) {
@@ -12,59 +22,31 @@ int main(int argc, char** argv) {
 			exit(0);
 		}
 
-		int snd_frame_rate = 25;
+		int play_frame_rate = 30;
+		int full_frame_rate = client.get_frame_rate();
 		int64_t frame_no = 0;
+		int64_t width = client.get_image_width();
+		int64_t height = client.get_image_height();
 		
-		client.init();
 		std::string name;
 		client.get_user_defined_name(name);
+
 		client.set_store_file(1, name);
-		client.set_snd_frame_resolution(320, 240);
+		client.set_play_frame_resolution(width, height);
+		client.set_play_frame_rate(play_frame_rate);
 
-		std::vector<char> buffer(client.get_image_width() * client.get_image_height() + sizeof int64_t + sizeof int64_t, 0x00);
-		int recv_count = 0;
+		uint16_t port = client.start_play_live();
 
-		client.start(snd_frame_rate);
+		client.m_recv_thread.init(a, port, GET_IMAGE_BUFFER_SIZE(width, height), (full_frame_rate+1)/play_frame_rate);
+		client.m_recv_thread.set_sink_data_callback(recv_data_cb, NULL);
+		client.m_recv_thread.start();
+
 		while (true) {
-			client.m_pProcessor->recv_data(buffer.data(), buffer.size());
-			memcpy(&frame_no, &buffer[FRAME_SEQ_START], sizeof int64_t);
-			//fprintf(stdout, "1 recv frame no:%lld\n", frame_no);
-
 			::Sleep(10);
 			continue;
-
-			++recv_count;
-			if (recv_count > snd_frame_rate * 15) {
-				//snd_frame_rate = client.get_frame_rate();
-				client.do_pause(1);
-				client.backward_play(frame_no, snd_frame_rate);
-				recv_count = 0;
-				while (true) {
-					memset(buffer.data(), 0x00, buffer.size());
-					client.m_pProcessor->recv_data(buffer.data(), buffer.size());
-					memcpy(&frame_no, &buffer[FRAME_SEQ_START], sizeof int64_t);
-					//fprintf(stdout, "2 recv frame no:%lld\n", frame_no);
-					
-					if (frame_no <= 20) {
-						client.do_pause(1);
-						client.forward_play(frame_no, snd_frame_rate);
-						recv_count = 0;
-						while (true) {
-							memset(buffer.data(), 0x00, buffer.size());
-							client.m_pProcessor->recv_data(buffer.data(), buffer.size());
-							memcpy(&frame_no, &buffer[FRAME_SEQ_START], sizeof int64_t);
-
-							if (++recv_count > snd_frame_rate * 15) {
-								client.do_pause(0);//FIXME:
-								break;
-							}
-						}
-					}
-				}
-			}
 		}
-
-		client.stop();
+		client.m_recv_thread.stop();
+		client.stop_play_live();
 	}
 
 	return 0;

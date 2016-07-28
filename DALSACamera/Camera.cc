@@ -525,7 +525,6 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 	// If grabbing in trash buffer, do not display the image, update the
 	// appropriate number of frames on the status bar instead
 	if (pInfo->IsTrash()) {
-		//fprintf(stdout, "%s 1 Failed!\n", __FUNCTION__);
 		fprintf(stdout, "Frames acquired in trash buffer: %03d\n", pInfo->GetEventCount());
 	}
 	else {

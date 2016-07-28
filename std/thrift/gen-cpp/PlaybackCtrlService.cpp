@@ -4,11 +4,529 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "AgentServerService.h"
+#include "PlaybackCtrlService.h"
 
 namespace hawkeye {
 
-uint32_t AgentServerService_find_cameras_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_play_frame_rate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->play_frame_rate);
+          this->__isset.play_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_rate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_play_frame_rate_args");
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->play_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_rate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_play_frame_rate_pargs");
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->play_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_rate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_rate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_play_frame_rate_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_rate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_resolution_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->w);
+          this->__isset.w = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->h);
+          this->__isset.h = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_resolution_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_play_frame_resolution_args");
+
+  xfer += oprot->writeFieldBegin("w", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->w);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("h", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->h);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_resolution_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_play_frame_resolution_pargs");
+
+  xfer += oprot->writeFieldBegin("w", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->w)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("h", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->h)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_resolution_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_resolution_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_play_frame_resolution_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_play_frame_resolution_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_store_file_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->flag);
+          this->__isset.flag = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->file_name);
+          this->__isset.file_name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_store_file_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_store_file_args");
+
+  xfer += oprot->writeFieldBegin("flag", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->flag);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("file_name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->file_name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_store_file_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_store_file_pargs");
+
+  xfer += oprot->writeFieldBegin("flag", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->flag)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("file_name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->file_name)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_store_file_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_store_file_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_store_file_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_store_file_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_play_live_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -35,247 +553,25 @@ uint32_t AgentServerService_find_cameras_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t AgentServerService_find_cameras_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_play_live_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_find_cameras_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_play_live_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_find_cameras_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_play_live_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_find_cameras_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_play_live_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_find_cameras_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->success.clear();
-            uint32_t _size0;
-            ::apache::thrift::protocol::TType _etype3;
-            xfer += iprot->readListBegin(_etype3, _size0);
-            this->success.resize(_size0);
-            uint32_t _i4;
-            for (_i4 = 0; _i4 < _size0; ++_i4)
-            {
-              xfer += iprot->readString(this->success[_i4]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_find_cameras_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("AgentServerService_find_cameras_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->success.size()));
-      std::vector<std::string> ::const_iterator _iter5;
-      for (_iter5 = this->success.begin(); _iter5 != this->success.end(); ++_iter5)
-      {
-        xfer += oprot->writeString((*_iter5));
-      }
-      xfer += oprot->writeListEnd();
-    }
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_find_cameras_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            (*(this->success)).clear();
-            uint32_t _size6;
-            ::apache::thrift::protocol::TType _etype9;
-            xfer += iprot->readListBegin(_etype9, _size6);
-            (*(this->success)).resize(_size6);
-            uint32_t _i10;
-            for (_i10 = 0; _i10 < _size6; ++_i10)
-            {
-              xfer += iprot->readString((*(this->success))[_i10]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_add_cameras_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->l.clear();
-            uint32_t _size11;
-            ::apache::thrift::protocol::TType _etype14;
-            xfer += iprot->readListBegin(_etype14, _size11);
-            this->l.resize(_size11);
-            uint32_t _i15;
-            for (_i15 = 0; _i15 < _size11; ++_i15)
-            {
-              xfer += iprot->readString(this->l[_i15]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.l = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_add_cameras_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_add_cameras_args");
-
-  xfer += oprot->writeFieldBegin("l", ::apache::thrift::protocol::T_LIST, 1);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->l.size()));
-    std::vector<std::string> ::const_iterator _iter16;
-    for (_iter16 = this->l.begin(); _iter16 != this->l.end(); ++_iter16)
-    {
-      xfer += oprot->writeString((*_iter16));
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_add_cameras_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_add_cameras_pargs");
-
-  xfer += oprot->writeFieldBegin("l", ::apache::thrift::protocol::T_LIST, 1);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->l)).size()));
-    std::vector<std::string> ::const_iterator _iter17;
-    for (_iter17 = (*(this->l)).begin(); _iter17 != (*(this->l)).end(); ++_iter17)
-    {
-      xfer += oprot->writeString((*_iter17));
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_add_cameras_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_start_play_live_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -315,11 +611,11 @@ uint32_t AgentServerService_add_cameras_result::read(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t AgentServerService_add_cameras_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_play_live_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_add_cameras_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_play_live_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -331,7 +627,7 @@ uint32_t AgentServerService_add_cameras_result::write(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_add_cameras_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_start_play_live_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -371,7 +667,7 @@ uint32_t AgentServerService_add_cameras_presult::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_get_hold_cameras_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_stop_play_live_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -398,247 +694,25 @@ uint32_t AgentServerService_get_hold_cameras_args::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_hold_cameras_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_stop_play_live_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_hold_cameras_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_play_live_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_hold_cameras_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_stop_play_live_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_hold_cameras_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_play_live_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_hold_cameras_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->success.clear();
-            uint32_t _size18;
-            ::apache::thrift::protocol::TType _etype21;
-            xfer += iprot->readListBegin(_etype21, _size18);
-            this->success.resize(_size18);
-            uint32_t _i22;
-            for (_i22 = 0; _i22 < _size18; ++_i22)
-            {
-              xfer += iprot->readString(this->success[_i22]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_get_hold_cameras_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("AgentServerService_get_hold_cameras_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->success.size()));
-      std::vector<std::string> ::const_iterator _iter23;
-      for (_iter23 = this->success.begin(); _iter23 != this->success.end(); ++_iter23)
-      {
-        xfer += oprot->writeString((*_iter23));
-      }
-      xfer += oprot->writeListEnd();
-    }
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_get_hold_cameras_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            (*(this->success)).clear();
-            uint32_t _size24;
-            ::apache::thrift::protocol::TType _etype27;
-            xfer += iprot->readListBegin(_etype27, _size24);
-            (*(this->success)).resize(_size24);
-            uint32_t _i28;
-            for (_i28 = 0; _i28 < _size24; ++_i28)
-            {
-              xfer += iprot->readString((*(this->success))[_i28]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_del_cameras_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->l.clear();
-            uint32_t _size29;
-            ::apache::thrift::protocol::TType _etype32;
-            xfer += iprot->readListBegin(_etype32, _size29);
-            this->l.resize(_size29);
-            uint32_t _i33;
-            for (_i33 = 0; _i33 < _size29; ++_i33)
-            {
-              xfer += iprot->readString(this->l[_i33]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.l = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_del_cameras_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_del_cameras_args");
-
-  xfer += oprot->writeFieldBegin("l", ::apache::thrift::protocol::T_LIST, 1);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->l.size()));
-    std::vector<std::string> ::const_iterator _iter34;
-    for (_iter34 = this->l.begin(); _iter34 != this->l.end(); ++_iter34)
-    {
-      xfer += oprot->writeString((*_iter34));
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_del_cameras_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_del_cameras_pargs");
-
-  xfer += oprot->writeFieldBegin("l", ::apache::thrift::protocol::T_LIST, 1);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->l)).size()));
-    std::vector<std::string> ::const_iterator _iter35;
-    for (_iter35 = (*(this->l)).begin(); _iter35 != (*(this->l)).end(); ++_iter35)
-    {
-      xfer += oprot->writeString((*_iter35));
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_del_cameras_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_stop_play_live_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -678,11 +752,11 @@ uint32_t AgentServerService_del_cameras_result::read(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t AgentServerService_del_cameras_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_stop_play_live_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_del_cameras_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_play_live_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -694,7 +768,7 @@ uint32_t AgentServerService_del_cameras_result::write(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_del_cameras_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_stop_play_live_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -734,7 +808,7 @@ uint32_t AgentServerService_del_cameras_presult::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_open_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_forward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -755,341 +829,25 @@ uint32_t AgentServerService_open_args::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_open_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_open_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_open_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_open_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_open_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->success);
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_open_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("AgentServerService_open_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
-    xfer += oprot->writeI32(this->success);
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_open_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32((*(this->success)));
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_close_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_close_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_close_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_close_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_close_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_close_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->success);
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_close_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("AgentServerService_close_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
-    xfer += oprot->writeI32(this->success);
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_close_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32((*(this->success)));
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_start_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->display_frame_rate);
-          this->__isset.display_frame_rate = true;
+          xfer += iprot->readI32(this->play_frame_rate);
+          this->__isset.play_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->how_many_frames);
+          this->__isset.how_many_frames = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1106,16 +864,20 @@ uint32_t AgentServerService_start_args::read(::apache::thrift::protocol::TProtoc
   return xfer;
 }
 
-uint32_t AgentServerService_start_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_forward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_start_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("display_frame_rate", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->display_frame_rate);
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->play_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->how_many_frames);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1123,16 +885,20 @@ uint32_t AgentServerService_start_args::write(::apache::thrift::protocol::TProto
   return xfer;
 }
 
-uint32_t AgentServerService_start_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_forward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_start_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("display_frame_rate", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32((*(this->display_frame_rate)));
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->play_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->how_many_frames)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1140,7 +906,7 @@ uint32_t AgentServerService_start_pargs::write(::apache::thrift::protocol::TProt
   return xfer;
 }
 
-uint32_t AgentServerService_start_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_forward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1180,11 +946,11 @@ uint32_t AgentServerService_start_result::read(::apache::thrift::protocol::TProt
   return xfer;
 }
 
-uint32_t AgentServerService_start_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_forward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_start_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -1196,7 +962,7 @@ uint32_t AgentServerService_start_result::write(::apache::thrift::protocol::TPro
   return xfer;
 }
 
-uint32_t AgentServerService_start_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_forward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1236,7 +1002,7 @@ uint32_t AgentServerService_start_presult::read(::apache::thrift::protocol::TPro
   return xfer;
 }
 
-uint32_t AgentServerService_stop_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_backward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1257,176 +1023,588 @@ uint32_t AgentServerService_stop_args::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_stop_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_stop_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_stop_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_stop_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_stop_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->success);
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_stop_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("AgentServerService_stop_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
-    xfer += oprot->writeI32(this->success);
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_stop_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32((*(this->success)));
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_set_exposure_time_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->play_frame_rate);
+          this->__isset.play_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->how_many_frames);
+          this->__isset.how_many_frames = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_args");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->play_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->how_many_frames);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_pargs");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->play_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->how_many_frames)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->play_frame_rate);
+          this->__isset.play_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->how_many_frames);
+          this->__isset.how_many_frames = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_temp_args");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->play_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->how_many_frames);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_temp_pargs");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->play_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->how_many_frames)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_temp_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->frame_seq);
+          this->__isset.frame_seq = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->play_frame_rate);
+          this->__isset.play_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->how_many_frames);
+          this->__isset.how_many_frames = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_temp_args");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64(this->frame_seq);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->play_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->how_many_frames);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_temp_pargs");
+
+  xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
+  xfer += oprot->writeI64((*(this->frame_seq)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->play_frame_rate)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->how_many_frames)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_temp_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_set_exposure_time_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
         if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
           xfer += iprot->readDouble(this->microseconds);
           this->__isset.microseconds = true;
@@ -1446,15 +1624,11 @@ uint32_t AgentServerService_set_exposure_time_args::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_set_exposure_time_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_exposure_time_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_exposure_time_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_exposure_time_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("microseconds", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("microseconds", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble(this->microseconds);
   xfer += oprot->writeFieldEnd();
 
@@ -1463,15 +1637,11 @@ uint32_t AgentServerService_set_exposure_time_args::write(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_set_exposure_time_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_exposure_time_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_exposure_time_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_exposure_time_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("microseconds", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("microseconds", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble((*(this->microseconds)));
   xfer += oprot->writeFieldEnd();
 
@@ -1480,7 +1650,7 @@ uint32_t AgentServerService_set_exposure_time_pargs::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_set_exposure_time_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_exposure_time_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1520,11 +1690,11 @@ uint32_t AgentServerService_set_exposure_time_result::read(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_set_exposure_time_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_exposure_time_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_exposure_time_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_exposure_time_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -1536,7 +1706,7 @@ uint32_t AgentServerService_set_exposure_time_result::write(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_set_exposure_time_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_exposure_time_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1576,7 +1746,7 @@ uint32_t AgentServerService_set_exposure_time_presult::read(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_all_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_all_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1597,14 +1767,6 @@ uint32_t AgentServerService_set_gain_by_sensor_all_args::read(::apache::thrift::
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
           xfer += iprot->readDouble(this->gain);
           this->__isset.gain = true;
@@ -1624,15 +1786,11 @@ uint32_t AgentServerService_set_gain_by_sensor_all_args::read(::apache::thrift::
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_all_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_all_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_all_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_all_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble(this->gain);
   xfer += oprot->writeFieldEnd();
 
@@ -1641,15 +1799,11 @@ uint32_t AgentServerService_set_gain_by_sensor_all_args::write(::apache::thrift:
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_all_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_all_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_all_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_all_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble((*(this->gain)));
   xfer += oprot->writeFieldEnd();
 
@@ -1658,7 +1812,7 @@ uint32_t AgentServerService_set_gain_by_sensor_all_pargs::write(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_all_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_all_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1698,11 +1852,11 @@ uint32_t AgentServerService_set_gain_by_sensor_all_result::read(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_all_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_all_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_all_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_all_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -1714,7 +1868,7 @@ uint32_t AgentServerService_set_gain_by_sensor_all_result::write(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_all_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_all_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1754,7 +1908,7 @@ uint32_t AgentServerService_set_gain_by_sensor_all_presult::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_analog_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_analog_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1775,14 +1929,6 @@ uint32_t AgentServerService_set_gain_by_sensor_analog_args::read(::apache::thrif
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
           xfer += iprot->readDouble(this->gain);
           this->__isset.gain = true;
@@ -1802,15 +1948,11 @@ uint32_t AgentServerService_set_gain_by_sensor_analog_args::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_analog_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_analog_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_analog_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_analog_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble(this->gain);
   xfer += oprot->writeFieldEnd();
 
@@ -1819,15 +1961,11 @@ uint32_t AgentServerService_set_gain_by_sensor_analog_args::write(::apache::thri
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_analog_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_analog_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_analog_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_analog_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble((*(this->gain)));
   xfer += oprot->writeFieldEnd();
 
@@ -1836,7 +1974,7 @@ uint32_t AgentServerService_set_gain_by_sensor_analog_pargs::write(::apache::thr
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_analog_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_analog_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1876,11 +2014,11 @@ uint32_t AgentServerService_set_gain_by_sensor_analog_result::read(::apache::thr
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_analog_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_analog_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_analog_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_analog_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -1892,7 +2030,7 @@ uint32_t AgentServerService_set_gain_by_sensor_analog_result::write(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_analog_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_analog_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1932,7 +2070,7 @@ uint32_t AgentServerService_set_gain_by_sensor_analog_presult::read(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_digital_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_digital_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1953,14 +2091,6 @@ uint32_t AgentServerService_set_gain_by_sensor_digital_args::read(::apache::thri
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
           xfer += iprot->readDouble(this->gain);
           this->__isset.gain = true;
@@ -1980,15 +2110,11 @@ uint32_t AgentServerService_set_gain_by_sensor_digital_args::read(::apache::thri
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_digital_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_digital_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_digital_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_digital_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble(this->gain);
   xfer += oprot->writeFieldEnd();
 
@@ -1997,15 +2123,11 @@ uint32_t AgentServerService_set_gain_by_sensor_digital_args::write(::apache::thr
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_digital_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_digital_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_digital_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_digital_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("gain", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble((*(this->gain)));
   xfer += oprot->writeFieldEnd();
 
@@ -2014,7 +2136,7 @@ uint32_t AgentServerService_set_gain_by_sensor_digital_pargs::write(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_digital_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_digital_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2054,11 +2176,11 @@ uint32_t AgentServerService_set_gain_by_sensor_digital_result::read(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_digital_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_digital_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_gain_by_sensor_digital_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_gain_by_sensor_digital_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -2070,7 +2192,7 @@ uint32_t AgentServerService_set_gain_by_sensor_digital_result::write(::apache::t
   return xfer;
 }
 
-uint32_t AgentServerService_set_gain_by_sensor_digital_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_gain_by_sensor_digital_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2110,7 +2232,7 @@ uint32_t AgentServerService_set_gain_by_sensor_digital_presult::read(::apache::t
   return xfer;
 }
 
-uint32_t AgentServerService_set_frame_rate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_frame_rate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2131,14 +2253,6 @@ uint32_t AgentServerService_set_frame_rate_args::read(::apache::thrift::protocol
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
           xfer += iprot->readDouble(this->rate);
           this->__isset.rate = true;
@@ -2158,15 +2272,11 @@ uint32_t AgentServerService_set_frame_rate_args::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_set_frame_rate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_frame_rate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_frame_rate_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_frame_rate_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("rate", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("rate", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble(this->rate);
   xfer += oprot->writeFieldEnd();
 
@@ -2175,15 +2285,11 @@ uint32_t AgentServerService_set_frame_rate_args::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_frame_rate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_frame_rate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_frame_rate_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_frame_rate_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("rate", ::apache::thrift::protocol::T_DOUBLE, 2);
+  xfer += oprot->writeFieldBegin("rate", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble((*(this->rate)));
   xfer += oprot->writeFieldEnd();
 
@@ -2192,7 +2298,7 @@ uint32_t AgentServerService_set_frame_rate_pargs::write(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_set_frame_rate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_frame_rate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2232,11 +2338,11 @@ uint32_t AgentServerService_set_frame_rate_result::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_set_frame_rate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_frame_rate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_frame_rate_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_frame_rate_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -2248,7 +2354,7 @@ uint32_t AgentServerService_set_frame_rate_result::write(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_set_frame_rate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_frame_rate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2288,7 +2394,7 @@ uint32_t AgentServerService_set_frame_rate_presult::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_enable_turbo_transfer_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_enable_turbo_transfer_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2309,14 +2415,6 @@ uint32_t AgentServerService_enable_turbo_transfer_args::read(::apache::thrift::p
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->enabled);
           this->__isset.enabled = true;
@@ -2336,15 +2434,11 @@ uint32_t AgentServerService_enable_turbo_transfer_args::read(::apache::thrift::p
   return xfer;
 }
 
-uint32_t AgentServerService_enable_turbo_transfer_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_enable_turbo_transfer_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_enable_turbo_transfer_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_enable_turbo_transfer_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("enabled", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("enabled", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32(this->enabled);
   xfer += oprot->writeFieldEnd();
 
@@ -2353,15 +2447,11 @@ uint32_t AgentServerService_enable_turbo_transfer_args::write(::apache::thrift::
   return xfer;
 }
 
-uint32_t AgentServerService_enable_turbo_transfer_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_enable_turbo_transfer_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_enable_turbo_transfer_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_enable_turbo_transfer_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("enabled", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("enabled", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32((*(this->enabled)));
   xfer += oprot->writeFieldEnd();
 
@@ -2370,7 +2460,7 @@ uint32_t AgentServerService_enable_turbo_transfer_pargs::write(::apache::thrift:
   return xfer;
 }
 
-uint32_t AgentServerService_enable_turbo_transfer_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_enable_turbo_transfer_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2410,11 +2500,11 @@ uint32_t AgentServerService_enable_turbo_transfer_result::read(::apache::thrift:
   return xfer;
 }
 
-uint32_t AgentServerService_enable_turbo_transfer_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_enable_turbo_transfer_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_enable_turbo_transfer_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_enable_turbo_transfer_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -2426,7 +2516,7 @@ uint32_t AgentServerService_enable_turbo_transfer_result::write(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_enable_turbo_transfer_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_enable_turbo_transfer_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2466,7 +2556,7 @@ uint32_t AgentServerService_enable_turbo_transfer_presult::read(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_set_pixel_fmt_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_pixel_fmt_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2487,14 +2577,6 @@ uint32_t AgentServerService_set_pixel_fmt_args::read(::apache::thrift::protocol:
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->pixel_fmt);
           this->__isset.pixel_fmt = true;
@@ -2514,15 +2596,11 @@ uint32_t AgentServerService_set_pixel_fmt_args::read(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t AgentServerService_set_pixel_fmt_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_pixel_fmt_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_pixel_fmt_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_pixel_fmt_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("pixel_fmt", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("pixel_fmt", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString(this->pixel_fmt);
   xfer += oprot->writeFieldEnd();
 
@@ -2531,15 +2609,11 @@ uint32_t AgentServerService_set_pixel_fmt_args::write(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_set_pixel_fmt_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_pixel_fmt_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_pixel_fmt_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_pixel_fmt_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("pixel_fmt", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("pixel_fmt", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString((*(this->pixel_fmt)));
   xfer += oprot->writeFieldEnd();
 
@@ -2548,7 +2622,7 @@ uint32_t AgentServerService_set_pixel_fmt_pargs::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_pixel_fmt_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_pixel_fmt_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2588,11 +2662,11 @@ uint32_t AgentServerService_set_pixel_fmt_result::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_pixel_fmt_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_pixel_fmt_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_pixel_fmt_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_pixel_fmt_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -2604,7 +2678,7 @@ uint32_t AgentServerService_set_pixel_fmt_result::write(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_set_pixel_fmt_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_pixel_fmt_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2644,7 +2718,7 @@ uint32_t AgentServerService_set_pixel_fmt_presult::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_x_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_offset_x_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2665,14 +2739,6 @@ uint32_t AgentServerService_set_offset_x_args::read(::apache::thrift::protocol::
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->offset_x);
           this->__isset.offset_x = true;
@@ -2692,15 +2758,11 @@ uint32_t AgentServerService_set_offset_x_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_x_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_offset_x_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_offset_x_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_offset_x_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("offset_x", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("offset_x", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32(this->offset_x);
   xfer += oprot->writeFieldEnd();
 
@@ -2709,15 +2771,11 @@ uint32_t AgentServerService_set_offset_x_args::write(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_x_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_offset_x_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_offset_x_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_offset_x_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("offset_x", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("offset_x", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32((*(this->offset_x)));
   xfer += oprot->writeFieldEnd();
 
@@ -2726,7 +2784,7 @@ uint32_t AgentServerService_set_offset_x_pargs::write(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_x_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_offset_x_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2766,11 +2824,11 @@ uint32_t AgentServerService_set_offset_x_result::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_x_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_offset_x_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_offset_x_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_offset_x_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -2782,7 +2840,7 @@ uint32_t AgentServerService_set_offset_x_result::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_x_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_offset_x_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2822,7 +2880,7 @@ uint32_t AgentServerService_set_offset_x_presult::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_y_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_offset_y_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2843,14 +2901,6 @@ uint32_t AgentServerService_set_offset_y_args::read(::apache::thrift::protocol::
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->offset_y);
           this->__isset.offset_y = true;
@@ -2870,15 +2920,11 @@ uint32_t AgentServerService_set_offset_y_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_y_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_offset_y_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_offset_y_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_offset_y_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("offset_y", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("offset_y", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32(this->offset_y);
   xfer += oprot->writeFieldEnd();
 
@@ -2887,15 +2933,11 @@ uint32_t AgentServerService_set_offset_y_args::write(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_y_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_offset_y_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_offset_y_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_offset_y_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("offset_y", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("offset_y", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32((*(this->offset_y)));
   xfer += oprot->writeFieldEnd();
 
@@ -2904,7 +2946,7 @@ uint32_t AgentServerService_set_offset_y_pargs::write(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_y_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_offset_y_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -2944,11 +2986,11 @@ uint32_t AgentServerService_set_offset_y_result::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_y_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_offset_y_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_offset_y_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_offset_y_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -2960,7 +3002,7 @@ uint32_t AgentServerService_set_offset_y_result::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_offset_y_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_offset_y_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3000,7 +3042,7 @@ uint32_t AgentServerService_set_offset_y_presult::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_width_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_image_width_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3021,14 +3063,6 @@ uint32_t AgentServerService_set_image_width_args::read(::apache::thrift::protoco
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->width);
           this->__isset.width = true;
@@ -3048,15 +3082,11 @@ uint32_t AgentServerService_set_image_width_args::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_width_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_image_width_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_image_width_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_image_width_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("width", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("width", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32(this->width);
   xfer += oprot->writeFieldEnd();
 
@@ -3065,15 +3095,11 @@ uint32_t AgentServerService_set_image_width_args::write(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_width_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_image_width_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_image_width_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_image_width_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("width", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("width", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32((*(this->width)));
   xfer += oprot->writeFieldEnd();
 
@@ -3082,7 +3108,7 @@ uint32_t AgentServerService_set_image_width_pargs::write(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_width_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_image_width_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3122,11 +3148,11 @@ uint32_t AgentServerService_set_image_width_result::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_width_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_image_width_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_image_width_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_image_width_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -3138,7 +3164,7 @@ uint32_t AgentServerService_set_image_width_result::write(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_width_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_image_width_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3178,7 +3204,7 @@ uint32_t AgentServerService_set_image_width_presult::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_height_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_image_height_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3199,14 +3225,6 @@ uint32_t AgentServerService_set_image_height_args::read(::apache::thrift::protoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->height);
           this->__isset.height = true;
@@ -3226,15 +3244,11 @@ uint32_t AgentServerService_set_image_height_args::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_height_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_image_height_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_image_height_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_image_height_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("height", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("height", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32(this->height);
   xfer += oprot->writeFieldEnd();
 
@@ -3243,15 +3257,11 @@ uint32_t AgentServerService_set_image_height_args::write(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_height_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_image_height_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_set_image_height_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_image_height_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("height", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("height", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32((*(this->height)));
   xfer += oprot->writeFieldEnd();
 
@@ -3260,7 +3270,7 @@ uint32_t AgentServerService_set_image_height_pargs::write(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_height_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_image_height_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3300,11 +3310,11 @@ uint32_t AgentServerService_set_image_height_result::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_height_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_set_image_height_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_set_image_height_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_set_image_height_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -3316,7 +3326,7 @@ uint32_t AgentServerService_set_image_height_result::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_set_image_height_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_set_image_height_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3356,7 +3366,7 @@ uint32_t AgentServerService_set_image_height_presult::read(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_exposure_time_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3374,20 +3384,7 @@ uint32_t AgentServerService_get_exposure_time_args::read(::apache::thrift::proto
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -3396,33 +3393,25 @@ uint32_t AgentServerService_get_exposure_time_args::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_exposure_time_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_exposure_time_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_exposure_time_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_exposure_time_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_exposure_time_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_exposure_time_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_exposure_time_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3462,11 +3451,11 @@ uint32_t AgentServerService_get_exposure_time_result::read(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_exposure_time_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_exposure_time_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_exposure_time_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
@@ -3478,7 +3467,7 @@ uint32_t AgentServerService_get_exposure_time_result::write(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_exposure_time_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3518,7 +3507,7 @@ uint32_t AgentServerService_get_exposure_time_presult::read(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_all_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_all_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3536,20 +3525,7 @@ uint32_t AgentServerService_get_gain_by_sensor_all_args::read(::apache::thrift::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -3558,33 +3534,25 @@ uint32_t AgentServerService_get_gain_by_sensor_all_args::read(::apache::thrift::
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_all_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_all_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_all_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_all_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_all_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_all_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_all_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_all_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_all_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_all_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3624,11 +3592,11 @@ uint32_t AgentServerService_get_gain_by_sensor_all_result::read(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_all_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_all_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_all_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_all_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
@@ -3640,7 +3608,7 @@ uint32_t AgentServerService_get_gain_by_sensor_all_result::write(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_all_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_all_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3680,7 +3648,7 @@ uint32_t AgentServerService_get_gain_by_sensor_all_presult::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_analog_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_analog_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3698,20 +3666,7 @@ uint32_t AgentServerService_get_gain_by_sensor_analog_args::read(::apache::thrif
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -3720,33 +3675,25 @@ uint32_t AgentServerService_get_gain_by_sensor_analog_args::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_analog_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_analog_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_analog_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_analog_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_analog_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_analog_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_analog_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_analog_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_analog_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_analog_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3786,11 +3733,11 @@ uint32_t AgentServerService_get_gain_by_sensor_analog_result::read(::apache::thr
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_analog_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_analog_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_analog_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_analog_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
@@ -3802,7 +3749,7 @@ uint32_t AgentServerService_get_gain_by_sensor_analog_result::write(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_analog_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_analog_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3842,7 +3789,7 @@ uint32_t AgentServerService_get_gain_by_sensor_analog_presult::read(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_digital_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_digital_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3860,20 +3807,7 @@ uint32_t AgentServerService_get_gain_by_sensor_digital_args::read(::apache::thri
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -3882,33 +3816,25 @@ uint32_t AgentServerService_get_gain_by_sensor_digital_args::read(::apache::thri
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_digital_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_digital_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_digital_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_digital_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_digital_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_digital_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_digital_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_digital_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_digital_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_digital_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -3948,11 +3874,11 @@ uint32_t AgentServerService_get_gain_by_sensor_digital_result::read(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_digital_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_digital_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_by_sensor_digital_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_by_sensor_digital_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
@@ -3964,7 +3890,7 @@ uint32_t AgentServerService_get_gain_by_sensor_digital_result::write(::apache::t
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_by_sensor_digital_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_by_sensor_digital_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4004,7 +3930,7 @@ uint32_t AgentServerService_get_gain_by_sensor_digital_presult::read(::apache::t
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_frame_rate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4022,20 +3948,7 @@ uint32_t AgentServerService_get_frame_rate_args::read(::apache::thrift::protocol
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -4044,33 +3957,25 @@ uint32_t AgentServerService_get_frame_rate_args::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_frame_rate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_frame_rate_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_frame_rate_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_frame_rate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_frame_rate_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_frame_rate_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_frame_rate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4110,11 +4015,11 @@ uint32_t AgentServerService_get_frame_rate_result::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_frame_rate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_frame_rate_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_frame_rate_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
@@ -4126,7 +4031,7 @@ uint32_t AgentServerService_get_frame_rate_result::write(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_frame_rate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4166,7 +4071,7 @@ uint32_t AgentServerService_get_frame_rate_presult::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_range_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_exposure_time_range_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4184,20 +4089,7 @@ uint32_t AgentServerService_get_exposure_time_range_args::read(::apache::thrift:
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -4206,33 +4098,25 @@ uint32_t AgentServerService_get_exposure_time_range_args::read(::apache::thrift:
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_range_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_exposure_time_range_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_exposure_time_range_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_exposure_time_range_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_range_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_exposure_time_range_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_exposure_time_range_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_exposure_time_range_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_range_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_exposure_time_range_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4272,11 +4156,11 @@ uint32_t AgentServerService_get_exposure_time_range_result::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_range_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_exposure_time_range_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_exposure_time_range_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_exposure_time_range_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
@@ -4288,7 +4172,7 @@ uint32_t AgentServerService_get_exposure_time_range_result::write(::apache::thri
   return xfer;
 }
 
-uint32_t AgentServerService_get_exposure_time_range_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_exposure_time_range_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4328,7 +4212,7 @@ uint32_t AgentServerService_get_exposure_time_range_presult::read(::apache::thri
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_all_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_all_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4346,20 +4230,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_all_args::read(::apache::th
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -4368,33 +4239,25 @@ uint32_t AgentServerService_get_gain_range_by_sensor_all_args::read(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_all_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_all_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_all_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_all_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_all_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_all_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_all_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_all_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_all_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_all_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4434,11 +4297,11 @@ uint32_t AgentServerService_get_gain_range_by_sensor_all_result::read(::apache::
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_all_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_all_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_all_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_all_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
@@ -4450,7 +4313,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_all_result::write(::apache:
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_all_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_all_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4490,7 +4353,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_all_presult::read(::apache:
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_analog_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_analog_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4508,20 +4371,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_analog_args::read(::apache:
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -4530,33 +4380,25 @@ uint32_t AgentServerService_get_gain_range_by_sensor_analog_args::read(::apache:
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_analog_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_analog_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_analog_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_analog_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_analog_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_analog_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_analog_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_analog_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_analog_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_analog_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4596,11 +4438,11 @@ uint32_t AgentServerService_get_gain_range_by_sensor_analog_result::read(::apach
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_analog_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_analog_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_analog_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_analog_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
@@ -4612,7 +4454,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_analog_result::write(::apac
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_analog_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_analog_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4652,7 +4494,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_analog_presult::read(::apac
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_digital_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_digital_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4670,20 +4512,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_digital_args::read(::apache
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -4692,33 +4521,25 @@ uint32_t AgentServerService_get_gain_range_by_sensor_digital_args::read(::apache
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_digital_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_digital_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_digital_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_digital_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_digital_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_digital_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_digital_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_digital_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_digital_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_digital_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4758,11 +4579,11 @@ uint32_t AgentServerService_get_gain_range_by_sensor_digital_result::read(::apac
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_digital_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_digital_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_gain_range_by_sensor_digital_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_gain_range_by_sensor_digital_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
@@ -4774,7 +4595,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_digital_result::write(::apa
   return xfer;
 }
 
-uint32_t AgentServerService_get_gain_range_by_sensor_digital_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_gain_range_by_sensor_digital_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4814,7 +4635,7 @@ uint32_t AgentServerService_get_gain_range_by_sensor_digital_presult::read(::apa
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_range_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_frame_rate_range_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4832,20 +4653,7 @@ uint32_t AgentServerService_get_frame_rate_range_args::read(::apache::thrift::pr
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -4854,33 +4662,25 @@ uint32_t AgentServerService_get_frame_rate_range_args::read(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_range_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_frame_rate_range_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_frame_rate_range_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_frame_rate_range_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_range_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_frame_rate_range_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_frame_rate_range_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_frame_rate_range_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_range_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_frame_rate_range_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4920,11 +4720,11 @@ uint32_t AgentServerService_get_frame_rate_range_result::read(::apache::thrift::
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_range_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_frame_rate_range_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_frame_rate_range_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_frame_rate_range_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
@@ -4936,7 +4736,7 @@ uint32_t AgentServerService_get_frame_rate_range_result::write(::apache::thrift:
   return xfer;
 }
 
-uint32_t AgentServerService_get_frame_rate_range_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_frame_rate_range_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4976,7 +4776,7 @@ uint32_t AgentServerService_get_frame_rate_range_presult::read(::apache::thrift:
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_width_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_image_width_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -4994,20 +4794,7 @@ uint32_t AgentServerService_get_image_width_args::read(::apache::thrift::protoco
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -5016,33 +4803,25 @@ uint32_t AgentServerService_get_image_width_args::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_width_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_image_width_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_image_width_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_image_width_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_width_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_image_width_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_image_width_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_image_width_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_width_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_image_width_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5082,11 +4861,11 @@ uint32_t AgentServerService_get_image_width_result::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_width_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_image_width_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_image_width_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_image_width_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -5098,7 +4877,7 @@ uint32_t AgentServerService_get_image_width_result::write(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_width_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_image_width_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5138,7 +4917,7 @@ uint32_t AgentServerService_get_image_width_presult::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_height_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_image_height_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5156,20 +4935,7 @@ uint32_t AgentServerService_get_image_height_args::read(::apache::thrift::protoc
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -5178,33 +4944,25 @@ uint32_t AgentServerService_get_image_height_args::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_height_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_image_height_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_image_height_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_image_height_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_height_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_image_height_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_image_height_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_image_height_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_height_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_image_height_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5244,11 +5002,11 @@ uint32_t AgentServerService_get_image_height_result::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_height_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_image_height_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_image_height_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_image_height_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -5260,7 +5018,7 @@ uint32_t AgentServerService_get_image_height_result::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_get_image_height_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_image_height_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5300,7 +5058,7 @@ uint32_t AgentServerService_get_image_height_presult::read(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t AgentServerService_get_height_max_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_height_max_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5318,20 +5076,7 @@ uint32_t AgentServerService_get_height_max_args::read(::apache::thrift::protocol
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -5340,33 +5085,25 @@ uint32_t AgentServerService_get_height_max_args::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_get_height_max_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_height_max_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_height_max_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_height_max_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_height_max_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_height_max_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_height_max_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_height_max_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_height_max_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_height_max_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5406,11 +5143,11 @@ uint32_t AgentServerService_get_height_max_result::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_height_max_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_height_max_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_height_max_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_height_max_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -5422,7 +5159,7 @@ uint32_t AgentServerService_get_height_max_result::write(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_get_height_max_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_height_max_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5462,7 +5199,7 @@ uint32_t AgentServerService_get_height_max_presult::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_get_width_max_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_width_max_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5480,20 +5217,7 @@ uint32_t AgentServerService_get_width_max_args::read(::apache::thrift::protocol:
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -5502,33 +5226,25 @@ uint32_t AgentServerService_get_width_max_args::read(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t AgentServerService_get_width_max_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_width_max_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_width_max_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_width_max_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_width_max_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_width_max_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_width_max_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_width_max_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_width_max_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_width_max_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5568,11 +5284,11 @@ uint32_t AgentServerService_get_width_max_result::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_width_max_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_width_max_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_width_max_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_width_max_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -5584,7 +5300,7 @@ uint32_t AgentServerService_get_width_max_result::write(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_width_max_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_width_max_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5624,7 +5340,7 @@ uint32_t AgentServerService_get_width_max_presult::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_x_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_offset_x_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5642,20 +5358,7 @@ uint32_t AgentServerService_get_offset_x_args::read(::apache::thrift::protocol::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -5664,33 +5367,25 @@ uint32_t AgentServerService_get_offset_x_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_x_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_offset_x_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_offset_x_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_offset_x_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_x_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_offset_x_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_offset_x_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_offset_x_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_x_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_offset_x_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5730,11 +5425,11 @@ uint32_t AgentServerService_get_offset_x_result::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_x_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_offset_x_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_offset_x_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_offset_x_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -5746,7 +5441,7 @@ uint32_t AgentServerService_get_offset_x_result::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_x_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_offset_x_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5786,7 +5481,7 @@ uint32_t AgentServerService_get_offset_x_presult::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_y_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_offset_y_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5804,20 +5499,7 @@ uint32_t AgentServerService_get_offset_y_args::read(::apache::thrift::protocol::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -5826,33 +5508,25 @@ uint32_t AgentServerService_get_offset_y_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_y_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_offset_y_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_offset_y_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_offset_y_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_y_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_offset_y_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_offset_y_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_offset_y_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_y_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_offset_y_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5892,11 +5566,11 @@ uint32_t AgentServerService_get_offset_y_result::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_y_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_offset_y_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_offset_y_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_offset_y_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -5908,7 +5582,7 @@ uint32_t AgentServerService_get_offset_y_result::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_offset_y_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_offset_y_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5948,7 +5622,7 @@ uint32_t AgentServerService_get_offset_y_presult::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_is_enabled_turbo_transfer_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_is_enabled_turbo_transfer_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -5966,20 +5640,7 @@ uint32_t AgentServerService_is_enabled_turbo_transfer_args::read(::apache::thrif
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -5988,33 +5649,25 @@ uint32_t AgentServerService_is_enabled_turbo_transfer_args::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_is_enabled_turbo_transfer_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_is_enabled_turbo_transfer_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_is_enabled_turbo_transfer_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_is_enabled_turbo_transfer_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_is_enabled_turbo_transfer_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_is_enabled_turbo_transfer_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_is_enabled_turbo_transfer_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_is_enabled_turbo_transfer_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_is_enabled_turbo_transfer_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_is_enabled_turbo_transfer_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6054,11 +5707,11 @@ uint32_t AgentServerService_is_enabled_turbo_transfer_result::read(::apache::thr
   return xfer;
 }
 
-uint32_t AgentServerService_is_enabled_turbo_transfer_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_is_enabled_turbo_transfer_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_is_enabled_turbo_transfer_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_is_enabled_turbo_transfer_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -6070,7 +5723,7 @@ uint32_t AgentServerService_is_enabled_turbo_transfer_result::write(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_is_enabled_turbo_transfer_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_is_enabled_turbo_transfer_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6110,7 +5763,7 @@ uint32_t AgentServerService_is_enabled_turbo_transfer_presult::read(::apache::th
   return xfer;
 }
 
-uint32_t AgentServerService_get_pixel_fmt_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_pixel_fmt_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6128,20 +5781,7 @@ uint32_t AgentServerService_get_pixel_fmt_args::read(::apache::thrift::protocol:
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -6150,33 +5790,25 @@ uint32_t AgentServerService_get_pixel_fmt_args::read(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t AgentServerService_get_pixel_fmt_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_pixel_fmt_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_pixel_fmt_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_pixel_fmt_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_pixel_fmt_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_pixel_fmt_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_pixel_fmt_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_pixel_fmt_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_pixel_fmt_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_pixel_fmt_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6216,11 +5848,11 @@ uint32_t AgentServerService_get_pixel_fmt_result::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_pixel_fmt_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_pixel_fmt_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_pixel_fmt_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_pixel_fmt_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
@@ -6232,7 +5864,7 @@ uint32_t AgentServerService_get_pixel_fmt_result::write(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_pixel_fmt_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_pixel_fmt_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6272,7 +5904,7 @@ uint32_t AgentServerService_get_pixel_fmt_presult::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_get_user_defined_name_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_user_defined_name_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6290,20 +5922,7 @@ uint32_t AgentServerService_get_user_defined_name_args::read(::apache::thrift::p
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -6312,33 +5931,25 @@ uint32_t AgentServerService_get_user_defined_name_args::read(::apache::thrift::p
   return xfer;
 }
 
-uint32_t AgentServerService_get_user_defined_name_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_user_defined_name_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_user_defined_name_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_user_defined_name_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_user_defined_name_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_user_defined_name_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_user_defined_name_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_user_defined_name_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_user_defined_name_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_user_defined_name_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6378,11 +5989,11 @@ uint32_t AgentServerService_get_user_defined_name_result::read(::apache::thrift:
   return xfer;
 }
 
-uint32_t AgentServerService_get_user_defined_name_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_user_defined_name_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_user_defined_name_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_user_defined_name_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
@@ -6394,7 +6005,7 @@ uint32_t AgentServerService_get_user_defined_name_result::write(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_get_user_defined_name_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_user_defined_name_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6434,7 +6045,7 @@ uint32_t AgentServerService_get_user_defined_name_presult::read(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_get_device_serial_number_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_device_serial_number_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6452,20 +6063,7 @@ uint32_t AgentServerService_get_device_serial_number_args::read(::apache::thrift
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -6474,33 +6072,25 @@ uint32_t AgentServerService_get_device_serial_number_args::read(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_get_device_serial_number_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_device_serial_number_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_device_serial_number_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_device_serial_number_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_device_serial_number_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_device_serial_number_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_device_serial_number_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_device_serial_number_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_device_serial_number_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_device_serial_number_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6540,11 +6130,11 @@ uint32_t AgentServerService_get_device_serial_number_result::read(::apache::thri
   return xfer;
 }
 
-uint32_t AgentServerService_get_device_serial_number_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_device_serial_number_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_device_serial_number_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_device_serial_number_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
@@ -6556,7 +6146,7 @@ uint32_t AgentServerService_get_device_serial_number_result::write(::apache::thr
   return xfer;
 }
 
-uint32_t AgentServerService_get_device_serial_number_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_device_serial_number_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6596,7 +6186,7 @@ uint32_t AgentServerService_get_device_serial_number_presult::read(::apache::thr
   return xfer;
 }
 
-uint32_t AgentServerService_get_current_ip_address_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_current_ip_address_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6614,20 +6204,7 @@ uint32_t AgentServerService_get_current_ip_address_args::read(::apache::thrift::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -6636,33 +6213,25 @@ uint32_t AgentServerService_get_current_ip_address_args::read(::apache::thrift::
   return xfer;
 }
 
-uint32_t AgentServerService_get_current_ip_address_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_current_ip_address_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_current_ip_address_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_current_ip_address_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_current_ip_address_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_current_ip_address_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_current_ip_address_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_current_ip_address_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_current_ip_address_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_current_ip_address_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6702,11 +6271,11 @@ uint32_t AgentServerService_get_current_ip_address_result::read(::apache::thrift
   return xfer;
 }
 
-uint32_t AgentServerService_get_current_ip_address_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_current_ip_address_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_current_ip_address_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_current_ip_address_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
@@ -6718,7 +6287,7 @@ uint32_t AgentServerService_get_current_ip_address_result::write(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_get_current_ip_address_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_current_ip_address_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6758,7 +6327,7 @@ uint32_t AgentServerService_get_current_ip_address_presult::read(::apache::thrif
   return xfer;
 }
 
-uint32_t AgentServerService_get_grab_fps_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_grab_fps_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6776,20 +6345,7 @@ uint32_t AgentServerService_get_grab_fps_args::read(::apache::thrift::protocol::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -6798,33 +6354,25 @@ uint32_t AgentServerService_get_grab_fps_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t AgentServerService_get_grab_fps_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_grab_fps_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_grab_fps_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_grab_fps_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_grab_fps_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_grab_fps_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_grab_fps_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_grab_fps_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_grab_fps_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_grab_fps_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6864,11 +6412,11 @@ uint32_t AgentServerService_get_grab_fps_result::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_get_grab_fps_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_grab_fps_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_grab_fps_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_grab_fps_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
@@ -6880,7 +6428,7 @@ uint32_t AgentServerService_get_grab_fps_result::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_grab_fps_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_grab_fps_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6920,7 +6468,7 @@ uint32_t AgentServerService_get_grab_fps_presult::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_process_fps_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_process_fps_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -6938,20 +6486,7 @@ uint32_t AgentServerService_get_process_fps_args::read(::apache::thrift::protoco
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -6960,33 +6495,25 @@ uint32_t AgentServerService_get_process_fps_args::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_get_process_fps_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_process_fps_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_process_fps_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_process_fps_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_process_fps_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_process_fps_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_get_process_fps_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_process_fps_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_get_process_fps_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_process_fps_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7026,11 +6553,11 @@ uint32_t AgentServerService_get_process_fps_result::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_get_process_fps_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_get_process_fps_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_get_process_fps_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_get_process_fps_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
@@ -7042,7 +6569,7 @@ uint32_t AgentServerService_get_process_fps_result::write(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_get_process_fps_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_get_process_fps_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7082,7 +6609,7 @@ uint32_t AgentServerService_get_process_fps_presult::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t AgentServerService_save_feature_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_save_feature_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7100,20 +6627,7 @@ uint32_t AgentServerService_save_feature_args::read(::apache::thrift::protocol::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
+    xfer += iprot->skip(ftype);
     xfer += iprot->readFieldEnd();
   }
 
@@ -7122,33 +6636,25 @@ uint32_t AgentServerService_save_feature_args::read(::apache::thrift::protocol::
   return xfer;
 }
 
-uint32_t AgentServerService_save_feature_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_save_feature_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_save_feature_args");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_save_feature_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_save_feature_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_save_feature_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_save_feature_pargs");
-
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_save_feature_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t AgentServerService_save_feature_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_save_feature_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7188,11 +6694,11 @@ uint32_t AgentServerService_save_feature_result::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_save_feature_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_save_feature_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_save_feature_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_save_feature_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
@@ -7204,7 +6710,7 @@ uint32_t AgentServerService_save_feature_result::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_save_feature_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_save_feature_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7244,7 +6750,7 @@ uint32_t AgentServerService_save_feature_presult::read(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_update_feature_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_update_feature_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7265,14 +6771,6 @@ uint32_t AgentServerService_update_feature_args::read(::apache::thrift::protocol
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->camera_name);
-          this->__isset.camera_name = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->content);
           this->__isset.content = true;
@@ -7292,15 +6790,11 @@ uint32_t AgentServerService_update_feature_args::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t AgentServerService_update_feature_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_update_feature_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_update_feature_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_update_feature_args");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->camera_name);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("content", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("content", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString(this->content);
   xfer += oprot->writeFieldEnd();
 
@@ -7309,15 +6803,11 @@ uint32_t AgentServerService_update_feature_args::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t AgentServerService_update_feature_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_update_feature_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_update_feature_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_update_feature_pargs");
 
-  xfer += oprot->writeFieldBegin("camera_name", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->camera_name)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("content", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("content", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString((*(this->content)));
   xfer += oprot->writeFieldEnd();
 
@@ -7326,7 +6816,7 @@ uint32_t AgentServerService_update_feature_pargs::write(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_update_feature_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_update_feature_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7366,11 +6856,11 @@ uint32_t AgentServerService_update_feature_result::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t AgentServerService_update_feature_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_update_feature_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("AgentServerService_update_feature_result");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_update_feature_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
@@ -7382,7 +6872,7 @@ uint32_t AgentServerService_update_feature_result::write(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_update_feature_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_update_feature_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -7422,180 +6912,19 @@ uint32_t AgentServerService_update_feature_presult::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t AgentServerService_ping_server_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->seq);
-          this->__isset.seq = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_ping_server_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_ping_server_args");
-
-  xfer += oprot->writeFieldBegin("seq", ::apache::thrift::protocol::T_I64, 1);
-  xfer += oprot->writeI64(this->seq);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_ping_server_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("AgentServerService_ping_server_pargs");
-
-  xfer += oprot->writeFieldBegin("seq", ::apache::thrift::protocol::T_I64, 1);
-  xfer += oprot->writeI64((*(this->seq)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_ping_server_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->success);
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AgentServerService_ping_server_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("AgentServerService_ping_server_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I64, 0);
-    xfer += oprot->writeI64(this->success);
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t AgentServerService_ping_server_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64((*(this->success)));
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-void AgentServerServiceClient::find_cameras(std::vector<std::string> & _return)
+int32_t PlaybackCtrlServiceClient::set_play_frame_rate(const int32_t play_frame_rate)
 {
-  send_find_cameras();
-  recv_find_cameras(_return);
+  send_set_play_frame_rate(play_frame_rate);
+  return recv_set_play_frame_rate();
 }
 
-void AgentServerServiceClient::send_find_cameras()
+void PlaybackCtrlServiceClient::send_set_play_frame_rate(const int32_t play_frame_rate)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("find_cameras", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("set_play_frame_rate", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_find_cameras_pargs args;
+  PlaybackCtrlService_set_play_frame_rate_pargs args;
+  args.play_frame_rate = &play_frame_rate;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7603,7 +6932,7 @@ void AgentServerServiceClient::send_find_cameras()
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_find_cameras(std::vector<std::string> & _return)
+int32_t PlaybackCtrlServiceClient::recv_set_play_frame_rate()
 {
 
   int32_t rseqid = 0;
@@ -7623,71 +6952,13 @@ void AgentServerServiceClient::recv_find_cameras(std::vector<std::string> & _ret
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("find_cameras") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  AgentServerService_find_cameras_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "find_cameras failed: unknown result");
-}
-
-int32_t AgentServerServiceClient::add_cameras(const std::vector<std::string> & l)
-{
-  send_add_cameras(l);
-  return recv_add_cameras();
-}
-
-void AgentServerServiceClient::send_add_cameras(const std::vector<std::string> & l)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("add_cameras", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  AgentServerService_add_cameras_pargs args;
-  args.l = &l;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-int32_t AgentServerServiceClient::recv_add_cameras()
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("add_cameras") != 0) {
+  if (fname.compare("set_play_frame_rate") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_add_cameras_presult result;
+  PlaybackCtrlService_set_play_frame_rate_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -7696,21 +6967,23 @@ int32_t AgentServerServiceClient::recv_add_cameras()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "add_cameras failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_play_frame_rate failed: unknown result");
 }
 
-void AgentServerServiceClient::get_hold_cameras(std::vector<std::string> & _return)
+int32_t PlaybackCtrlServiceClient::set_play_frame_resolution(const int32_t w, const int32_t h)
 {
-  send_get_hold_cameras();
-  recv_get_hold_cameras(_return);
+  send_set_play_frame_resolution(w, h);
+  return recv_set_play_frame_resolution();
 }
 
-void AgentServerServiceClient::send_get_hold_cameras()
+void PlaybackCtrlServiceClient::send_set_play_frame_resolution(const int32_t w, const int32_t h)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("get_hold_cameras", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("set_play_frame_resolution", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_hold_cameras_pargs args;
+  PlaybackCtrlService_set_play_frame_resolution_pargs args;
+  args.w = &w;
+  args.h = &h;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7718,7 +6991,7 @@ void AgentServerServiceClient::send_get_hold_cameras()
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_hold_cameras(std::vector<std::string> & _return)
+int32_t PlaybackCtrlServiceClient::recv_set_play_frame_resolution()
 {
 
   int32_t rseqid = 0;
@@ -7738,71 +7011,13 @@ void AgentServerServiceClient::recv_get_hold_cameras(std::vector<std::string> & 
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("get_hold_cameras") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  AgentServerService_get_hold_cameras_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_hold_cameras failed: unknown result");
-}
-
-int32_t AgentServerServiceClient::del_cameras(const std::vector<std::string> & l)
-{
-  send_del_cameras(l);
-  return recv_del_cameras();
-}
-
-void AgentServerServiceClient::send_del_cameras(const std::vector<std::string> & l)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("del_cameras", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  AgentServerService_del_cameras_pargs args;
-  args.l = &l;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-int32_t AgentServerServiceClient::recv_del_cameras()
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("del_cameras") != 0) {
+  if (fname.compare("set_play_frame_resolution") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_del_cameras_presult result;
+  PlaybackCtrlService_set_play_frame_resolution_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -7811,22 +7026,23 @@ int32_t AgentServerServiceClient::recv_del_cameras()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "del_cameras failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_play_frame_resolution failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::open(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::set_store_file(const int32_t flag, const std::string& file_name)
 {
-  send_open(camera_name);
-  return recv_open();
+  send_set_store_file(flag, file_name);
+  return recv_set_store_file();
 }
 
-void AgentServerServiceClient::send_open(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_set_store_file(const int32_t flag, const std::string& file_name)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("open", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("set_store_file", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_open_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_store_file_pargs args;
+  args.flag = &flag;
+  args.file_name = &file_name;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7834,7 +7050,7 @@ void AgentServerServiceClient::send_open(const std::string& camera_name)
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_open()
+int32_t PlaybackCtrlServiceClient::recv_set_store_file()
 {
 
   int32_t rseqid = 0;
@@ -7854,13 +7070,13 @@ int32_t AgentServerServiceClient::recv_open()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("open") != 0) {
+  if (fname.compare("set_store_file") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_open_presult result;
+  PlaybackCtrlService_set_store_file_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -7869,22 +7085,21 @@ int32_t AgentServerServiceClient::recv_open()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "open failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_store_file failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::close(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::start_play_live()
 {
-  send_close(camera_name);
-  return recv_close();
+  send_start_play_live();
+  return recv_start_play_live();
 }
 
-void AgentServerServiceClient::send_close(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_start_play_live()
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("close", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("start_play_live", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_close_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_start_play_live_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7892,7 +7107,7 @@ void AgentServerServiceClient::send_close(const std::string& camera_name)
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_close()
+int32_t PlaybackCtrlServiceClient::recv_start_play_live()
 {
 
   int32_t rseqid = 0;
@@ -7912,13 +7127,13 @@ int32_t AgentServerServiceClient::recv_close()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("close") != 0) {
+  if (fname.compare("start_play_live") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_close_presult result;
+  PlaybackCtrlService_start_play_live_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -7927,23 +7142,21 @@ int32_t AgentServerServiceClient::recv_close()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "close failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "start_play_live failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::start(const std::string& camera_name, const int32_t display_frame_rate)
+int32_t PlaybackCtrlServiceClient::stop_play_live()
 {
-  send_start(camera_name, display_frame_rate);
-  return recv_start();
+  send_stop_play_live();
+  return recv_stop_play_live();
 }
 
-void AgentServerServiceClient::send_start(const std::string& camera_name, const int32_t display_frame_rate)
+void PlaybackCtrlServiceClient::send_stop_play_live()
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("start", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("stop_play_live", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_start_pargs args;
-  args.camera_name = &camera_name;
-  args.display_frame_rate = &display_frame_rate;
+  PlaybackCtrlService_stop_play_live_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7951,7 +7164,7 @@ void AgentServerServiceClient::send_start(const std::string& camera_name, const 
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_start()
+int32_t PlaybackCtrlServiceClient::recv_stop_play_live()
 {
 
   int32_t rseqid = 0;
@@ -7971,13 +7184,13 @@ int32_t AgentServerServiceClient::recv_start()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("start") != 0) {
+  if (fname.compare("stop_play_live") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_start_presult result;
+  PlaybackCtrlService_stop_play_live_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -7986,22 +7199,24 @@ int32_t AgentServerServiceClient::recv_start()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "start failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop_play_live failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::stop(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
 {
-  send_stop(camera_name);
-  return recv_stop();
+  send_forward_play(frame_seq, play_frame_rate, how_many_frames);
+  return recv_forward_play();
 }
 
-void AgentServerServiceClient::send_stop(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("stop", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("forward_play", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_stop_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_forward_play_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -8009,7 +7224,7 @@ void AgentServerServiceClient::send_stop(const std::string& camera_name)
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_stop()
+int32_t PlaybackCtrlServiceClient::recv_forward_play()
 {
 
   int32_t rseqid = 0;
@@ -8029,13 +7244,13 @@ int32_t AgentServerServiceClient::recv_stop()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("stop") != 0) {
+  if (fname.compare("forward_play") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_stop_presult result;
+  PlaybackCtrlService_forward_play_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8044,22 +7259,201 @@ int32_t AgentServerServiceClient::recv_stop()
   if (result.__isset.success) {
     return _return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "forward_play failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_exposure_time(const std::string& camera_name, const double microseconds)
+int32_t PlaybackCtrlServiceClient::backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
 {
-  send_set_exposure_time(camera_name, microseconds);
+  send_backward_play(frame_seq, play_frame_rate, how_many_frames);
+  return recv_backward_play();
+}
+
+void PlaybackCtrlServiceClient::send_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("backward_play", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_backward_play_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_backward_play()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("backward_play") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_backward_play_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "backward_play failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  send_forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  return recv_forward_play_temp();
+}
+
+void PlaybackCtrlServiceClient::send_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("forward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_forward_play_temp_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_forward_play_temp()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("forward_play_temp") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_forward_play_temp_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "forward_play_temp failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  send_backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  return recv_backward_play_temp();
+}
+
+void PlaybackCtrlServiceClient::send_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("backward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_backward_play_temp_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_backward_play_temp()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("backward_play_temp") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_backward_play_temp_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "backward_play_temp failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::set_exposure_time(const double microseconds)
+{
+  send_set_exposure_time(microseconds);
   return recv_set_exposure_time();
 }
 
-void AgentServerServiceClient::send_set_exposure_time(const std::string& camera_name, const double microseconds)
+void PlaybackCtrlServiceClient::send_set_exposure_time(const double microseconds)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_exposure_time", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_exposure_time_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_exposure_time_pargs args;
   args.microseconds = &microseconds;
   args.write(oprot_);
 
@@ -8068,7 +7462,7 @@ void AgentServerServiceClient::send_set_exposure_time(const std::string& camera_
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_exposure_time()
+int32_t PlaybackCtrlServiceClient::recv_set_exposure_time()
 {
 
   int32_t rseqid = 0;
@@ -8094,7 +7488,7 @@ int32_t AgentServerServiceClient::recv_set_exposure_time()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_exposure_time_presult result;
+  PlaybackCtrlService_set_exposure_time_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8106,19 +7500,18 @@ int32_t AgentServerServiceClient::recv_set_exposure_time()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_exposure_time failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_gain_by_sensor_all(const std::string& camera_name, const double gain)
+int32_t PlaybackCtrlServiceClient::set_gain_by_sensor_all(const double gain)
 {
-  send_set_gain_by_sensor_all(camera_name, gain);
+  send_set_gain_by_sensor_all(gain);
   return recv_set_gain_by_sensor_all();
 }
 
-void AgentServerServiceClient::send_set_gain_by_sensor_all(const std::string& camera_name, const double gain)
+void PlaybackCtrlServiceClient::send_set_gain_by_sensor_all(const double gain)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_gain_by_sensor_all", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_gain_by_sensor_all_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_gain_by_sensor_all_pargs args;
   args.gain = &gain;
   args.write(oprot_);
 
@@ -8127,7 +7520,7 @@ void AgentServerServiceClient::send_set_gain_by_sensor_all(const std::string& ca
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_gain_by_sensor_all()
+int32_t PlaybackCtrlServiceClient::recv_set_gain_by_sensor_all()
 {
 
   int32_t rseqid = 0;
@@ -8153,7 +7546,7 @@ int32_t AgentServerServiceClient::recv_set_gain_by_sensor_all()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_gain_by_sensor_all_presult result;
+  PlaybackCtrlService_set_gain_by_sensor_all_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8165,19 +7558,18 @@ int32_t AgentServerServiceClient::recv_set_gain_by_sensor_all()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_gain_by_sensor_all failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_gain_by_sensor_analog(const std::string& camera_name, const double gain)
+int32_t PlaybackCtrlServiceClient::set_gain_by_sensor_analog(const double gain)
 {
-  send_set_gain_by_sensor_analog(camera_name, gain);
+  send_set_gain_by_sensor_analog(gain);
   return recv_set_gain_by_sensor_analog();
 }
 
-void AgentServerServiceClient::send_set_gain_by_sensor_analog(const std::string& camera_name, const double gain)
+void PlaybackCtrlServiceClient::send_set_gain_by_sensor_analog(const double gain)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_gain_by_sensor_analog", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_gain_by_sensor_analog_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_gain_by_sensor_analog_pargs args;
   args.gain = &gain;
   args.write(oprot_);
 
@@ -8186,7 +7578,7 @@ void AgentServerServiceClient::send_set_gain_by_sensor_analog(const std::string&
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_gain_by_sensor_analog()
+int32_t PlaybackCtrlServiceClient::recv_set_gain_by_sensor_analog()
 {
 
   int32_t rseqid = 0;
@@ -8212,7 +7604,7 @@ int32_t AgentServerServiceClient::recv_set_gain_by_sensor_analog()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_gain_by_sensor_analog_presult result;
+  PlaybackCtrlService_set_gain_by_sensor_analog_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8224,19 +7616,18 @@ int32_t AgentServerServiceClient::recv_set_gain_by_sensor_analog()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_gain_by_sensor_analog failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_gain_by_sensor_digital(const std::string& camera_name, const double gain)
+int32_t PlaybackCtrlServiceClient::set_gain_by_sensor_digital(const double gain)
 {
-  send_set_gain_by_sensor_digital(camera_name, gain);
+  send_set_gain_by_sensor_digital(gain);
   return recv_set_gain_by_sensor_digital();
 }
 
-void AgentServerServiceClient::send_set_gain_by_sensor_digital(const std::string& camera_name, const double gain)
+void PlaybackCtrlServiceClient::send_set_gain_by_sensor_digital(const double gain)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_gain_by_sensor_digital", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_gain_by_sensor_digital_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_gain_by_sensor_digital_pargs args;
   args.gain = &gain;
   args.write(oprot_);
 
@@ -8245,7 +7636,7 @@ void AgentServerServiceClient::send_set_gain_by_sensor_digital(const std::string
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_gain_by_sensor_digital()
+int32_t PlaybackCtrlServiceClient::recv_set_gain_by_sensor_digital()
 {
 
   int32_t rseqid = 0;
@@ -8271,7 +7662,7 @@ int32_t AgentServerServiceClient::recv_set_gain_by_sensor_digital()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_gain_by_sensor_digital_presult result;
+  PlaybackCtrlService_set_gain_by_sensor_digital_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8283,19 +7674,18 @@ int32_t AgentServerServiceClient::recv_set_gain_by_sensor_digital()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_gain_by_sensor_digital failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_frame_rate(const std::string& camera_name, const double rate)
+int32_t PlaybackCtrlServiceClient::set_frame_rate(const double rate)
 {
-  send_set_frame_rate(camera_name, rate);
+  send_set_frame_rate(rate);
   return recv_set_frame_rate();
 }
 
-void AgentServerServiceClient::send_set_frame_rate(const std::string& camera_name, const double rate)
+void PlaybackCtrlServiceClient::send_set_frame_rate(const double rate)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_frame_rate", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_frame_rate_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_frame_rate_pargs args;
   args.rate = &rate;
   args.write(oprot_);
 
@@ -8304,7 +7694,7 @@ void AgentServerServiceClient::send_set_frame_rate(const std::string& camera_nam
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_frame_rate()
+int32_t PlaybackCtrlServiceClient::recv_set_frame_rate()
 {
 
   int32_t rseqid = 0;
@@ -8330,7 +7720,7 @@ int32_t AgentServerServiceClient::recv_set_frame_rate()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_frame_rate_presult result;
+  PlaybackCtrlService_set_frame_rate_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8342,19 +7732,18 @@ int32_t AgentServerServiceClient::recv_set_frame_rate()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_frame_rate failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::enable_turbo_transfer(const std::string& camera_name, const int32_t enabled)
+int32_t PlaybackCtrlServiceClient::enable_turbo_transfer(const int32_t enabled)
 {
-  send_enable_turbo_transfer(camera_name, enabled);
+  send_enable_turbo_transfer(enabled);
   return recv_enable_turbo_transfer();
 }
 
-void AgentServerServiceClient::send_enable_turbo_transfer(const std::string& camera_name, const int32_t enabled)
+void PlaybackCtrlServiceClient::send_enable_turbo_transfer(const int32_t enabled)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("enable_turbo_transfer", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_enable_turbo_transfer_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_enable_turbo_transfer_pargs args;
   args.enabled = &enabled;
   args.write(oprot_);
 
@@ -8363,7 +7752,7 @@ void AgentServerServiceClient::send_enable_turbo_transfer(const std::string& cam
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_enable_turbo_transfer()
+int32_t PlaybackCtrlServiceClient::recv_enable_turbo_transfer()
 {
 
   int32_t rseqid = 0;
@@ -8389,7 +7778,7 @@ int32_t AgentServerServiceClient::recv_enable_turbo_transfer()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_enable_turbo_transfer_presult result;
+  PlaybackCtrlService_enable_turbo_transfer_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8401,19 +7790,18 @@ int32_t AgentServerServiceClient::recv_enable_turbo_transfer()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "enable_turbo_transfer failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_pixel_fmt(const std::string& camera_name, const std::string& pixel_fmt)
+int32_t PlaybackCtrlServiceClient::set_pixel_fmt(const std::string& pixel_fmt)
 {
-  send_set_pixel_fmt(camera_name, pixel_fmt);
+  send_set_pixel_fmt(pixel_fmt);
   return recv_set_pixel_fmt();
 }
 
-void AgentServerServiceClient::send_set_pixel_fmt(const std::string& camera_name, const std::string& pixel_fmt)
+void PlaybackCtrlServiceClient::send_set_pixel_fmt(const std::string& pixel_fmt)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_pixel_fmt", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_pixel_fmt_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_pixel_fmt_pargs args;
   args.pixel_fmt = &pixel_fmt;
   args.write(oprot_);
 
@@ -8422,7 +7810,7 @@ void AgentServerServiceClient::send_set_pixel_fmt(const std::string& camera_name
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_pixel_fmt()
+int32_t PlaybackCtrlServiceClient::recv_set_pixel_fmt()
 {
 
   int32_t rseqid = 0;
@@ -8448,7 +7836,7 @@ int32_t AgentServerServiceClient::recv_set_pixel_fmt()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_pixel_fmt_presult result;
+  PlaybackCtrlService_set_pixel_fmt_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8460,19 +7848,18 @@ int32_t AgentServerServiceClient::recv_set_pixel_fmt()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_pixel_fmt failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_offset_x(const std::string& camera_name, const int32_t offset_x)
+int32_t PlaybackCtrlServiceClient::set_offset_x(const int32_t offset_x)
 {
-  send_set_offset_x(camera_name, offset_x);
+  send_set_offset_x(offset_x);
   return recv_set_offset_x();
 }
 
-void AgentServerServiceClient::send_set_offset_x(const std::string& camera_name, const int32_t offset_x)
+void PlaybackCtrlServiceClient::send_set_offset_x(const int32_t offset_x)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_offset_x", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_offset_x_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_offset_x_pargs args;
   args.offset_x = &offset_x;
   args.write(oprot_);
 
@@ -8481,7 +7868,7 @@ void AgentServerServiceClient::send_set_offset_x(const std::string& camera_name,
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_offset_x()
+int32_t PlaybackCtrlServiceClient::recv_set_offset_x()
 {
 
   int32_t rseqid = 0;
@@ -8507,7 +7894,7 @@ int32_t AgentServerServiceClient::recv_set_offset_x()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_offset_x_presult result;
+  PlaybackCtrlService_set_offset_x_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8519,19 +7906,18 @@ int32_t AgentServerServiceClient::recv_set_offset_x()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_offset_x failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_offset_y(const std::string& camera_name, const int32_t offset_y)
+int32_t PlaybackCtrlServiceClient::set_offset_y(const int32_t offset_y)
 {
-  send_set_offset_y(camera_name, offset_y);
+  send_set_offset_y(offset_y);
   return recv_set_offset_y();
 }
 
-void AgentServerServiceClient::send_set_offset_y(const std::string& camera_name, const int32_t offset_y)
+void PlaybackCtrlServiceClient::send_set_offset_y(const int32_t offset_y)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_offset_y", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_offset_y_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_offset_y_pargs args;
   args.offset_y = &offset_y;
   args.write(oprot_);
 
@@ -8540,7 +7926,7 @@ void AgentServerServiceClient::send_set_offset_y(const std::string& camera_name,
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_offset_y()
+int32_t PlaybackCtrlServiceClient::recv_set_offset_y()
 {
 
   int32_t rseqid = 0;
@@ -8566,7 +7952,7 @@ int32_t AgentServerServiceClient::recv_set_offset_y()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_offset_y_presult result;
+  PlaybackCtrlService_set_offset_y_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8578,19 +7964,18 @@ int32_t AgentServerServiceClient::recv_set_offset_y()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_offset_y failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_image_width(const std::string& camera_name, const int32_t width)
+int32_t PlaybackCtrlServiceClient::set_image_width(const int32_t width)
 {
-  send_set_image_width(camera_name, width);
+  send_set_image_width(width);
   return recv_set_image_width();
 }
 
-void AgentServerServiceClient::send_set_image_width(const std::string& camera_name, const int32_t width)
+void PlaybackCtrlServiceClient::send_set_image_width(const int32_t width)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_image_width", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_image_width_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_image_width_pargs args;
   args.width = &width;
   args.write(oprot_);
 
@@ -8599,7 +7984,7 @@ void AgentServerServiceClient::send_set_image_width(const std::string& camera_na
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_image_width()
+int32_t PlaybackCtrlServiceClient::recv_set_image_width()
 {
 
   int32_t rseqid = 0;
@@ -8625,7 +8010,7 @@ int32_t AgentServerServiceClient::recv_set_image_width()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_image_width_presult result;
+  PlaybackCtrlService_set_image_width_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8637,19 +8022,18 @@ int32_t AgentServerServiceClient::recv_set_image_width()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_image_width failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::set_image_height(const std::string& camera_name, const int32_t height)
+int32_t PlaybackCtrlServiceClient::set_image_height(const int32_t height)
 {
-  send_set_image_height(camera_name, height);
+  send_set_image_height(height);
   return recv_set_image_height();
 }
 
-void AgentServerServiceClient::send_set_image_height(const std::string& camera_name, const int32_t height)
+void PlaybackCtrlServiceClient::send_set_image_height(const int32_t height)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("set_image_height", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_set_image_height_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_set_image_height_pargs args;
   args.height = &height;
   args.write(oprot_);
 
@@ -8658,7 +8042,7 @@ void AgentServerServiceClient::send_set_image_height(const std::string& camera_n
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_set_image_height()
+int32_t PlaybackCtrlServiceClient::recv_set_image_height()
 {
 
   int32_t rseqid = 0;
@@ -8684,7 +8068,7 @@ int32_t AgentServerServiceClient::recv_set_image_height()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_set_image_height_presult result;
+  PlaybackCtrlService_set_image_height_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8696,19 +8080,18 @@ int32_t AgentServerServiceClient::recv_set_image_height()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_image_height failed: unknown result");
 }
 
-double AgentServerServiceClient::get_exposure_time(const std::string& camera_name)
+double PlaybackCtrlServiceClient::get_exposure_time()
 {
-  send_get_exposure_time(camera_name);
+  send_get_exposure_time();
   return recv_get_exposure_time();
 }
 
-void AgentServerServiceClient::send_get_exposure_time(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_exposure_time()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_exposure_time", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_exposure_time_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_exposure_time_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -8716,7 +8099,7 @@ void AgentServerServiceClient::send_get_exposure_time(const std::string& camera_
   oprot_->getTransport()->flush();
 }
 
-double AgentServerServiceClient::recv_get_exposure_time()
+double PlaybackCtrlServiceClient::recv_get_exposure_time()
 {
 
   int32_t rseqid = 0;
@@ -8742,7 +8125,7 @@ double AgentServerServiceClient::recv_get_exposure_time()
     iprot_->getTransport()->readEnd();
   }
   double _return;
-  AgentServerService_get_exposure_time_presult result;
+  PlaybackCtrlService_get_exposure_time_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8754,19 +8137,18 @@ double AgentServerServiceClient::recv_get_exposure_time()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_exposure_time failed: unknown result");
 }
 
-double AgentServerServiceClient::get_gain_by_sensor_all(const std::string& camera_name)
+double PlaybackCtrlServiceClient::get_gain_by_sensor_all()
 {
-  send_get_gain_by_sensor_all(camera_name);
+  send_get_gain_by_sensor_all();
   return recv_get_gain_by_sensor_all();
 }
 
-void AgentServerServiceClient::send_get_gain_by_sensor_all(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_gain_by_sensor_all()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_gain_by_sensor_all", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_gain_by_sensor_all_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_gain_by_sensor_all_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -8774,7 +8156,7 @@ void AgentServerServiceClient::send_get_gain_by_sensor_all(const std::string& ca
   oprot_->getTransport()->flush();
 }
 
-double AgentServerServiceClient::recv_get_gain_by_sensor_all()
+double PlaybackCtrlServiceClient::recv_get_gain_by_sensor_all()
 {
 
   int32_t rseqid = 0;
@@ -8800,7 +8182,7 @@ double AgentServerServiceClient::recv_get_gain_by_sensor_all()
     iprot_->getTransport()->readEnd();
   }
   double _return;
-  AgentServerService_get_gain_by_sensor_all_presult result;
+  PlaybackCtrlService_get_gain_by_sensor_all_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8812,19 +8194,18 @@ double AgentServerServiceClient::recv_get_gain_by_sensor_all()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_gain_by_sensor_all failed: unknown result");
 }
 
-double AgentServerServiceClient::get_gain_by_sensor_analog(const std::string& camera_name)
+double PlaybackCtrlServiceClient::get_gain_by_sensor_analog()
 {
-  send_get_gain_by_sensor_analog(camera_name);
+  send_get_gain_by_sensor_analog();
   return recv_get_gain_by_sensor_analog();
 }
 
-void AgentServerServiceClient::send_get_gain_by_sensor_analog(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_gain_by_sensor_analog()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_gain_by_sensor_analog", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_gain_by_sensor_analog_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_gain_by_sensor_analog_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -8832,7 +8213,7 @@ void AgentServerServiceClient::send_get_gain_by_sensor_analog(const std::string&
   oprot_->getTransport()->flush();
 }
 
-double AgentServerServiceClient::recv_get_gain_by_sensor_analog()
+double PlaybackCtrlServiceClient::recv_get_gain_by_sensor_analog()
 {
 
   int32_t rseqid = 0;
@@ -8858,7 +8239,7 @@ double AgentServerServiceClient::recv_get_gain_by_sensor_analog()
     iprot_->getTransport()->readEnd();
   }
   double _return;
-  AgentServerService_get_gain_by_sensor_analog_presult result;
+  PlaybackCtrlService_get_gain_by_sensor_analog_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8870,19 +8251,18 @@ double AgentServerServiceClient::recv_get_gain_by_sensor_analog()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_gain_by_sensor_analog failed: unknown result");
 }
 
-double AgentServerServiceClient::get_gain_by_sensor_digital(const std::string& camera_name)
+double PlaybackCtrlServiceClient::get_gain_by_sensor_digital()
 {
-  send_get_gain_by_sensor_digital(camera_name);
+  send_get_gain_by_sensor_digital();
   return recv_get_gain_by_sensor_digital();
 }
 
-void AgentServerServiceClient::send_get_gain_by_sensor_digital(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_gain_by_sensor_digital()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_gain_by_sensor_digital", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_gain_by_sensor_digital_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_gain_by_sensor_digital_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -8890,7 +8270,7 @@ void AgentServerServiceClient::send_get_gain_by_sensor_digital(const std::string
   oprot_->getTransport()->flush();
 }
 
-double AgentServerServiceClient::recv_get_gain_by_sensor_digital()
+double PlaybackCtrlServiceClient::recv_get_gain_by_sensor_digital()
 {
 
   int32_t rseqid = 0;
@@ -8916,7 +8296,7 @@ double AgentServerServiceClient::recv_get_gain_by_sensor_digital()
     iprot_->getTransport()->readEnd();
   }
   double _return;
-  AgentServerService_get_gain_by_sensor_digital_presult result;
+  PlaybackCtrlService_get_gain_by_sensor_digital_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8928,19 +8308,18 @@ double AgentServerServiceClient::recv_get_gain_by_sensor_digital()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_gain_by_sensor_digital failed: unknown result");
 }
 
-double AgentServerServiceClient::get_frame_rate(const std::string& camera_name)
+double PlaybackCtrlServiceClient::get_frame_rate()
 {
-  send_get_frame_rate(camera_name);
+  send_get_frame_rate();
   return recv_get_frame_rate();
 }
 
-void AgentServerServiceClient::send_get_frame_rate(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_frame_rate()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_frame_rate", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_frame_rate_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_frame_rate_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -8948,7 +8327,7 @@ void AgentServerServiceClient::send_get_frame_rate(const std::string& camera_nam
   oprot_->getTransport()->flush();
 }
 
-double AgentServerServiceClient::recv_get_frame_rate()
+double PlaybackCtrlServiceClient::recv_get_frame_rate()
 {
 
   int32_t rseqid = 0;
@@ -8974,7 +8353,7 @@ double AgentServerServiceClient::recv_get_frame_rate()
     iprot_->getTransport()->readEnd();
   }
   double _return;
-  AgentServerService_get_frame_rate_presult result;
+  PlaybackCtrlService_get_frame_rate_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -8986,19 +8365,18 @@ double AgentServerServiceClient::recv_get_frame_rate()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_frame_rate failed: unknown result");
 }
 
-void AgentServerServiceClient::get_exposure_time_range(MinMaxStruct& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_exposure_time_range(MinMaxStruct& _return)
 {
-  send_get_exposure_time_range(camera_name);
+  send_get_exposure_time_range();
   recv_get_exposure_time_range(_return);
 }
 
-void AgentServerServiceClient::send_get_exposure_time_range(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_exposure_time_range()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_exposure_time_range", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_exposure_time_range_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_exposure_time_range_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9006,7 +8384,7 @@ void AgentServerServiceClient::send_get_exposure_time_range(const std::string& c
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_exposure_time_range(MinMaxStruct& _return)
+void PlaybackCtrlServiceClient::recv_get_exposure_time_range(MinMaxStruct& _return)
 {
 
   int32_t rseqid = 0;
@@ -9031,7 +8409,7 @@ void AgentServerServiceClient::recv_get_exposure_time_range(MinMaxStruct& _retur
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_exposure_time_range_presult result;
+  PlaybackCtrlService_get_exposure_time_range_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9044,19 +8422,18 @@ void AgentServerServiceClient::recv_get_exposure_time_range(MinMaxStruct& _retur
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_exposure_time_range failed: unknown result");
 }
 
-void AgentServerServiceClient::get_gain_range_by_sensor_all(MinMaxStruct& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_gain_range_by_sensor_all(MinMaxStruct& _return)
 {
-  send_get_gain_range_by_sensor_all(camera_name);
+  send_get_gain_range_by_sensor_all();
   recv_get_gain_range_by_sensor_all(_return);
 }
 
-void AgentServerServiceClient::send_get_gain_range_by_sensor_all(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_gain_range_by_sensor_all()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_gain_range_by_sensor_all", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_gain_range_by_sensor_all_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_gain_range_by_sensor_all_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9064,7 +8441,7 @@ void AgentServerServiceClient::send_get_gain_range_by_sensor_all(const std::stri
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_gain_range_by_sensor_all(MinMaxStruct& _return)
+void PlaybackCtrlServiceClient::recv_get_gain_range_by_sensor_all(MinMaxStruct& _return)
 {
 
   int32_t rseqid = 0;
@@ -9089,7 +8466,7 @@ void AgentServerServiceClient::recv_get_gain_range_by_sensor_all(MinMaxStruct& _
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_gain_range_by_sensor_all_presult result;
+  PlaybackCtrlService_get_gain_range_by_sensor_all_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9102,19 +8479,18 @@ void AgentServerServiceClient::recv_get_gain_range_by_sensor_all(MinMaxStruct& _
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_gain_range_by_sensor_all failed: unknown result");
 }
 
-void AgentServerServiceClient::get_gain_range_by_sensor_analog(MinMaxStruct& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_gain_range_by_sensor_analog(MinMaxStruct& _return)
 {
-  send_get_gain_range_by_sensor_analog(camera_name);
+  send_get_gain_range_by_sensor_analog();
   recv_get_gain_range_by_sensor_analog(_return);
 }
 
-void AgentServerServiceClient::send_get_gain_range_by_sensor_analog(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_gain_range_by_sensor_analog()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_gain_range_by_sensor_analog", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_gain_range_by_sensor_analog_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_gain_range_by_sensor_analog_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9122,7 +8498,7 @@ void AgentServerServiceClient::send_get_gain_range_by_sensor_analog(const std::s
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_gain_range_by_sensor_analog(MinMaxStruct& _return)
+void PlaybackCtrlServiceClient::recv_get_gain_range_by_sensor_analog(MinMaxStruct& _return)
 {
 
   int32_t rseqid = 0;
@@ -9147,7 +8523,7 @@ void AgentServerServiceClient::recv_get_gain_range_by_sensor_analog(MinMaxStruct
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_gain_range_by_sensor_analog_presult result;
+  PlaybackCtrlService_get_gain_range_by_sensor_analog_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9160,19 +8536,18 @@ void AgentServerServiceClient::recv_get_gain_range_by_sensor_analog(MinMaxStruct
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_gain_range_by_sensor_analog failed: unknown result");
 }
 
-void AgentServerServiceClient::get_gain_range_by_sensor_digital(MinMaxStruct& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_gain_range_by_sensor_digital(MinMaxStruct& _return)
 {
-  send_get_gain_range_by_sensor_digital(camera_name);
+  send_get_gain_range_by_sensor_digital();
   recv_get_gain_range_by_sensor_digital(_return);
 }
 
-void AgentServerServiceClient::send_get_gain_range_by_sensor_digital(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_gain_range_by_sensor_digital()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_gain_range_by_sensor_digital", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_gain_range_by_sensor_digital_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_gain_range_by_sensor_digital_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9180,7 +8555,7 @@ void AgentServerServiceClient::send_get_gain_range_by_sensor_digital(const std::
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_gain_range_by_sensor_digital(MinMaxStruct& _return)
+void PlaybackCtrlServiceClient::recv_get_gain_range_by_sensor_digital(MinMaxStruct& _return)
 {
 
   int32_t rseqid = 0;
@@ -9205,7 +8580,7 @@ void AgentServerServiceClient::recv_get_gain_range_by_sensor_digital(MinMaxStruc
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_gain_range_by_sensor_digital_presult result;
+  PlaybackCtrlService_get_gain_range_by_sensor_digital_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9218,19 +8593,18 @@ void AgentServerServiceClient::recv_get_gain_range_by_sensor_digital(MinMaxStruc
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_gain_range_by_sensor_digital failed: unknown result");
 }
 
-void AgentServerServiceClient::get_frame_rate_range(MinMaxStruct& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_frame_rate_range(MinMaxStruct& _return)
 {
-  send_get_frame_rate_range(camera_name);
+  send_get_frame_rate_range();
   recv_get_frame_rate_range(_return);
 }
 
-void AgentServerServiceClient::send_get_frame_rate_range(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_frame_rate_range()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_frame_rate_range", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_frame_rate_range_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_frame_rate_range_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9238,7 +8612,7 @@ void AgentServerServiceClient::send_get_frame_rate_range(const std::string& came
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_frame_rate_range(MinMaxStruct& _return)
+void PlaybackCtrlServiceClient::recv_get_frame_rate_range(MinMaxStruct& _return)
 {
 
   int32_t rseqid = 0;
@@ -9263,7 +8637,7 @@ void AgentServerServiceClient::recv_get_frame_rate_range(MinMaxStruct& _return)
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_frame_rate_range_presult result;
+  PlaybackCtrlService_get_frame_rate_range_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9276,19 +8650,18 @@ void AgentServerServiceClient::recv_get_frame_rate_range(MinMaxStruct& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_frame_rate_range failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::get_image_width(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::get_image_width()
 {
-  send_get_image_width(camera_name);
+  send_get_image_width();
   return recv_get_image_width();
 }
 
-void AgentServerServiceClient::send_get_image_width(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_image_width()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_image_width", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_image_width_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_image_width_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9296,7 +8669,7 @@ void AgentServerServiceClient::send_get_image_width(const std::string& camera_na
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_get_image_width()
+int32_t PlaybackCtrlServiceClient::recv_get_image_width()
 {
 
   int32_t rseqid = 0;
@@ -9322,7 +8695,7 @@ int32_t AgentServerServiceClient::recv_get_image_width()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_get_image_width_presult result;
+  PlaybackCtrlService_get_image_width_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9334,19 +8707,18 @@ int32_t AgentServerServiceClient::recv_get_image_width()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_image_width failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::get_image_height(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::get_image_height()
 {
-  send_get_image_height(camera_name);
+  send_get_image_height();
   return recv_get_image_height();
 }
 
-void AgentServerServiceClient::send_get_image_height(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_image_height()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_image_height", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_image_height_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_image_height_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9354,7 +8726,7 @@ void AgentServerServiceClient::send_get_image_height(const std::string& camera_n
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_get_image_height()
+int32_t PlaybackCtrlServiceClient::recv_get_image_height()
 {
 
   int32_t rseqid = 0;
@@ -9380,7 +8752,7 @@ int32_t AgentServerServiceClient::recv_get_image_height()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_get_image_height_presult result;
+  PlaybackCtrlService_get_image_height_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9392,19 +8764,18 @@ int32_t AgentServerServiceClient::recv_get_image_height()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_image_height failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::get_height_max(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::get_height_max()
 {
-  send_get_height_max(camera_name);
+  send_get_height_max();
   return recv_get_height_max();
 }
 
-void AgentServerServiceClient::send_get_height_max(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_height_max()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_height_max", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_height_max_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_height_max_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9412,7 +8783,7 @@ void AgentServerServiceClient::send_get_height_max(const std::string& camera_nam
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_get_height_max()
+int32_t PlaybackCtrlServiceClient::recv_get_height_max()
 {
 
   int32_t rseqid = 0;
@@ -9438,7 +8809,7 @@ int32_t AgentServerServiceClient::recv_get_height_max()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_get_height_max_presult result;
+  PlaybackCtrlService_get_height_max_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9450,19 +8821,18 @@ int32_t AgentServerServiceClient::recv_get_height_max()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_height_max failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::get_width_max(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::get_width_max()
 {
-  send_get_width_max(camera_name);
+  send_get_width_max();
   return recv_get_width_max();
 }
 
-void AgentServerServiceClient::send_get_width_max(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_width_max()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_width_max", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_width_max_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_width_max_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9470,7 +8840,7 @@ void AgentServerServiceClient::send_get_width_max(const std::string& camera_name
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_get_width_max()
+int32_t PlaybackCtrlServiceClient::recv_get_width_max()
 {
 
   int32_t rseqid = 0;
@@ -9496,7 +8866,7 @@ int32_t AgentServerServiceClient::recv_get_width_max()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_get_width_max_presult result;
+  PlaybackCtrlService_get_width_max_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9508,19 +8878,18 @@ int32_t AgentServerServiceClient::recv_get_width_max()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_width_max failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::get_offset_x(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::get_offset_x()
 {
-  send_get_offset_x(camera_name);
+  send_get_offset_x();
   return recv_get_offset_x();
 }
 
-void AgentServerServiceClient::send_get_offset_x(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_offset_x()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_offset_x", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_offset_x_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_offset_x_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9528,7 +8897,7 @@ void AgentServerServiceClient::send_get_offset_x(const std::string& camera_name)
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_get_offset_x()
+int32_t PlaybackCtrlServiceClient::recv_get_offset_x()
 {
 
   int32_t rseqid = 0;
@@ -9554,7 +8923,7 @@ int32_t AgentServerServiceClient::recv_get_offset_x()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_get_offset_x_presult result;
+  PlaybackCtrlService_get_offset_x_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9566,19 +8935,18 @@ int32_t AgentServerServiceClient::recv_get_offset_x()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_offset_x failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::get_offset_y(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::get_offset_y()
 {
-  send_get_offset_y(camera_name);
+  send_get_offset_y();
   return recv_get_offset_y();
 }
 
-void AgentServerServiceClient::send_get_offset_y(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_offset_y()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_offset_y", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_offset_y_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_offset_y_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9586,7 +8954,7 @@ void AgentServerServiceClient::send_get_offset_y(const std::string& camera_name)
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_get_offset_y()
+int32_t PlaybackCtrlServiceClient::recv_get_offset_y()
 {
 
   int32_t rseqid = 0;
@@ -9612,7 +8980,7 @@ int32_t AgentServerServiceClient::recv_get_offset_y()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_get_offset_y_presult result;
+  PlaybackCtrlService_get_offset_y_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9624,19 +8992,18 @@ int32_t AgentServerServiceClient::recv_get_offset_y()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_offset_y failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::is_enabled_turbo_transfer(const std::string& camera_name)
+int32_t PlaybackCtrlServiceClient::is_enabled_turbo_transfer()
 {
-  send_is_enabled_turbo_transfer(camera_name);
+  send_is_enabled_turbo_transfer();
   return recv_is_enabled_turbo_transfer();
 }
 
-void AgentServerServiceClient::send_is_enabled_turbo_transfer(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_is_enabled_turbo_transfer()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("is_enabled_turbo_transfer", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_is_enabled_turbo_transfer_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_is_enabled_turbo_transfer_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9644,7 +9011,7 @@ void AgentServerServiceClient::send_is_enabled_turbo_transfer(const std::string&
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_is_enabled_turbo_transfer()
+int32_t PlaybackCtrlServiceClient::recv_is_enabled_turbo_transfer()
 {
 
   int32_t rseqid = 0;
@@ -9670,7 +9037,7 @@ int32_t AgentServerServiceClient::recv_is_enabled_turbo_transfer()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_is_enabled_turbo_transfer_presult result;
+  PlaybackCtrlService_is_enabled_turbo_transfer_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9682,19 +9049,18 @@ int32_t AgentServerServiceClient::recv_is_enabled_turbo_transfer()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "is_enabled_turbo_transfer failed: unknown result");
 }
 
-void AgentServerServiceClient::get_pixel_fmt(std::string& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_pixel_fmt(std::string& _return)
 {
-  send_get_pixel_fmt(camera_name);
+  send_get_pixel_fmt();
   recv_get_pixel_fmt(_return);
 }
 
-void AgentServerServiceClient::send_get_pixel_fmt(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_pixel_fmt()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_pixel_fmt", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_pixel_fmt_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_pixel_fmt_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9702,7 +9068,7 @@ void AgentServerServiceClient::send_get_pixel_fmt(const std::string& camera_name
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_pixel_fmt(std::string& _return)
+void PlaybackCtrlServiceClient::recv_get_pixel_fmt(std::string& _return)
 {
 
   int32_t rseqid = 0;
@@ -9727,7 +9093,7 @@ void AgentServerServiceClient::recv_get_pixel_fmt(std::string& _return)
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_pixel_fmt_presult result;
+  PlaybackCtrlService_get_pixel_fmt_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9740,19 +9106,18 @@ void AgentServerServiceClient::recv_get_pixel_fmt(std::string& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_pixel_fmt failed: unknown result");
 }
 
-void AgentServerServiceClient::get_user_defined_name(std::string& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_user_defined_name(std::string& _return)
 {
-  send_get_user_defined_name(camera_name);
+  send_get_user_defined_name();
   recv_get_user_defined_name(_return);
 }
 
-void AgentServerServiceClient::send_get_user_defined_name(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_user_defined_name()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_user_defined_name", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_user_defined_name_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_user_defined_name_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9760,7 +9125,7 @@ void AgentServerServiceClient::send_get_user_defined_name(const std::string& cam
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_user_defined_name(std::string& _return)
+void PlaybackCtrlServiceClient::recv_get_user_defined_name(std::string& _return)
 {
 
   int32_t rseqid = 0;
@@ -9785,7 +9150,7 @@ void AgentServerServiceClient::recv_get_user_defined_name(std::string& _return)
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_user_defined_name_presult result;
+  PlaybackCtrlService_get_user_defined_name_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9798,19 +9163,18 @@ void AgentServerServiceClient::recv_get_user_defined_name(std::string& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_user_defined_name failed: unknown result");
 }
 
-void AgentServerServiceClient::get_device_serial_number(std::string& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_device_serial_number(std::string& _return)
 {
-  send_get_device_serial_number(camera_name);
+  send_get_device_serial_number();
   recv_get_device_serial_number(_return);
 }
 
-void AgentServerServiceClient::send_get_device_serial_number(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_device_serial_number()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_device_serial_number", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_device_serial_number_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_device_serial_number_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9818,7 +9182,7 @@ void AgentServerServiceClient::send_get_device_serial_number(const std::string& 
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_device_serial_number(std::string& _return)
+void PlaybackCtrlServiceClient::recv_get_device_serial_number(std::string& _return)
 {
 
   int32_t rseqid = 0;
@@ -9843,7 +9207,7 @@ void AgentServerServiceClient::recv_get_device_serial_number(std::string& _retur
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_device_serial_number_presult result;
+  PlaybackCtrlService_get_device_serial_number_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9856,19 +9220,18 @@ void AgentServerServiceClient::recv_get_device_serial_number(std::string& _retur
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_device_serial_number failed: unknown result");
 }
 
-void AgentServerServiceClient::get_current_ip_address(std::string& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::get_current_ip_address(std::string& _return)
 {
-  send_get_current_ip_address(camera_name);
+  send_get_current_ip_address();
   recv_get_current_ip_address(_return);
 }
 
-void AgentServerServiceClient::send_get_current_ip_address(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_current_ip_address()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_current_ip_address", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_current_ip_address_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_current_ip_address_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9876,7 +9239,7 @@ void AgentServerServiceClient::send_get_current_ip_address(const std::string& ca
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_get_current_ip_address(std::string& _return)
+void PlaybackCtrlServiceClient::recv_get_current_ip_address(std::string& _return)
 {
 
   int32_t rseqid = 0;
@@ -9901,7 +9264,7 @@ void AgentServerServiceClient::recv_get_current_ip_address(std::string& _return)
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_get_current_ip_address_presult result;
+  PlaybackCtrlService_get_current_ip_address_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9914,19 +9277,18 @@ void AgentServerServiceClient::recv_get_current_ip_address(std::string& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_current_ip_address failed: unknown result");
 }
 
-double AgentServerServiceClient::get_grab_fps(const std::string& camera_name)
+double PlaybackCtrlServiceClient::get_grab_fps()
 {
-  send_get_grab_fps(camera_name);
+  send_get_grab_fps();
   return recv_get_grab_fps();
 }
 
-void AgentServerServiceClient::send_get_grab_fps(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_grab_fps()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_grab_fps", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_grab_fps_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_grab_fps_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9934,7 +9296,7 @@ void AgentServerServiceClient::send_get_grab_fps(const std::string& camera_name)
   oprot_->getTransport()->flush();
 }
 
-double AgentServerServiceClient::recv_get_grab_fps()
+double PlaybackCtrlServiceClient::recv_get_grab_fps()
 {
 
   int32_t rseqid = 0;
@@ -9960,7 +9322,7 @@ double AgentServerServiceClient::recv_get_grab_fps()
     iprot_->getTransport()->readEnd();
   }
   double _return;
-  AgentServerService_get_grab_fps_presult result;
+  PlaybackCtrlService_get_grab_fps_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -9972,19 +9334,18 @@ double AgentServerServiceClient::recv_get_grab_fps()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_grab_fps failed: unknown result");
 }
 
-double AgentServerServiceClient::get_process_fps(const std::string& camera_name)
+double PlaybackCtrlServiceClient::get_process_fps()
 {
-  send_get_process_fps(camera_name);
+  send_get_process_fps();
   return recv_get_process_fps();
 }
 
-void AgentServerServiceClient::send_get_process_fps(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_get_process_fps()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get_process_fps", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_get_process_fps_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_get_process_fps_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9992,7 +9353,7 @@ void AgentServerServiceClient::send_get_process_fps(const std::string& camera_na
   oprot_->getTransport()->flush();
 }
 
-double AgentServerServiceClient::recv_get_process_fps()
+double PlaybackCtrlServiceClient::recv_get_process_fps()
 {
 
   int32_t rseqid = 0;
@@ -10018,7 +9379,7 @@ double AgentServerServiceClient::recv_get_process_fps()
     iprot_->getTransport()->readEnd();
   }
   double _return;
-  AgentServerService_get_process_fps_presult result;
+  PlaybackCtrlService_get_process_fps_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -10030,19 +9391,18 @@ double AgentServerServiceClient::recv_get_process_fps()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get_process_fps failed: unknown result");
 }
 
-void AgentServerServiceClient::save_feature(std::string& _return, const std::string& camera_name)
+void PlaybackCtrlServiceClient::save_feature(std::string& _return)
 {
-  send_save_feature(camera_name);
+  send_save_feature();
   recv_save_feature(_return);
 }
 
-void AgentServerServiceClient::send_save_feature(const std::string& camera_name)
+void PlaybackCtrlServiceClient::send_save_feature()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("save_feature", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_save_feature_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_save_feature_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -10050,7 +9410,7 @@ void AgentServerServiceClient::send_save_feature(const std::string& camera_name)
   oprot_->getTransport()->flush();
 }
 
-void AgentServerServiceClient::recv_save_feature(std::string& _return)
+void PlaybackCtrlServiceClient::recv_save_feature(std::string& _return)
 {
 
   int32_t rseqid = 0;
@@ -10075,7 +9435,7 @@ void AgentServerServiceClient::recv_save_feature(std::string& _return)
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  AgentServerService_save_feature_presult result;
+  PlaybackCtrlService_save_feature_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -10088,19 +9448,18 @@ void AgentServerServiceClient::recv_save_feature(std::string& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "save_feature failed: unknown result");
 }
 
-int32_t AgentServerServiceClient::update_feature(const std::string& camera_name, const std::string& content)
+int32_t PlaybackCtrlServiceClient::update_feature(const std::string& content)
 {
-  send_update_feature(camera_name, content);
+  send_update_feature(content);
   return recv_update_feature();
 }
 
-void AgentServerServiceClient::send_update_feature(const std::string& camera_name, const std::string& content)
+void PlaybackCtrlServiceClient::send_update_feature(const std::string& content)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("update_feature", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  AgentServerService_update_feature_pargs args;
-  args.camera_name = &camera_name;
+  PlaybackCtrlService_update_feature_pargs args;
   args.content = &content;
   args.write(oprot_);
 
@@ -10109,7 +9468,7 @@ void AgentServerServiceClient::send_update_feature(const std::string& camera_nam
   oprot_->getTransport()->flush();
 }
 
-int32_t AgentServerServiceClient::recv_update_feature()
+int32_t PlaybackCtrlServiceClient::recv_update_feature()
 {
 
   int32_t rseqid = 0;
@@ -10135,7 +9494,7 @@ int32_t AgentServerServiceClient::recv_update_feature()
     iprot_->getTransport()->readEnd();
   }
   int32_t _return;
-  AgentServerService_update_feature_presult result;
+  PlaybackCtrlService_update_feature_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -10147,65 +9506,7 @@ int32_t AgentServerServiceClient::recv_update_feature()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "update_feature failed: unknown result");
 }
 
-int64_t AgentServerServiceClient::ping_server(const int64_t seq)
-{
-  send_ping_server(seq);
-  return recv_ping_server();
-}
-
-void AgentServerServiceClient::send_ping_server(const int64_t seq)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("ping_server", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  AgentServerService_ping_server_pargs args;
-  args.seq = &seq;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-int64_t AgentServerServiceClient::recv_ping_server()
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("ping_server") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  int64_t _return;
-  AgentServerService_ping_server_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    return _return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "ping_server failed: unknown result");
-}
-
-bool AgentServerServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
+bool PlaybackCtrlServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
   ProcessMap::iterator pfn;
   pfn = processMap_.find(fname);
   if (pfn == processMap_.end()) {
@@ -10224,38 +9525,38 @@ bool AgentServerServiceProcessor::dispatchCall(::apache::thrift::protocol::TProt
   return true;
 }
 
-void AgentServerServiceProcessor::process_find_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_play_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.find_cameras", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_play_frame_rate", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.find_cameras");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_play_frame_rate");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.find_cameras");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_play_frame_rate");
   }
 
-  AgentServerService_find_cameras_args args;
+  PlaybackCtrlService_set_play_frame_rate_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.find_cameras", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_play_frame_rate", bytes);
   }
 
-  AgentServerService_find_cameras_result result;
+  PlaybackCtrlService_set_play_frame_rate_result result;
   try {
-    iface_->find_cameras(result.success);
+    result.success = iface_->set_play_frame_rate(args.play_frame_rate);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.find_cameras");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_play_frame_rate");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("find_cameras", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("set_play_frame_rate", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10264,52 +9565,52 @@ void AgentServerServiceProcessor::process_find_cameras(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.find_cameras");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_play_frame_rate");
   }
 
-  oprot->writeMessageBegin("find_cameras", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("set_play_frame_rate", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.find_cameras", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_play_frame_rate", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_add_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_play_frame_resolution(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.add_cameras", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_play_frame_resolution", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.add_cameras");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_play_frame_resolution");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.add_cameras");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_play_frame_resolution");
   }
 
-  AgentServerService_add_cameras_args args;
+  PlaybackCtrlService_set_play_frame_resolution_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.add_cameras", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_play_frame_resolution", bytes);
   }
 
-  AgentServerService_add_cameras_result result;
+  PlaybackCtrlService_set_play_frame_resolution_result result;
   try {
-    result.success = iface_->add_cameras(args.l);
+    result.success = iface_->set_play_frame_resolution(args.w, args.h);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.add_cameras");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_play_frame_resolution");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("add_cameras", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("set_play_frame_resolution", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10318,52 +9619,52 @@ void AgentServerServiceProcessor::process_add_cameras(int32_t seqid, ::apache::t
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.add_cameras");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_play_frame_resolution");
   }
 
-  oprot->writeMessageBegin("add_cameras", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("set_play_frame_resolution", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.add_cameras", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_play_frame_resolution", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_hold_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_store_file(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_hold_cameras", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_store_file", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_hold_cameras");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_store_file");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_hold_cameras");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_store_file");
   }
 
-  AgentServerService_get_hold_cameras_args args;
+  PlaybackCtrlService_set_store_file_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_hold_cameras", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_store_file", bytes);
   }
 
-  AgentServerService_get_hold_cameras_result result;
+  PlaybackCtrlService_set_store_file_result result;
   try {
-    iface_->get_hold_cameras(result.success);
+    result.success = iface_->set_store_file(args.flag, args.file_name);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_hold_cameras");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_store_file");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("get_hold_cameras", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("set_store_file", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10372,52 +9673,52 @@ void AgentServerServiceProcessor::process_get_hold_cameras(int32_t seqid, ::apac
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_hold_cameras");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_store_file");
   }
 
-  oprot->writeMessageBegin("get_hold_cameras", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("set_store_file", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_hold_cameras", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_store_file", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_del_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_start_play_live(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.del_cameras", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.start_play_live", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.del_cameras");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.start_play_live");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.del_cameras");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.start_play_live");
   }
 
-  AgentServerService_del_cameras_args args;
+  PlaybackCtrlService_start_play_live_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.del_cameras", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.start_play_live", bytes);
   }
 
-  AgentServerService_del_cameras_result result;
+  PlaybackCtrlService_start_play_live_result result;
   try {
-    result.success = iface_->del_cameras(args.l);
+    result.success = iface_->start_play_live();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.del_cameras");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.start_play_live");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("del_cameras", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("start_play_live", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10426,52 +9727,52 @@ void AgentServerServiceProcessor::process_del_cameras(int32_t seqid, ::apache::t
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.del_cameras");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.start_play_live");
   }
 
-  oprot->writeMessageBegin("del_cameras", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("start_play_live", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.del_cameras", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.start_play_live", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_open(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_stop_play_live(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.open", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.stop_play_live", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.open");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.stop_play_live");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.open");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.stop_play_live");
   }
 
-  AgentServerService_open_args args;
+  PlaybackCtrlService_stop_play_live_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.open", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.stop_play_live", bytes);
   }
 
-  AgentServerService_open_result result;
+  PlaybackCtrlService_stop_play_live_result result;
   try {
-    result.success = iface_->open(args.camera_name);
+    result.success = iface_->stop_play_live();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.open");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.stop_play_live");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("open", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("stop_play_live", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10480,52 +9781,52 @@ void AgentServerServiceProcessor::process_open(int32_t seqid, ::apache::thrift::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.open");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.stop_play_live");
   }
 
-  oprot->writeMessageBegin("open", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("stop_play_live", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.open", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.stop_play_live", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_close(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.close", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.forward_play", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.close");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.forward_play");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.close");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.forward_play");
   }
 
-  AgentServerService_close_args args;
+  PlaybackCtrlService_forward_play_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.close", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.forward_play", bytes);
   }
 
-  AgentServerService_close_result result;
+  PlaybackCtrlService_forward_play_result result;
   try {
-    result.success = iface_->close(args.camera_name);
+    result.success = iface_->forward_play(args.frame_seq, args.play_frame_rate, args.how_many_frames);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.close");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.forward_play");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("close", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("forward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10534,52 +9835,52 @@ void AgentServerServiceProcessor::process_close(int32_t seqid, ::apache::thrift:
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.close");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.forward_play");
   }
 
-  oprot->writeMessageBegin("close", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("forward_play", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.close", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.forward_play", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_start(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.start", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.backward_play", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.start");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.backward_play");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.start");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.backward_play");
   }
 
-  AgentServerService_start_args args;
+  PlaybackCtrlService_backward_play_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.start", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.backward_play", bytes);
   }
 
-  AgentServerService_start_result result;
+  PlaybackCtrlService_backward_play_result result;
   try {
-    result.success = iface_->start(args.camera_name, args.display_frame_rate);
+    result.success = iface_->backward_play(args.frame_seq, args.play_frame_rate, args.how_many_frames);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.start");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.backward_play");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("start", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("backward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10588,52 +9889,52 @@ void AgentServerServiceProcessor::process_start(int32_t seqid, ::apache::thrift:
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.start");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.backward_play");
   }
 
-  oprot->writeMessageBegin("start", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("backward_play", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.start", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.backward_play", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_stop(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_forward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.stop", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.forward_play_temp", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.stop");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.forward_play_temp");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.stop");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.forward_play_temp");
   }
 
-  AgentServerService_stop_args args;
+  PlaybackCtrlService_forward_play_temp_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.stop", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.forward_play_temp", bytes);
   }
 
-  AgentServerService_stop_result result;
+  PlaybackCtrlService_forward_play_temp_result result;
   try {
-    result.success = iface_->stop(args.camera_name);
+    result.success = iface_->forward_play_temp(args.frame_seq, args.play_frame_rate, args.how_many_frames);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.stop");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.forward_play_temp");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("stop", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("forward_play_temp", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -10642,48 +9943,102 @@ void AgentServerServiceProcessor::process_stop(int32_t seqid, ::apache::thrift::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.stop");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.forward_play_temp");
   }
 
-  oprot->writeMessageBegin("stop", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("forward_play_temp", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.stop", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.forward_play_temp", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_backward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_exposure_time", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.backward_play_temp", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_exposure_time");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.backward_play_temp");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_exposure_time");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.backward_play_temp");
   }
 
-  AgentServerService_set_exposure_time_args args;
+  PlaybackCtrlService_backward_play_temp_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_exposure_time", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.backward_play_temp", bytes);
   }
 
-  AgentServerService_set_exposure_time_result result;
+  PlaybackCtrlService_backward_play_temp_result result;
   try {
-    result.success = iface_->set_exposure_time(args.camera_name, args.microseconds);
+    result.success = iface_->backward_play_temp(args.frame_seq, args.play_frame_rate, args.how_many_frames);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_exposure_time");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.backward_play_temp");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("backward_play_temp", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.backward_play_temp");
+  }
+
+  oprot->writeMessageBegin("backward_play_temp", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.backward_play_temp", bytes);
+  }
+}
+
+void PlaybackCtrlServiceProcessor::process_set_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_exposure_time", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_exposure_time");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_exposure_time");
+  }
+
+  PlaybackCtrlService_set_exposure_time_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_exposure_time", bytes);
+  }
+
+  PlaybackCtrlService_set_exposure_time_result result;
+  try {
+    result.success = iface_->set_exposure_time(args.microseconds);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_exposure_time");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -10696,7 +10051,7 @@ void AgentServerServiceProcessor::process_set_exposure_time(int32_t seqid, ::apa
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_exposure_time");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_exposure_time");
   }
 
   oprot->writeMessageBegin("set_exposure_time", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -10706,38 +10061,38 @@ void AgentServerServiceProcessor::process_set_exposure_time(int32_t seqid, ::apa
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_exposure_time", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_exposure_time", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_gain_by_sensor_all", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_gain_by_sensor_all", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_gain_by_sensor_all");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_gain_by_sensor_all");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_gain_by_sensor_all");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_gain_by_sensor_all");
   }
 
-  AgentServerService_set_gain_by_sensor_all_args args;
+  PlaybackCtrlService_set_gain_by_sensor_all_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_gain_by_sensor_all", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_gain_by_sensor_all", bytes);
   }
 
-  AgentServerService_set_gain_by_sensor_all_result result;
+  PlaybackCtrlService_set_gain_by_sensor_all_result result;
   try {
-    result.success = iface_->set_gain_by_sensor_all(args.camera_name, args.gain);
+    result.success = iface_->set_gain_by_sensor_all(args.gain);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_gain_by_sensor_all");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_gain_by_sensor_all");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -10750,7 +10105,7 @@ void AgentServerServiceProcessor::process_set_gain_by_sensor_all(int32_t seqid, 
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_gain_by_sensor_all");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_gain_by_sensor_all");
   }
 
   oprot->writeMessageBegin("set_gain_by_sensor_all", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -10760,38 +10115,38 @@ void AgentServerServiceProcessor::process_set_gain_by_sensor_all(int32_t seqid, 
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_gain_by_sensor_all", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_gain_by_sensor_all", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_gain_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_gain_by_sensor_analog", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_gain_by_sensor_analog", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_gain_by_sensor_analog");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_gain_by_sensor_analog");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_gain_by_sensor_analog");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_gain_by_sensor_analog");
   }
 
-  AgentServerService_set_gain_by_sensor_analog_args args;
+  PlaybackCtrlService_set_gain_by_sensor_analog_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_gain_by_sensor_analog", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_gain_by_sensor_analog", bytes);
   }
 
-  AgentServerService_set_gain_by_sensor_analog_result result;
+  PlaybackCtrlService_set_gain_by_sensor_analog_result result;
   try {
-    result.success = iface_->set_gain_by_sensor_analog(args.camera_name, args.gain);
+    result.success = iface_->set_gain_by_sensor_analog(args.gain);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_gain_by_sensor_analog");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_gain_by_sensor_analog");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -10804,7 +10159,7 @@ void AgentServerServiceProcessor::process_set_gain_by_sensor_analog(int32_t seqi
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_gain_by_sensor_analog");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_gain_by_sensor_analog");
   }
 
   oprot->writeMessageBegin("set_gain_by_sensor_analog", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -10814,38 +10169,38 @@ void AgentServerServiceProcessor::process_set_gain_by_sensor_analog(int32_t seqi
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_gain_by_sensor_analog", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_gain_by_sensor_analog", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_gain_by_sensor_digital(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_digital(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_gain_by_sensor_digital", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_gain_by_sensor_digital", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_gain_by_sensor_digital");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_gain_by_sensor_digital");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_gain_by_sensor_digital");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_gain_by_sensor_digital");
   }
 
-  AgentServerService_set_gain_by_sensor_digital_args args;
+  PlaybackCtrlService_set_gain_by_sensor_digital_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_gain_by_sensor_digital", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_gain_by_sensor_digital", bytes);
   }
 
-  AgentServerService_set_gain_by_sensor_digital_result result;
+  PlaybackCtrlService_set_gain_by_sensor_digital_result result;
   try {
-    result.success = iface_->set_gain_by_sensor_digital(args.camera_name, args.gain);
+    result.success = iface_->set_gain_by_sensor_digital(args.gain);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_gain_by_sensor_digital");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_gain_by_sensor_digital");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -10858,7 +10213,7 @@ void AgentServerServiceProcessor::process_set_gain_by_sensor_digital(int32_t seq
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_gain_by_sensor_digital");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_gain_by_sensor_digital");
   }
 
   oprot->writeMessageBegin("set_gain_by_sensor_digital", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -10868,38 +10223,38 @@ void AgentServerServiceProcessor::process_set_gain_by_sensor_digital(int32_t seq
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_gain_by_sensor_digital", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_gain_by_sensor_digital", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_frame_rate", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_frame_rate", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_frame_rate");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_frame_rate");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_frame_rate");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_frame_rate");
   }
 
-  AgentServerService_set_frame_rate_args args;
+  PlaybackCtrlService_set_frame_rate_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_frame_rate", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_frame_rate", bytes);
   }
 
-  AgentServerService_set_frame_rate_result result;
+  PlaybackCtrlService_set_frame_rate_result result;
   try {
-    result.success = iface_->set_frame_rate(args.camera_name, args.rate);
+    result.success = iface_->set_frame_rate(args.rate);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_frame_rate");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_frame_rate");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -10912,7 +10267,7 @@ void AgentServerServiceProcessor::process_set_frame_rate(int32_t seqid, ::apache
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_frame_rate");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_frame_rate");
   }
 
   oprot->writeMessageBegin("set_frame_rate", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -10922,38 +10277,38 @@ void AgentServerServiceProcessor::process_set_frame_rate(int32_t seqid, ::apache
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_frame_rate", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_frame_rate", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_enable_turbo_transfer(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_enable_turbo_transfer(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.enable_turbo_transfer", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.enable_turbo_transfer", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.enable_turbo_transfer");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.enable_turbo_transfer");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.enable_turbo_transfer");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.enable_turbo_transfer");
   }
 
-  AgentServerService_enable_turbo_transfer_args args;
+  PlaybackCtrlService_enable_turbo_transfer_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.enable_turbo_transfer", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.enable_turbo_transfer", bytes);
   }
 
-  AgentServerService_enable_turbo_transfer_result result;
+  PlaybackCtrlService_enable_turbo_transfer_result result;
   try {
-    result.success = iface_->enable_turbo_transfer(args.camera_name, args.enabled);
+    result.success = iface_->enable_turbo_transfer(args.enabled);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.enable_turbo_transfer");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.enable_turbo_transfer");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -10966,7 +10321,7 @@ void AgentServerServiceProcessor::process_enable_turbo_transfer(int32_t seqid, :
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.enable_turbo_transfer");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.enable_turbo_transfer");
   }
 
   oprot->writeMessageBegin("enable_turbo_transfer", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -10976,38 +10331,38 @@ void AgentServerServiceProcessor::process_enable_turbo_transfer(int32_t seqid, :
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.enable_turbo_transfer", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.enable_turbo_transfer", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_pixel_fmt(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_pixel_fmt(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_pixel_fmt", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_pixel_fmt", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_pixel_fmt");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_pixel_fmt");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_pixel_fmt");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_pixel_fmt");
   }
 
-  AgentServerService_set_pixel_fmt_args args;
+  PlaybackCtrlService_set_pixel_fmt_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_pixel_fmt", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_pixel_fmt", bytes);
   }
 
-  AgentServerService_set_pixel_fmt_result result;
+  PlaybackCtrlService_set_pixel_fmt_result result;
   try {
-    result.success = iface_->set_pixel_fmt(args.camera_name, args.pixel_fmt);
+    result.success = iface_->set_pixel_fmt(args.pixel_fmt);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_pixel_fmt");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_pixel_fmt");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11020,7 +10375,7 @@ void AgentServerServiceProcessor::process_set_pixel_fmt(int32_t seqid, ::apache:
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_pixel_fmt");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_pixel_fmt");
   }
 
   oprot->writeMessageBegin("set_pixel_fmt", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11030,38 +10385,38 @@ void AgentServerServiceProcessor::process_set_pixel_fmt(int32_t seqid, ::apache:
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_pixel_fmt", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_pixel_fmt", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_offset_x(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_offset_x(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_offset_x", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_offset_x", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_offset_x");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_offset_x");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_offset_x");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_offset_x");
   }
 
-  AgentServerService_set_offset_x_args args;
+  PlaybackCtrlService_set_offset_x_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_offset_x", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_offset_x", bytes);
   }
 
-  AgentServerService_set_offset_x_result result;
+  PlaybackCtrlService_set_offset_x_result result;
   try {
-    result.success = iface_->set_offset_x(args.camera_name, args.offset_x);
+    result.success = iface_->set_offset_x(args.offset_x);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_offset_x");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_offset_x");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11074,7 +10429,7 @@ void AgentServerServiceProcessor::process_set_offset_x(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_offset_x");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_offset_x");
   }
 
   oprot->writeMessageBegin("set_offset_x", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11084,38 +10439,38 @@ void AgentServerServiceProcessor::process_set_offset_x(int32_t seqid, ::apache::
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_offset_x", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_offset_x", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_offset_y(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_offset_y(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_offset_y", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_offset_y", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_offset_y");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_offset_y");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_offset_y");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_offset_y");
   }
 
-  AgentServerService_set_offset_y_args args;
+  PlaybackCtrlService_set_offset_y_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_offset_y", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_offset_y", bytes);
   }
 
-  AgentServerService_set_offset_y_result result;
+  PlaybackCtrlService_set_offset_y_result result;
   try {
-    result.success = iface_->set_offset_y(args.camera_name, args.offset_y);
+    result.success = iface_->set_offset_y(args.offset_y);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_offset_y");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_offset_y");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11128,7 +10483,7 @@ void AgentServerServiceProcessor::process_set_offset_y(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_offset_y");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_offset_y");
   }
 
   oprot->writeMessageBegin("set_offset_y", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11138,38 +10493,38 @@ void AgentServerServiceProcessor::process_set_offset_y(int32_t seqid, ::apache::
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_offset_y", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_offset_y", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_image_width(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_image_width(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_image_width", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_image_width", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_image_width");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_image_width");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_image_width");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_image_width");
   }
 
-  AgentServerService_set_image_width_args args;
+  PlaybackCtrlService_set_image_width_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_image_width", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_image_width", bytes);
   }
 
-  AgentServerService_set_image_width_result result;
+  PlaybackCtrlService_set_image_width_result result;
   try {
-    result.success = iface_->set_image_width(args.camera_name, args.width);
+    result.success = iface_->set_image_width(args.width);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_image_width");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_image_width");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11182,7 +10537,7 @@ void AgentServerServiceProcessor::process_set_image_width(int32_t seqid, ::apach
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_image_width");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_image_width");
   }
 
   oprot->writeMessageBegin("set_image_width", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11192,38 +10547,38 @@ void AgentServerServiceProcessor::process_set_image_width(int32_t seqid, ::apach
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_image_width", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_image_width", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_set_image_height(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_set_image_height(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.set_image_height", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.set_image_height", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.set_image_height");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.set_image_height");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.set_image_height");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.set_image_height");
   }
 
-  AgentServerService_set_image_height_args args;
+  PlaybackCtrlService_set_image_height_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.set_image_height", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.set_image_height", bytes);
   }
 
-  AgentServerService_set_image_height_result result;
+  PlaybackCtrlService_set_image_height_result result;
   try {
-    result.success = iface_->set_image_height(args.camera_name, args.height);
+    result.success = iface_->set_image_height(args.height);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.set_image_height");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.set_image_height");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11236,7 +10591,7 @@ void AgentServerServiceProcessor::process_set_image_height(int32_t seqid, ::apac
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.set_image_height");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.set_image_height");
   }
 
   oprot->writeMessageBegin("set_image_height", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11246,38 +10601,38 @@ void AgentServerServiceProcessor::process_set_image_height(int32_t seqid, ::apac
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.set_image_height", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.set_image_height", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_exposure_time", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_exposure_time", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_exposure_time");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_exposure_time");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_exposure_time");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_exposure_time");
   }
 
-  AgentServerService_get_exposure_time_args args;
+  PlaybackCtrlService_get_exposure_time_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_exposure_time", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_exposure_time", bytes);
   }
 
-  AgentServerService_get_exposure_time_result result;
+  PlaybackCtrlService_get_exposure_time_result result;
   try {
-    result.success = iface_->get_exposure_time(args.camera_name);
+    result.success = iface_->get_exposure_time();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_exposure_time");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_exposure_time");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11290,7 +10645,7 @@ void AgentServerServiceProcessor::process_get_exposure_time(int32_t seqid, ::apa
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_exposure_time");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_exposure_time");
   }
 
   oprot->writeMessageBegin("get_exposure_time", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11300,38 +10655,38 @@ void AgentServerServiceProcessor::process_get_exposure_time(int32_t seqid, ::apa
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_exposure_time", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_exposure_time", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_gain_by_sensor_all", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_gain_by_sensor_all", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_gain_by_sensor_all");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_gain_by_sensor_all");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_gain_by_sensor_all");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_gain_by_sensor_all");
   }
 
-  AgentServerService_get_gain_by_sensor_all_args args;
+  PlaybackCtrlService_get_gain_by_sensor_all_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_gain_by_sensor_all", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_gain_by_sensor_all", bytes);
   }
 
-  AgentServerService_get_gain_by_sensor_all_result result;
+  PlaybackCtrlService_get_gain_by_sensor_all_result result;
   try {
-    result.success = iface_->get_gain_by_sensor_all(args.camera_name);
+    result.success = iface_->get_gain_by_sensor_all();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_gain_by_sensor_all");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_gain_by_sensor_all");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11344,7 +10699,7 @@ void AgentServerServiceProcessor::process_get_gain_by_sensor_all(int32_t seqid, 
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_gain_by_sensor_all");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_gain_by_sensor_all");
   }
 
   oprot->writeMessageBegin("get_gain_by_sensor_all", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11354,38 +10709,38 @@ void AgentServerServiceProcessor::process_get_gain_by_sensor_all(int32_t seqid, 
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_gain_by_sensor_all", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_gain_by_sensor_all", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_gain_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_gain_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_gain_by_sensor_analog", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_gain_by_sensor_analog", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_gain_by_sensor_analog");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_gain_by_sensor_analog");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_gain_by_sensor_analog");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_gain_by_sensor_analog");
   }
 
-  AgentServerService_get_gain_by_sensor_analog_args args;
+  PlaybackCtrlService_get_gain_by_sensor_analog_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_gain_by_sensor_analog", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_gain_by_sensor_analog", bytes);
   }
 
-  AgentServerService_get_gain_by_sensor_analog_result result;
+  PlaybackCtrlService_get_gain_by_sensor_analog_result result;
   try {
-    result.success = iface_->get_gain_by_sensor_analog(args.camera_name);
+    result.success = iface_->get_gain_by_sensor_analog();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_gain_by_sensor_analog");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_gain_by_sensor_analog");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11398,7 +10753,7 @@ void AgentServerServiceProcessor::process_get_gain_by_sensor_analog(int32_t seqi
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_gain_by_sensor_analog");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_gain_by_sensor_analog");
   }
 
   oprot->writeMessageBegin("get_gain_by_sensor_analog", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11408,38 +10763,38 @@ void AgentServerServiceProcessor::process_get_gain_by_sensor_analog(int32_t seqi
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_gain_by_sensor_analog", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_gain_by_sensor_analog", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_gain_by_sensor_digital(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_gain_by_sensor_digital(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_gain_by_sensor_digital", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_gain_by_sensor_digital", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_gain_by_sensor_digital");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_gain_by_sensor_digital");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_gain_by_sensor_digital");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_gain_by_sensor_digital");
   }
 
-  AgentServerService_get_gain_by_sensor_digital_args args;
+  PlaybackCtrlService_get_gain_by_sensor_digital_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_gain_by_sensor_digital", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_gain_by_sensor_digital", bytes);
   }
 
-  AgentServerService_get_gain_by_sensor_digital_result result;
+  PlaybackCtrlService_get_gain_by_sensor_digital_result result;
   try {
-    result.success = iface_->get_gain_by_sensor_digital(args.camera_name);
+    result.success = iface_->get_gain_by_sensor_digital();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_gain_by_sensor_digital");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_gain_by_sensor_digital");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11452,7 +10807,7 @@ void AgentServerServiceProcessor::process_get_gain_by_sensor_digital(int32_t seq
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_gain_by_sensor_digital");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_gain_by_sensor_digital");
   }
 
   oprot->writeMessageBegin("get_gain_by_sensor_digital", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11462,38 +10817,38 @@ void AgentServerServiceProcessor::process_get_gain_by_sensor_digital(int32_t seq
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_gain_by_sensor_digital", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_gain_by_sensor_digital", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_frame_rate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_frame_rate", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_frame_rate", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_frame_rate");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_frame_rate");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_frame_rate");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_frame_rate");
   }
 
-  AgentServerService_get_frame_rate_args args;
+  PlaybackCtrlService_get_frame_rate_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_frame_rate", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_frame_rate", bytes);
   }
 
-  AgentServerService_get_frame_rate_result result;
+  PlaybackCtrlService_get_frame_rate_result result;
   try {
-    result.success = iface_->get_frame_rate(args.camera_name);
+    result.success = iface_->get_frame_rate();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_frame_rate");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_frame_rate");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11506,7 +10861,7 @@ void AgentServerServiceProcessor::process_get_frame_rate(int32_t seqid, ::apache
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_frame_rate");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_frame_rate");
   }
 
   oprot->writeMessageBegin("get_frame_rate", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11516,38 +10871,38 @@ void AgentServerServiceProcessor::process_get_frame_rate(int32_t seqid, ::apache
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_frame_rate", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_frame_rate", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_exposure_time_range(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_exposure_time_range(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_exposure_time_range", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_exposure_time_range", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_exposure_time_range");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_exposure_time_range");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_exposure_time_range");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_exposure_time_range");
   }
 
-  AgentServerService_get_exposure_time_range_args args;
+  PlaybackCtrlService_get_exposure_time_range_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_exposure_time_range", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_exposure_time_range", bytes);
   }
 
-  AgentServerService_get_exposure_time_range_result result;
+  PlaybackCtrlService_get_exposure_time_range_result result;
   try {
-    iface_->get_exposure_time_range(result.success, args.camera_name);
+    iface_->get_exposure_time_range(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_exposure_time_range");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_exposure_time_range");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11560,7 +10915,7 @@ void AgentServerServiceProcessor::process_get_exposure_time_range(int32_t seqid,
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_exposure_time_range");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_exposure_time_range");
   }
 
   oprot->writeMessageBegin("get_exposure_time_range", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11570,38 +10925,38 @@ void AgentServerServiceProcessor::process_get_exposure_time_range(int32_t seqid,
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_exposure_time_range", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_exposure_time_range", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_gain_range_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_gain_range_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_gain_range_by_sensor_all", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_gain_range_by_sensor_all", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_gain_range_by_sensor_all");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_gain_range_by_sensor_all");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_gain_range_by_sensor_all");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_all");
   }
 
-  AgentServerService_get_gain_range_by_sensor_all_args args;
+  PlaybackCtrlService_get_gain_range_by_sensor_all_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_gain_range_by_sensor_all", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_all", bytes);
   }
 
-  AgentServerService_get_gain_range_by_sensor_all_result result;
+  PlaybackCtrlService_get_gain_range_by_sensor_all_result result;
   try {
-    iface_->get_gain_range_by_sensor_all(result.success, args.camera_name);
+    iface_->get_gain_range_by_sensor_all(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_gain_range_by_sensor_all");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_all");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11614,7 +10969,7 @@ void AgentServerServiceProcessor::process_get_gain_range_by_sensor_all(int32_t s
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_gain_range_by_sensor_all");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_all");
   }
 
   oprot->writeMessageBegin("get_gain_range_by_sensor_all", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11624,38 +10979,38 @@ void AgentServerServiceProcessor::process_get_gain_range_by_sensor_all(int32_t s
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_gain_range_by_sensor_all", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_all", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_gain_range_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_gain_range_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_gain_range_by_sensor_analog", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_gain_range_by_sensor_analog", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_gain_range_by_sensor_analog");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_gain_range_by_sensor_analog");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_gain_range_by_sensor_analog");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_analog");
   }
 
-  AgentServerService_get_gain_range_by_sensor_analog_args args;
+  PlaybackCtrlService_get_gain_range_by_sensor_analog_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_gain_range_by_sensor_analog", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_analog", bytes);
   }
 
-  AgentServerService_get_gain_range_by_sensor_analog_result result;
+  PlaybackCtrlService_get_gain_range_by_sensor_analog_result result;
   try {
-    iface_->get_gain_range_by_sensor_analog(result.success, args.camera_name);
+    iface_->get_gain_range_by_sensor_analog(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_gain_range_by_sensor_analog");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_analog");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11668,7 +11023,7 @@ void AgentServerServiceProcessor::process_get_gain_range_by_sensor_analog(int32_
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_gain_range_by_sensor_analog");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_analog");
   }
 
   oprot->writeMessageBegin("get_gain_range_by_sensor_analog", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11678,38 +11033,38 @@ void AgentServerServiceProcessor::process_get_gain_range_by_sensor_analog(int32_
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_gain_range_by_sensor_analog", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_analog", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_gain_range_by_sensor_digital(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_gain_range_by_sensor_digital(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_gain_range_by_sensor_digital", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_gain_range_by_sensor_digital", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_gain_range_by_sensor_digital");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_gain_range_by_sensor_digital");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_gain_range_by_sensor_digital");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_digital");
   }
 
-  AgentServerService_get_gain_range_by_sensor_digital_args args;
+  PlaybackCtrlService_get_gain_range_by_sensor_digital_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_gain_range_by_sensor_digital", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_digital", bytes);
   }
 
-  AgentServerService_get_gain_range_by_sensor_digital_result result;
+  PlaybackCtrlService_get_gain_range_by_sensor_digital_result result;
   try {
-    iface_->get_gain_range_by_sensor_digital(result.success, args.camera_name);
+    iface_->get_gain_range_by_sensor_digital(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_gain_range_by_sensor_digital");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_digital");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11722,7 +11077,7 @@ void AgentServerServiceProcessor::process_get_gain_range_by_sensor_digital(int32
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_gain_range_by_sensor_digital");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_digital");
   }
 
   oprot->writeMessageBegin("get_gain_range_by_sensor_digital", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11732,38 +11087,38 @@ void AgentServerServiceProcessor::process_get_gain_range_by_sensor_digital(int32
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_gain_range_by_sensor_digital", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_gain_range_by_sensor_digital", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_frame_rate_range(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_frame_rate_range(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_frame_rate_range", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_frame_rate_range", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_frame_rate_range");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_frame_rate_range");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_frame_rate_range");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_frame_rate_range");
   }
 
-  AgentServerService_get_frame_rate_range_args args;
+  PlaybackCtrlService_get_frame_rate_range_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_frame_rate_range", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_frame_rate_range", bytes);
   }
 
-  AgentServerService_get_frame_rate_range_result result;
+  PlaybackCtrlService_get_frame_rate_range_result result;
   try {
-    iface_->get_frame_rate_range(result.success, args.camera_name);
+    iface_->get_frame_rate_range(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_frame_rate_range");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_frame_rate_range");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11776,7 +11131,7 @@ void AgentServerServiceProcessor::process_get_frame_rate_range(int32_t seqid, ::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_frame_rate_range");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_frame_rate_range");
   }
 
   oprot->writeMessageBegin("get_frame_rate_range", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11786,38 +11141,38 @@ void AgentServerServiceProcessor::process_get_frame_rate_range(int32_t seqid, ::
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_frame_rate_range", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_frame_rate_range", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_image_width(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_image_width(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_image_width", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_image_width", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_image_width");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_image_width");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_image_width");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_image_width");
   }
 
-  AgentServerService_get_image_width_args args;
+  PlaybackCtrlService_get_image_width_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_image_width", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_image_width", bytes);
   }
 
-  AgentServerService_get_image_width_result result;
+  PlaybackCtrlService_get_image_width_result result;
   try {
-    result.success = iface_->get_image_width(args.camera_name);
+    result.success = iface_->get_image_width();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_image_width");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_image_width");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11830,7 +11185,7 @@ void AgentServerServiceProcessor::process_get_image_width(int32_t seqid, ::apach
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_image_width");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_image_width");
   }
 
   oprot->writeMessageBegin("get_image_width", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11840,38 +11195,38 @@ void AgentServerServiceProcessor::process_get_image_width(int32_t seqid, ::apach
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_image_width", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_image_width", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_image_height(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_image_height(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_image_height", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_image_height", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_image_height");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_image_height");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_image_height");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_image_height");
   }
 
-  AgentServerService_get_image_height_args args;
+  PlaybackCtrlService_get_image_height_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_image_height", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_image_height", bytes);
   }
 
-  AgentServerService_get_image_height_result result;
+  PlaybackCtrlService_get_image_height_result result;
   try {
-    result.success = iface_->get_image_height(args.camera_name);
+    result.success = iface_->get_image_height();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_image_height");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_image_height");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11884,7 +11239,7 @@ void AgentServerServiceProcessor::process_get_image_height(int32_t seqid, ::apac
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_image_height");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_image_height");
   }
 
   oprot->writeMessageBegin("get_image_height", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11894,38 +11249,38 @@ void AgentServerServiceProcessor::process_get_image_height(int32_t seqid, ::apac
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_image_height", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_image_height", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_height_max(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_height_max(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_height_max", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_height_max", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_height_max");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_height_max");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_height_max");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_height_max");
   }
 
-  AgentServerService_get_height_max_args args;
+  PlaybackCtrlService_get_height_max_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_height_max", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_height_max", bytes);
   }
 
-  AgentServerService_get_height_max_result result;
+  PlaybackCtrlService_get_height_max_result result;
   try {
-    result.success = iface_->get_height_max(args.camera_name);
+    result.success = iface_->get_height_max();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_height_max");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_height_max");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11938,7 +11293,7 @@ void AgentServerServiceProcessor::process_get_height_max(int32_t seqid, ::apache
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_height_max");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_height_max");
   }
 
   oprot->writeMessageBegin("get_height_max", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -11948,38 +11303,38 @@ void AgentServerServiceProcessor::process_get_height_max(int32_t seqid, ::apache
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_height_max", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_height_max", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_width_max(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_width_max(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_width_max", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_width_max", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_width_max");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_width_max");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_width_max");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_width_max");
   }
 
-  AgentServerService_get_width_max_args args;
+  PlaybackCtrlService_get_width_max_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_width_max", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_width_max", bytes);
   }
 
-  AgentServerService_get_width_max_result result;
+  PlaybackCtrlService_get_width_max_result result;
   try {
-    result.success = iface_->get_width_max(args.camera_name);
+    result.success = iface_->get_width_max();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_width_max");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_width_max");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -11992,7 +11347,7 @@ void AgentServerServiceProcessor::process_get_width_max(int32_t seqid, ::apache:
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_width_max");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_width_max");
   }
 
   oprot->writeMessageBegin("get_width_max", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12002,38 +11357,38 @@ void AgentServerServiceProcessor::process_get_width_max(int32_t seqid, ::apache:
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_width_max", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_width_max", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_offset_x(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_offset_x(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_offset_x", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_offset_x", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_offset_x");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_offset_x");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_offset_x");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_offset_x");
   }
 
-  AgentServerService_get_offset_x_args args;
+  PlaybackCtrlService_get_offset_x_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_offset_x", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_offset_x", bytes);
   }
 
-  AgentServerService_get_offset_x_result result;
+  PlaybackCtrlService_get_offset_x_result result;
   try {
-    result.success = iface_->get_offset_x(args.camera_name);
+    result.success = iface_->get_offset_x();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_offset_x");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_offset_x");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12046,7 +11401,7 @@ void AgentServerServiceProcessor::process_get_offset_x(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_offset_x");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_offset_x");
   }
 
   oprot->writeMessageBegin("get_offset_x", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12056,38 +11411,38 @@ void AgentServerServiceProcessor::process_get_offset_x(int32_t seqid, ::apache::
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_offset_x", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_offset_x", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_offset_y(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_offset_y(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_offset_y", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_offset_y", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_offset_y");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_offset_y");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_offset_y");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_offset_y");
   }
 
-  AgentServerService_get_offset_y_args args;
+  PlaybackCtrlService_get_offset_y_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_offset_y", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_offset_y", bytes);
   }
 
-  AgentServerService_get_offset_y_result result;
+  PlaybackCtrlService_get_offset_y_result result;
   try {
-    result.success = iface_->get_offset_y(args.camera_name);
+    result.success = iface_->get_offset_y();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_offset_y");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_offset_y");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12100,7 +11455,7 @@ void AgentServerServiceProcessor::process_get_offset_y(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_offset_y");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_offset_y");
   }
 
   oprot->writeMessageBegin("get_offset_y", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12110,38 +11465,38 @@ void AgentServerServiceProcessor::process_get_offset_y(int32_t seqid, ::apache::
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_offset_y", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_offset_y", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_is_enabled_turbo_transfer(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_is_enabled_turbo_transfer(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.is_enabled_turbo_transfer", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.is_enabled_turbo_transfer", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.is_enabled_turbo_transfer");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.is_enabled_turbo_transfer");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.is_enabled_turbo_transfer");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.is_enabled_turbo_transfer");
   }
 
-  AgentServerService_is_enabled_turbo_transfer_args args;
+  PlaybackCtrlService_is_enabled_turbo_transfer_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.is_enabled_turbo_transfer", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.is_enabled_turbo_transfer", bytes);
   }
 
-  AgentServerService_is_enabled_turbo_transfer_result result;
+  PlaybackCtrlService_is_enabled_turbo_transfer_result result;
   try {
-    result.success = iface_->is_enabled_turbo_transfer(args.camera_name);
+    result.success = iface_->is_enabled_turbo_transfer();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.is_enabled_turbo_transfer");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.is_enabled_turbo_transfer");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12154,7 +11509,7 @@ void AgentServerServiceProcessor::process_is_enabled_turbo_transfer(int32_t seqi
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.is_enabled_turbo_transfer");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.is_enabled_turbo_transfer");
   }
 
   oprot->writeMessageBegin("is_enabled_turbo_transfer", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12164,38 +11519,38 @@ void AgentServerServiceProcessor::process_is_enabled_turbo_transfer(int32_t seqi
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.is_enabled_turbo_transfer", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.is_enabled_turbo_transfer", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_pixel_fmt(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_pixel_fmt(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_pixel_fmt", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_pixel_fmt", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_pixel_fmt");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_pixel_fmt");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_pixel_fmt");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_pixel_fmt");
   }
 
-  AgentServerService_get_pixel_fmt_args args;
+  PlaybackCtrlService_get_pixel_fmt_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_pixel_fmt", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_pixel_fmt", bytes);
   }
 
-  AgentServerService_get_pixel_fmt_result result;
+  PlaybackCtrlService_get_pixel_fmt_result result;
   try {
-    iface_->get_pixel_fmt(result.success, args.camera_name);
+    iface_->get_pixel_fmt(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_pixel_fmt");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_pixel_fmt");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12208,7 +11563,7 @@ void AgentServerServiceProcessor::process_get_pixel_fmt(int32_t seqid, ::apache:
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_pixel_fmt");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_pixel_fmt");
   }
 
   oprot->writeMessageBegin("get_pixel_fmt", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12218,38 +11573,38 @@ void AgentServerServiceProcessor::process_get_pixel_fmt(int32_t seqid, ::apache:
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_pixel_fmt", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_pixel_fmt", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_user_defined_name(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_user_defined_name(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_user_defined_name", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_user_defined_name", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_user_defined_name");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_user_defined_name");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_user_defined_name");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_user_defined_name");
   }
 
-  AgentServerService_get_user_defined_name_args args;
+  PlaybackCtrlService_get_user_defined_name_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_user_defined_name", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_user_defined_name", bytes);
   }
 
-  AgentServerService_get_user_defined_name_result result;
+  PlaybackCtrlService_get_user_defined_name_result result;
   try {
-    iface_->get_user_defined_name(result.success, args.camera_name);
+    iface_->get_user_defined_name(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_user_defined_name");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_user_defined_name");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12262,7 +11617,7 @@ void AgentServerServiceProcessor::process_get_user_defined_name(int32_t seqid, :
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_user_defined_name");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_user_defined_name");
   }
 
   oprot->writeMessageBegin("get_user_defined_name", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12272,38 +11627,38 @@ void AgentServerServiceProcessor::process_get_user_defined_name(int32_t seqid, :
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_user_defined_name", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_user_defined_name", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_device_serial_number(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_device_serial_number(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_device_serial_number", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_device_serial_number", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_device_serial_number");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_device_serial_number");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_device_serial_number");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_device_serial_number");
   }
 
-  AgentServerService_get_device_serial_number_args args;
+  PlaybackCtrlService_get_device_serial_number_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_device_serial_number", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_device_serial_number", bytes);
   }
 
-  AgentServerService_get_device_serial_number_result result;
+  PlaybackCtrlService_get_device_serial_number_result result;
   try {
-    iface_->get_device_serial_number(result.success, args.camera_name);
+    iface_->get_device_serial_number(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_device_serial_number");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_device_serial_number");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12316,7 +11671,7 @@ void AgentServerServiceProcessor::process_get_device_serial_number(int32_t seqid
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_device_serial_number");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_device_serial_number");
   }
 
   oprot->writeMessageBegin("get_device_serial_number", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12326,38 +11681,38 @@ void AgentServerServiceProcessor::process_get_device_serial_number(int32_t seqid
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_device_serial_number", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_device_serial_number", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_current_ip_address(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_current_ip_address(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_current_ip_address", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_current_ip_address", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_current_ip_address");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_current_ip_address");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_current_ip_address");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_current_ip_address");
   }
 
-  AgentServerService_get_current_ip_address_args args;
+  PlaybackCtrlService_get_current_ip_address_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_current_ip_address", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_current_ip_address", bytes);
   }
 
-  AgentServerService_get_current_ip_address_result result;
+  PlaybackCtrlService_get_current_ip_address_result result;
   try {
-    iface_->get_current_ip_address(result.success, args.camera_name);
+    iface_->get_current_ip_address(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_current_ip_address");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_current_ip_address");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12370,7 +11725,7 @@ void AgentServerServiceProcessor::process_get_current_ip_address(int32_t seqid, 
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_current_ip_address");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_current_ip_address");
   }
 
   oprot->writeMessageBegin("get_current_ip_address", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12380,38 +11735,38 @@ void AgentServerServiceProcessor::process_get_current_ip_address(int32_t seqid, 
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_current_ip_address", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_current_ip_address", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_grab_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_grab_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_grab_fps", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_grab_fps", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_grab_fps");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_grab_fps");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_grab_fps");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_grab_fps");
   }
 
-  AgentServerService_get_grab_fps_args args;
+  PlaybackCtrlService_get_grab_fps_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_grab_fps", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_grab_fps", bytes);
   }
 
-  AgentServerService_get_grab_fps_result result;
+  PlaybackCtrlService_get_grab_fps_result result;
   try {
-    result.success = iface_->get_grab_fps(args.camera_name);
+    result.success = iface_->get_grab_fps();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_grab_fps");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_grab_fps");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12424,7 +11779,7 @@ void AgentServerServiceProcessor::process_get_grab_fps(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_grab_fps");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_grab_fps");
   }
 
   oprot->writeMessageBegin("get_grab_fps", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12434,38 +11789,38 @@ void AgentServerServiceProcessor::process_get_grab_fps(int32_t seqid, ::apache::
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_grab_fps", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_grab_fps", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_get_process_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_get_process_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.get_process_fps", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.get_process_fps", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.get_process_fps");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.get_process_fps");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.get_process_fps");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.get_process_fps");
   }
 
-  AgentServerService_get_process_fps_args args;
+  PlaybackCtrlService_get_process_fps_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.get_process_fps", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.get_process_fps", bytes);
   }
 
-  AgentServerService_get_process_fps_result result;
+  PlaybackCtrlService_get_process_fps_result result;
   try {
-    result.success = iface_->get_process_fps(args.camera_name);
+    result.success = iface_->get_process_fps();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.get_process_fps");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.get_process_fps");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12478,7 +11833,7 @@ void AgentServerServiceProcessor::process_get_process_fps(int32_t seqid, ::apach
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.get_process_fps");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.get_process_fps");
   }
 
   oprot->writeMessageBegin("get_process_fps", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12488,38 +11843,38 @@ void AgentServerServiceProcessor::process_get_process_fps(int32_t seqid, ::apach
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.get_process_fps", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.get_process_fps", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_save_feature(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_save_feature(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.save_feature", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.save_feature", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.save_feature");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.save_feature");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.save_feature");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.save_feature");
   }
 
-  AgentServerService_save_feature_args args;
+  PlaybackCtrlService_save_feature_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.save_feature", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.save_feature", bytes);
   }
 
-  AgentServerService_save_feature_result result;
+  PlaybackCtrlService_save_feature_result result;
   try {
-    iface_->save_feature(result.success, args.camera_name);
+    iface_->save_feature(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.save_feature");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.save_feature");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12532,7 +11887,7 @@ void AgentServerServiceProcessor::process_save_feature(int32_t seqid, ::apache::
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.save_feature");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.save_feature");
   }
 
   oprot->writeMessageBegin("save_feature", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12542,38 +11897,38 @@ void AgentServerServiceProcessor::process_save_feature(int32_t seqid, ::apache::
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.save_feature", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.save_feature", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_update_feature(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void PlaybackCtrlServiceProcessor::process_update_feature(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.update_feature", callContext);
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.update_feature", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.update_feature");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.update_feature");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.update_feature");
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.update_feature");
   }
 
-  AgentServerService_update_feature_args args;
+  PlaybackCtrlService_update_feature_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.update_feature", bytes);
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.update_feature", bytes);
   }
 
-  AgentServerService_update_feature_result result;
+  PlaybackCtrlService_update_feature_result result;
   try {
-    result.success = iface_->update_feature(args.camera_name, args.content);
+    result.success = iface_->update_feature(args.content);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.update_feature");
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.update_feature");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
@@ -12586,7 +11941,7 @@ void AgentServerServiceProcessor::process_update_feature(int32_t seqid, ::apache
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.update_feature");
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.update_feature");
   }
 
   oprot->writeMessageBegin("update_feature", ::apache::thrift::protocol::T_REPLY, seqid);
@@ -12596,68 +11951,14 @@ void AgentServerServiceProcessor::process_update_feature(int32_t seqid, ::apache
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.update_feature", bytes);
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.update_feature", bytes);
   }
 }
 
-void AgentServerServiceProcessor::process_ping_server(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
-{
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("AgentServerService.ping_server", callContext);
-  }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "AgentServerService.ping_server");
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "AgentServerService.ping_server");
-  }
-
-  AgentServerService_ping_server_args args;
-  args.read(iprot);
-  iprot->readMessageEnd();
-  uint32_t bytes = iprot->getTransport()->readEnd();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "AgentServerService.ping_server", bytes);
-  }
-
-  AgentServerService_ping_server_result result;
-  try {
-    result.success = iface_->ping_server(args.seq);
-    result.__isset.success = true;
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "AgentServerService.ping_server");
-    }
-
-    ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("ping_server", ::apache::thrift::protocol::T_EXCEPTION, seqid);
-    x.write(oprot);
-    oprot->writeMessageEnd();
-    oprot->getTransport()->writeEnd();
-    oprot->getTransport()->flush();
-    return;
-  }
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "AgentServerService.ping_server");
-  }
-
-  oprot->writeMessageBegin("ping_server", ::apache::thrift::protocol::T_REPLY, seqid);
-  result.write(oprot);
-  oprot->writeMessageEnd();
-  bytes = oprot->getTransport()->writeEnd();
-  oprot->getTransport()->flush();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "AgentServerService.ping_server", bytes);
-  }
-}
-
-::boost::shared_ptr< ::apache::thrift::TProcessor > AgentServerServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo) {
-  ::apache::thrift::ReleaseHandler< AgentServerServiceIfFactory > cleanup(handlerFactory_);
-  ::boost::shared_ptr< AgentServerServiceIf > handler(handlerFactory_->getHandler(connInfo), cleanup);
-  ::boost::shared_ptr< ::apache::thrift::TProcessor > processor(new AgentServerServiceProcessor(handler));
+::boost::shared_ptr< ::apache::thrift::TProcessor > PlaybackCtrlServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo) {
+  ::apache::thrift::ReleaseHandler< PlaybackCtrlServiceIfFactory > cleanup(handlerFactory_);
+  ::boost::shared_ptr< PlaybackCtrlServiceIf > handler(handlerFactory_->getHandler(connInfo), cleanup);
+  ::boost::shared_ptr< ::apache::thrift::TProcessor > processor(new PlaybackCtrlServiceProcessor(handler));
   return processor;
 }
 } // namespace

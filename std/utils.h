@@ -1,12 +1,22 @@
 #ifndef __MY_UTILS_H__
 #define __MY_UTILS_H__
 
-#include <vector>
-#include <string>
+#include "defs.h"
 #include "ping/Ping.h"
+extern "C" {
+	#include "lcthw\ringbuffer.h"
+}
 
+#include <string>
+#include <vector>
+#include <map>
+#include <chrono>
+#include <thread>
+#include <zmq.h>
 
-std::vector<std::string> scan_ip0(std::string& start_ip, std::string& end_ip) {
+typedef int(*SinkDataCallback)(unsigned char*, int, void*);
+
+inline std::vector<std::string> scan_ip0(std::string& start_ip, std::string& end_ip) {
 
 	std::vector<std::string> result;
 
@@ -41,6 +51,14 @@ std::vector<std::string> scan_ip0(std::string& start_ip, std::string& end_ip) {
 		}
 	}
 	return result;
+}
+
+inline int64_t get_current_time_in_ms() {
+	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}
+
+inline void sleep(int32_t milliseconds) {
+	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
 

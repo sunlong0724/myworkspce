@@ -2,14 +2,14 @@
 #define __ACQUIRE_STORE_CLIENT_H__
 
 
-#include "AcquireStoreService.h"
+#include "PlaybackCtrlService.h"
 
 #include <thrift/Thrift.h>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
 
-#include "ZmqTransportDataImpl.h"
+#include <TransportData.h>
 
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
@@ -17,11 +17,11 @@ using namespace apache::thrift::transport;
 
 using namespace hawkeye;
 
-class CAcquireStoreClient {
+class CPlaybackCtrlClient {
 public:
 
-	CAcquireStoreClient();
-	~CAcquireStoreClient();
+	CPlaybackCtrlClient();
+	~CPlaybackCtrlClient();
 
 	std::vector<std::string> scan_ip(std::string& start_ip, std::string& end_ip);
 
@@ -29,17 +29,20 @@ public:
 	BOOL			close();
 	BOOL			is_connected();
 
-	int32_t	init();
-	int32_t uninit();
 	//PLAYBACK
-	int32_t start(const int32_t snd_frame_rate);
-	int32_t stop();
-	int32_t	set_snd_frame_resolution(const int32_t width, const int32_t height);//FIXME:  
-	int32_t set_snd_frame_rate(const int32_t snd_frame_rate);
+
+	int32_t	set_play_frame_resolution(const int32_t width, const int32_t height);//FIXME:  
+	int32_t set_play_frame_rate(const int32_t play_frame_rate);
 	int32_t set_store_file(const int32_t flag, const std::string& file_name);
-	int32_t do_pause(const int32_t flag);
-	int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
-	int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate);
+
+	int32_t start_play_live();
+	int32_t stop_play_live();
+
+	int32_t forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+
+	int32_t forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
 
 	//CAMERA
 	int32_t set_exposure_time(const double microseconds) ;
@@ -83,17 +86,16 @@ public:
 
 	//WATCH
 	//int32_t	query_camrea_status();
-
-
-	CPostProcessor					*m_pProcessor;
+	CRecvData						m_recv_thread;
 private:
-	AcquireStoreServiceClient*		m_client;
+	PlaybackCtrlServiceClient		*m_client;
 
 	boost::shared_ptr<TTransport>	m_socket;
 	boost::shared_ptr<TTransport>	m_transport;
 	boost::shared_ptr<TProtocol>	m_protocol;
 
 	std::string						m_server_ip;
+	uint16_t						m_data_port;
 
 
 };

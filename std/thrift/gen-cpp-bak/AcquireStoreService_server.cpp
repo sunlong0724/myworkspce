@@ -11,7 +11,8 @@
 #include <thrift/transport/TBufferTransports.h>
 
 #include "Camera.h"
-#include "ZmqTransportDataImpl.h"
+#include "defs.h"
+#include "PlaybackCtrl.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -22,107 +23,59 @@ using boost::shared_ptr;
 
 using namespace  ::hawkeye;
 
+extern CustomStruct g_cs;
 
 class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
  public:
   AcquireStoreServiceHandler() {
     // Your initialization goes here
-	  m_pProcessor = new CPostProcessor;
-	  m_data_port = 0;
-	  m_camera = NULL;
-
-	  m_init = FALSE;
   }
-
-  CCamera			*m_camera;
-  uint16_t			m_data_port;
-  CPostProcessor	*m_pProcessor;
-
-  BOOL				m_init;
-
-  //-----------------------------------------PLAY BACK---------------------------------------------------
-
-
   int32_t init() {
-	  // Your implementation goes here
-	  printf("init\n");
-	  CPostProcessor* pProcessor = new CPostProcessor;
-	  pProcessor->create_zmq_context(1, m_data_port, "localhost", m_camera->GetImageWidth(), m_camera->GetImageHeight());
-
-	  m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, pProcessor);
-	  if (m_camera->CreateOtherObjects()) {
-		  return m_init = TRUE;
-	  }
-	  return m_init = FALSE;
+	  return 0;
   }
-
-  int32_t uninit() {
-	  // Your implementation goes here
-	  printf("uninit\n");
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  pProcessor->destroy_zmq_contex();
-	  m_camera->DestroyOtherObjects();
-	  return TRUE;
-  }
+	int32_t uninit(){
+		return 0;
+	}
 
   int32_t start(const int32_t snd_frame_rate) {
 	  // Your implementation goes here
-	  printf("start\n");
-	  //CPostProcessor* pProcessor = new CPostProcessor;
-	  //pProcessor->create_zmq_context(1, m_data_port, "localhost", m_camera->GetImageWidth() , m_camera->GetImageHeight());
-	  //pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
-	  //pProcessor->m_snd_frame_flag = TRUE;
-
-	  //m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, pProcessor);
-	  if (m_init) {
-		  m_camera->Start();
-		  return TRUE;
-	  }
-	  return FALSE;
+	  printf("start %d\n", snd_frame_rate);
+	  g_cs.m_playback_thread->m_status = CPlaybackCtrlThread::PlaybackCtrl_START_PLAY_CAMERAS;
+	  return TRUE;
   }
 
   int32_t stop() {
 	  // Your implementation goes here
 	  printf("stop\n");
-	  m_camera->Stop();
-	  //m_camera->DestroyOtherObjects();
-
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  pProcessor->m_snd_frame_flag = FALSE;
-
+	  g_cs.m_playback_thread->m_status = CPlaybackCtrlThread::PlaybackCtrl_STOP_PLAY_CAMERAS;
 	  return TRUE;
   }
 
   int32_t set_snd_frame_resolution(const int32_t w, const int32_t h) {
 	  // Your implementation goes here
 	  printf("set_snd_frame_resolution\n");
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  pProcessor->m_snd_frame_w = w;
-	  pProcessor->m_snd_frame_h = h;
-
-	  return 1;
+	  g_cs.m_snd_frame_w = w;
+	  g_cs.m_snd_frame_h = h;
+	  return TRUE;
   }
 
   int32_t set_snd_frame_rate(const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("set_snd_frame_rate\n");
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  return pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
+	  return g_cs.m_snd_frame_rate = snd_frame_rate;
   }
 
   int32_t set_store_file(const int32_t flag, const std::string& file_name) {
 	  // Your implementation goes here
 	  printf("set_store_file\n");
-	  if (0 == CStoreFile::m_file_name.size()) {
+	  if (0 == CFileStorage::m_file_name.size()) {
 		  char ip[30] = { 0 };
-		  if (m_camera->GetCurrentIPAddress(ip, sizeof ip)) {
+		  if (g_cs.m_camera->GetCurrentIPAddress(ip, sizeof ip)) {
 			  std::string name(ip);
-			  CStoreFile::m_file_name = name + ".raw";
+			  CFileStorage::m_file_name = name + ".raw";
 		  }
 	  }
-	  //FIXME:
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  return pProcessor->m_store_file_flag = flag;
+	  return g_cs.m_store_file_flag = flag;
   }
 
   //important!!!! FIXEME:
@@ -130,72 +83,42 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  // Your implementation goes here
 	  printf("do_pause\n");
 	  if (flag == TRUE) {
-		  m_camera->Stop();
-		  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-		  if (pProcessor && TRUE == pProcessor->m_play_extied) {
-			  pProcessor->m_play_extied = FALSE;
-			  pProcessor->m_play_thread = std::thread(&CPostProcessor::play_run, pProcessor);
-		  }
+		  g_cs.m_playback_thread->m_status = CPlaybackCtrlThread::PlaybackCtrl_STOP_PLAY_CAMERAS;
 	  }
 	  else if (flag == FALSE) {
-		  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-		  if (pProcessor && FALSE == pProcessor->m_play_extied) {
-			  pProcessor->m_play_extied = TRUE;
-			  pProcessor->m_play_thread.join();
-		  }
-		  m_camera->Start();
+		  g_cs.m_playback_thread->m_status = CPlaybackCtrlThread::PlaybackCtrl_START_PLAY_CAMERAS;
 	  }
 	  return TRUE;
   }
 
   int32_t do_pause_dummy(const int32_t flag) {
 	  // Your implementation goes here
-	  printf("do_pause\n");
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  if (pProcessor) {
-		  if (flag == TRUE) {
-			  if (TRUE == pProcessor->m_play_extied) {
-				  pProcessor->m_snd_frame_flag = FALSE;
-				  pProcessor->m_play_extied = FALSE;
-				  pProcessor->m_play_thread = std::thread(&CPostProcessor::play_run, pProcessor);
-			  }
-		  }
-		  else if (flag == FALSE) {
-			  if (FALSE == pProcessor->m_play_extied) {
-				  pProcessor->m_play_extied = TRUE;
-				  pProcessor->m_play_thread.join();
-				  pProcessor->m_snd_frame_flag = TRUE;
-			  }
-		  }
-		  return TRUE;
-	  }
-	  return FALSE;
+	  printf("do_pause_dummy\n");
+		if (flag == TRUE) {
+			g_cs.m_playback_thread->m_status = CPlaybackCtrlThread::PlaybackCtrl_STOP_PLAY_FILE_TEMP;
+		}
+		else if (flag == FALSE) {
+			g_cs.m_playback_thread->m_status = CPlaybackCtrlThread::PlaybackCtrl_START_PLAY_FILE_TEMP;
+		}
+	  return TRUE;
   }
   
 
   int32_t forward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("forward_play\n");
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
-	  if (pProcessor && pProcessor->m_is_forward == TRUE && pProcessor->m_start_play_frame_no == frame_seq) {
-		  return 0;
-	  }
-	  if (pProcessor)
-		pProcessor->set_play_parameters(frame_seq, TRUE);
+	  g_cs.m_snd_frame_rate = snd_frame_rate;
+	  g_cs.m_playback_thread->m_start_play_frame_no = frame_seq;
+	  g_cs.m_playback_thread->m_is_forward = TRUE;
 	  return 0;
   }
 
   int32_t backward_play(const int64_t frame_seq, const int32_t snd_frame_rate) {
 	  // Your implementation goes here
 	  printf("backward_play\n");
-	  CPostProcessor* pProcessor = (CPostProcessor*)m_camera->get_SinkBayerDataCallback_ctx();
-	  pProcessor->set_send_frame_rate(snd_frame_rate, m_camera->GetFrameRate());
-	  if (pProcessor && pProcessor->m_is_forward == FALSE && pProcessor->m_start_play_frame_no == frame_seq) {
-		  return 0;
-	  }
-	  if (pProcessor)
-		pProcessor->set_play_parameters(frame_seq, FALSE);
+	  g_cs.m_snd_frame_rate = snd_frame_rate;
+	  g_cs.m_playback_thread->m_start_play_frame_no = frame_seq;
+	  g_cs.m_playback_thread->m_is_forward = FALSE;
 	  return 0;
   }
 
@@ -205,177 +128,177 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
   int32_t set_exposure_time(const double microseconds) {
 	  // Your implementation goes here
 	  printf("set_exposure_time\n");
-	  return m_camera->SetExposureTime(microseconds);
+	  return g_cs.m_camera->SetExposureTime(microseconds);
   }
 
   int32_t set_gain_by_sensor_all(const double gain) {
 	  // Your implementation goes here
 	  printf("set_gain_by_sensor_all\n");
-	  return m_camera->SetGainBySensorAll(gain);
+	  return g_cs.m_camera->SetGainBySensorAll(gain);
   }
 
   int32_t set_gain_by_sensor_analog(const double gain) {
 	  // Your implementation goes here
 	  printf("set_gain_by_sensor_analog\n");
-	  return m_camera->SetGainBySensorAnalog(gain);
+	  return g_cs.m_camera->SetGainBySensorAnalog(gain);
   }
 
   int32_t set_gain_by_sensor_digital(const double gain) {
 	  // Your implementation goes here
 	  printf("set_gain_by_sensor_digital\n");
-	  return m_camera->SetGainBySensorDigital(gain);
+	  return g_cs.m_camera->SetGainBySensorDigital(gain);
   }
 
   int32_t set_frame_rate(const double rate) {
 	  // Your implementation goes here
 	  printf("set_frame_rate\n");
-	  return m_camera->SetFrameRate(rate);
+	  return g_cs.m_camera->SetFrameRate(rate);
   }
 
   int32_t enable_turbo_transfer(const int32_t enabled) {
 	  // Your implementation goes here
 	  printf("enable_turbo_transfer\n");
-	  return m_camera->EnableTurboTransfer(enabled);
+	  return g_cs.m_camera->EnableTurboTransfer(enabled);
   }
 
   int32_t set_pixel_fmt(const std::string& pixel_fmt) {
 	  // Your implementation goes here
 	  printf("set_pixel_fmt\n");
-	  return m_camera->SetPixelFormat(pixel_fmt.c_str(), pixel_fmt.length());
+	  return g_cs.m_camera->SetPixelFormat(pixel_fmt.c_str(), pixel_fmt.length());
   }
 
   int32_t set_offset_x(const int32_t offset_x) {
 	  // Your implementation goes here
 	  printf("set_offset_x\n");
-	  return m_camera->SetOffsetX(offset_x);
+	  return g_cs.m_camera->SetOffsetX(offset_x);
   }
 
   int32_t set_offset_y(const int32_t offset_y) {
 	  // Your implementation goes here
 	  printf("set_offset_y\n");
-	  return m_camera->SetOffsetY(offset_y);
+	  return g_cs.m_camera->SetOffsetY(offset_y);
   }
 
   int32_t set_image_width(const int32_t width) {
 	  // Your implementation goes here
 	  printf("set_image_width\n");
-	  return m_camera->SetImageWidth(width);
+	  return g_cs.m_camera->SetImageWidth(width);
   }
 
   int32_t set_image_height(const int32_t height) {
 	  // Your implementation goes here
 	  printf("set_image_height\n");
-	  return m_camera->SetImageHeight(height);
+	  return g_cs.m_camera->SetImageHeight(height);
   }
 
   double get_exposure_time() {
 	  // Your implementation goes here
 	  printf("get_exposure_time\n");
-	  return m_camera->GetExposureTime();
+	  return g_cs.m_camera->GetExposureTime();
   }
 
   double get_gain_by_sensor_all() {
 	  // Your implementation goes here
 	  printf("get_gain_by_sensor_all\n");
-	  return m_camera->GetGainBySensorAll();
+	  return g_cs.m_camera->GetGainBySensorAll();
   }
 
   double get_gain_by_sensor_analog() {
 	  // Your implementation goes here
 	  printf("get_gain_by_sensor_analog\n");
-	  return m_camera->GetGainBySensorAnalog();
+	  return g_cs.m_camera->GetGainBySensorAnalog();
   }
 
   double get_gain_by_sensor_digital() {
 	  // Your implementation goes here
 	  printf("get_gain_by_sensor_digital\n");
-	  return m_camera->GetGainBySensorDigital();
+	  return g_cs.m_camera->GetGainBySensorDigital();
   }
 
   double get_frame_rate() {
 	  // Your implementation goes here
 	  printf("get_frame_rate\n");
-	  return m_camera->GetFrameRate();
+	  return g_cs.m_camera->GetFrameRate();
   }
 
   void get_exposure_time_range(MinMaxStruct& _return) {
 	  // Your implementation goes here
 	  printf("get_exposure_time_range\n");
-	  m_camera->GetExposureTimeRange(&_return.min, &_return.max);//FIXME: should check the value of return!
+	  g_cs.m_camera->GetExposureTimeRange(&_return.min, &_return.max);//FIXME: should check the value of return!
   }
 
   void get_gain_range_by_sensor_all(MinMaxStruct& _return) {
 	  // Your implementation goes here
 	  printf("get_gain_range_by_sensor_all\n");
-	  m_camera->GetGainBySensorAllRange(&_return.min, &_return.max);//FIXME: should check the value of return!
+	  g_cs.m_camera->GetGainBySensorAllRange(&_return.min, &_return.max);//FIXME: should check the value of return!
   }
 
   void get_gain_range_by_sensor_analog(MinMaxStruct& _return) {
 	  // Your implementation goes here
 	  printf("get_gain_range_by_sensor_analog\n");
-	  m_camera->GetGainBySensorAnalogRange(&_return.min, &_return.max);//FIXME: should check the value of return!
+	  g_cs.m_camera->GetGainBySensorAnalogRange(&_return.min, &_return.max);//FIXME: should check the value of return!
   }
 
   void get_gain_range_by_sensor_digital(MinMaxStruct& _return) {
 	  // Your implementation goes here
 	  printf("get_gain_range_by_sensor_digital\n");
-	  m_camera->GetGainBySensorDigitalRange(&_return.min, &_return.max);//FIXME: should check the value of return!
+	  g_cs.m_camera->GetGainBySensorDigitalRange(&_return.min, &_return.max);//FIXME: should check the value of return!
   }
 
   void get_frame_rate_range(MinMaxStruct& _return) {
 	  // Your implementation goes here
 	  printf("get_frame_rate_range\n");
-	  m_camera->GetFrameRateRange(&_return.min, &_return.max);//FIXME: should check the value of return!
+	  g_cs.m_camera->GetFrameRateRange(&_return.min, &_return.max);//FIXME: should check the value of return!
   }
 
   int32_t get_image_width() {
 	  // Your implementation goes here
 	  printf("get_image_width\n");
-	  return m_camera->GetImageWidth();
+	  return g_cs.m_camera->GetImageWidth();
   }
 
   int32_t get_image_height() {
 	  // Your implementation goes here
 	  printf("get_image_height\n");
-	  return m_camera->GetImageHeight();
+	  return g_cs.m_camera->GetImageHeight();
   }
 
 
   int32_t get_height_max() {
 	  // Your implementation goes here
 	  printf("get_height_max\n");
-	  return m_camera->GetHeightMax();
+	  return g_cs.m_camera->GetHeightMax();
   }
 
   int32_t get_width_max() {
 	  // Your implementation goes here
 	  printf("get_width_max\n");
-	  return m_camera->GetWidthMax();
+	  return g_cs.m_camera->GetWidthMax();
   }
 
   int32_t get_offset_x() {
 	  // Your implementation goes here
 	  printf("get_offset_x\n");
-	  return m_camera->GetOffsetX();
+	  return g_cs.m_camera->GetOffsetX();
   }
 
   int32_t get_offset_y() {
 	  // Your implementation goes here
 	  printf("get_offset_y\n");
-	  return m_camera->GetOffsetY();
+	  return g_cs.m_camera->GetOffsetY();
   }
 
   int32_t is_enabled_turbo_transfer() {
 	  // Your implementation goes here
 	  printf("is_enabled_turbo_transfer\n");
-	  return m_camera->IsEnabledTurboTransfer();
+	  return g_cs.m_camera->IsEnabledTurboTransfer();
   }
 
   void get_pixel_fmt(std::string& _return) {
 	  // Your implementation goes here
 	  printf("get_pixel_fmt\n");
 	  char val[256] = { 0 };
-	  m_camera->GetPixelFormat(val, sizeof val);
+	  g_cs.m_camera->GetPixelFormat(val, sizeof val);
 	  _return.assign(val);
   }
 
@@ -383,7 +306,7 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  // Your implementation goes here
 	  printf("get_user_defined_name\n");
 	  char val[256] = { 0 };
-	  m_camera->GetUserDefinedName(val, sizeof val);
+	  g_cs.m_camera->GetUserDefinedName(val, sizeof val);
 	  _return.assign(val);
   }
 
@@ -391,7 +314,7 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  // Your implementation goes here
 	  printf("get_device_serial_number\n");
 	  char val[256] = { 0 };
-	  m_camera->GetDeviceSerialNumber(val, sizeof val);
+	  g_cs.m_camera->GetDeviceSerialNumber(val, sizeof val);
 	  _return.assign(val);
   }
 
@@ -400,27 +323,27 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
 	  printf("get_current_ip_address\n");
 
 	  char val[256] = { 0 };
-	  m_camera->GetCurrentIPAddress(val, sizeof val);
+	  g_cs.m_camera->GetCurrentIPAddress(val, sizeof val);
 	  _return.assign(val);
   }
 
   double get_grab_fps() {
 	  // Your implementation goes here
 	  printf("get_grab_fps\n");
-	  return m_camera->GetGrabFPS();
+	  return g_cs.m_camera->GetGrabFPS();
   }
 
   double get_process_fps() {
 	  // Your implementation goes here
 	  printf("get_process_fps\n");
-	  return m_camera->GetProcessFPS();
+	  return g_cs.m_camera->GetProcessFPS();
   }
 
   void save_feature(std::string& _return) {
 	  // Your implementation goes here
 	  printf("save_feature\n");
-	  m_camera->SaveFeatures(m_camera->GetUserDefinedName());
-	  FILE* fp = fopen(m_camera->GetUserDefinedName(), "r");
+	  g_cs.m_camera->SaveFeatures(g_cs.m_camera->GetUserDefinedName());
+	  FILE* fp = fopen(g_cs.m_camera->GetUserDefinedName(), "r");
 	  if (fp) {
 		  char buf[1024 * 10] = { 0 };
 		  int r = fread(buf, 1, sizeof buf, fp);
@@ -432,12 +355,12 @@ class AcquireStoreServiceHandler : virtual public AcquireStoreServiceIf {
   int32_t update_feature(const std::string& content) {
 	  // Your implementation goes here
 	  printf("update_feature\n");
-	  FILE* fp = fopen(m_camera->GetUserDefinedName(), "w");
+	  FILE* fp = fopen(g_cs.m_camera->GetUserDefinedName(), "w");
 	  if (fp) {
 		  fwrite(content.data(), 1, content.size(), fp);
 		  fclose(fp);
 	  }
-	  return m_camera->LoadFeatures(m_camera->GetUserDefinedName());
+	  return g_cs.m_camera->LoadFeatures(g_cs.m_camera->GetUserDefinedName());
   }
 
 

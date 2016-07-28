@@ -18,39 +18,39 @@
     <ClCompile Include="main.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AcquireStoreClient.cc">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\std\thrift\gen-cpp\AcquireStoreService.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\std\thrift\gen-cpp\AcquireStoreService_constants.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\std\thrift\gen-cpp\AcquireStoreService_types.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\std\ping\Ping.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackCtrlClient.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AcquireStoreClient.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\thrift\gen-cpp\AcquireStoreService.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\thrift\gen-cpp\AcquireStoreService_constants.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\thrift\gen-cpp\AcquireStoreService_types.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\std\utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\std\ping\Ping.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackCtrlClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

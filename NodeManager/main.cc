@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 		printf_cameras(cameras);
 
 		char cmdline[1024];
-		//.\AcquireStore.exe 9070 Nano-C1280_1 0 55555
+		//.\AcquireStore 9070 Nano-C1280_1 0 55555
 		sprintf(cmdline, ".\\AcquireStore.exe 9070 %s %d 55555", cameras.begin()->second.begin()->second.c_str(), cameras.begin()->second.begin()->first);
 		printf("%s\n", cmdline);
 		int32_t process_id = ac.exec_program(cmdline);

@@ -5,21 +5,21 @@ struct MinMaxStruct {
   2: double max
 }
 
-service AcquireStoreService{
+service PlaybackCtrlService{
 
- i32					init();
- i32					uninit();
- i32 					start(1: i32 snd_frame_rate),
- i32 					stop(),
- i32					set_snd_frame_rate(1: i32 snd_frame_rate),
- i32					set_snd_frame_resolution(1: i32 w, 2: i32 h),
+
+ i32					set_play_frame_rate(1: i32 play_frame_rate),
+ i32					set_play_frame_resolution(1: i32 w, 2: i32 h),
  i32					set_store_file(1: i32 flag, 2: string file_name),
- i32					do_pause(1: i32 flag),
    
- //play
- i32					forward_play(1: i64 frame_seq, 2: i32 snd_frame_rate),
- i32					backward_play(1: i64 frame_seq, 2: i32 snd_frame_rate),
+ i32 					start_play_live(),
+ i32 					stop_play_live(),
+ 
+ i32					forward_play(1: i64 frame_seq, 2: i32 play_frame_rate, 3: i32 how_many_frames),
+ i32					backward_play(1: i64 frame_seq, 2: i32 play_frame_rate, 3: i32 how_many_frames),
 
+ i32					forward_play_temp(1: i64 frame_seq, 2: i32 play_frame_rate, 3: i32 how_many_frames),
+ i32					backward_play_temp(1: i64 frame_seq, 2: i32 play_frame_rate, 3: i32 how_many_frames),
 
  i32 					set_exposure_time(1: double microseconds),
  i32 					set_gain_by_sensor_all(1: double gain),

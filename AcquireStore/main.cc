@@ -11,14 +11,19 @@
 #include <stdexcept>
 #include <sstream>
 		  
-#include "AcquireStoreService_server.cpp"
+#include "PlaybackCtrlService_server.cpp"
 
 #include <opencv2\opencv.hpp>
 
-IplImage* image;
+#include "defs.h"
+#include "utils.h"
+#include "FileStorage.h"
+#include "PlaybackCtrl.h"
+#include "MyThread.h"
+#include "SinkBayerDatasCallbackImpl.h"
 
-std::string	CStoreFile::m_file_name = "";
- long long CStoreFile::m_max_file_size = ONE_GB;
+std::string	CFileStorage::m_file_name = "";
+ long long CFileStorage::m_max_file_size = ONE_GB;
 
 using namespace std;
 using namespace apache::thrift;
@@ -29,7 +34,7 @@ using namespace apache::thrift::concurrency;
 
 using namespace hawkeye;
 
-void cmd_run(AcquireStoreServiceHandler* h, uint16_t port) {
+void cmd_run(PlaybackCtrlServiceHandler* h, uint16_t port) {
 	WORD wVersionRequested;
 	WSADATA wsaData;
 	int err;
@@ -37,8 +42,8 @@ void cmd_run(AcquireStoreServiceHandler* h, uint16_t port) {
 	err = WSAStartup(wVersionRequested, &wsaData);
 
 	boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-	boost::shared_ptr<AcquireStoreServiceHandler> handler(h);
-	boost::shared_ptr<TProcessor> processor(new AcquireStoreServiceProcessor(handler));
+	boost::shared_ptr<PlaybackCtrlServiceHandler> handler(h);
+	boost::shared_ptr<TProcessor> processor(new PlaybackCtrlServiceProcessor(handler));
 	boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
 	boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
 
@@ -57,6 +62,8 @@ void cmd_run(AcquireStoreServiceHandler* h, uint16_t port) {
 
 	WSACleanup();
 }
+
+CustomStruct g_cs;
 
 int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_name camera_index data_port(eg. .\\AcquireStore.exe 9090 name 1 55555)
 
@@ -88,23 +95,48 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	}
 
 
+	CFileStorage::m_max_file_size = raw_file_max_size_in_GB* ONE_GB;
+	PlaybackCtrlServiceHandler* handler = new PlaybackCtrlServiceHandler();
+	g_cs.m_data_port = data_port;
 
-	CStoreFile::m_max_file_size = raw_file_max_size_in_GB* ONE_GB;
-	AcquireStoreServiceHandler* handler = new AcquireStoreServiceHandler();
-	handler->m_data_port = data_port;
-
-	CCamera* camera = new CCamera(gige_server_name, camera_index);
-	if (!camera->CreateDevice()) {
+	g_cs.m_camera = new CCamera(gige_server_name, camera_index);
+	if (!g_cs.m_camera->CreateDevice()) {
 		fprintf(stdout, "CreateDevice failed!\n");
 		return 0;
 	}
-	camera->RegisterConnectionEventCallback();
+	g_cs.m_camera->RegisterConnectionEventCallback();
 
-	handler->m_camera = camera;
+	g_cs.m_playback_thread = new CPlaybackCtrlThread();
+	g_cs.m_post_processor_thread = new CPostProcessor();
+	g_cs.m_snd_data_thread = new CSendData();
+	g_cs.m_file_storage_object = new CFileStorage();
+
+	//init
+	g_cs.m_image_w = g_cs.m_camera->GetImageWidth();
+	g_cs.m_image_h = g_cs.m_camera->GetImageHeight();
+	g_cs.m_frame_rate = g_cs.m_camera->GetFrameRate();
+	g_cs.m_buffer.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h), 0x00);
+
+	//start
+	g_cs.m_playback_thread->start();
+	//do not start here!!! g_cs.m_post_processor_thread->start();
+
+	g_cs.m_snd_data_thread->init(g_cs.m_data_port, GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h));
+	g_cs.m_snd_data_thread->start();
+
 	std::thread cmd_thread(cmd_run,handler, server_port);
 	cmd_thread.join();
 
-	camera->DestroyDevice();
-	delete camera;
+	g_cs.m_playback_thread->stop();
+	g_cs.m_snd_data_thread->stop();
+
+	g_cs.m_camera->DestroyDevice();
+
+	delete g_cs.m_camera;
+	delete g_cs.m_file_storage_object;
+	delete g_cs.m_snd_data_thread;
+	delete g_cs.m_post_processor_thread;
+	delete g_cs.m_playback_thread;
+
 	return 0;
 }
