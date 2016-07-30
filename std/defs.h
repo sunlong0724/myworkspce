@@ -45,21 +45,22 @@ enum TRANSPORT_STATUS {
 };
 
 typedef struct _CustomStruct {
-	_CustomStruct():m_playback_thread(NULL), m_post_processor_thread(NULL), m_snd_data_thread(NULL), m_file_storage_object(NULL), m_camera(NULL), 
-		m_frame_counter(0),	m_store_file_flag(0), m_snd_frame_flag(0), m_processor_data_flag(0), m_frame_gap(0), m_last_play_seq(0), m_data_port(0), m_play_frame_rate(1){}
+	_CustomStruct():m_playback_thread(NULL), m_post_processor_thread(NULL), m_snd_data_thread(NULL), m_file_storage_object_for_write(NULL), m_file_storage_object_for_read(NULL), m_camera(NULL),
+		m_frame_counter(0),	m_store_file_flag(0), m_snd_live_frame_flag(0), m_processor_data_flag(0), m_play_frame_gap(0), m_last_live_play_seq(0), m_data_port(0), m_play_frame_rate(1){}
 
 
 	
 	CPlaybackCtrlThread			*m_playback_thread;
 	CPostProcessor				*m_post_processor_thread;
 	CSendData					*m_snd_data_thread;
-	CFileStorage				*m_file_storage_object;
+	CFileStorage				*m_file_storage_object_for_write;
+	CFileStorage				*m_file_storage_object_for_read;
 	CCamera						*m_camera;
 
-	std::vector<char>			m_buffer;
+	//std::vector<char>			m_buffer;
 
 	BOOL						m_store_file_flag;
-	BOOL						m_snd_frame_flag;
+	BOOL						m_snd_live_frame_flag;
 	BOOL						m_processor_data_flag;
 
 	uint16_t					m_data_port;
@@ -69,9 +70,15 @@ typedef struct _CustomStruct {
 
 	int64_t						m_frame_counter;//global counter
 	int64_t						m_frame_rate;
-	int64_t						m_frame_gap;
+
+	int64_t						m_play_frame_gap;
 	int64_t						m_play_frame_rate;
-	int64_t						m_last_play_seq;
+
+	int64_t						m_play_frame_gap_temp;
+	int64_t						m_play_frame_rate_temp;
+
+
+	int64_t						m_last_live_play_seq;
 
 	int32_t						m_play_frame_w;
 	int32_t						m_play_frame_h;

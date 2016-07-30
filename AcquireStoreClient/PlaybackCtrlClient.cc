@@ -72,9 +72,9 @@ BOOL CPlaybackCtrlClient::is_connected() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_play_live() {
+int32_t CPlaybackCtrlClient::start_play_live(const int32_t play_frame_rate) {
 	try {
-		return m_client->start_play_live();
+		return m_client->start_play_live(play_frame_rate);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -84,6 +84,15 @@ int32_t CPlaybackCtrlClient::start_play_live() {
 int32_t CPlaybackCtrlClient::stop_play_live() {
 	try {
 		return  m_client->stop_play_live();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+int32_t CPlaybackCtrlClient::play_live() {
+	try {
+		return  m_client->play_live();
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -118,18 +127,120 @@ int32_t CPlaybackCtrlClient::set_store_file(const int32_t flag, const std::strin
 	}
 }
 
-int32_t CPlaybackCtrlClient::forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+int32_t CPlaybackCtrlClient::start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
 	try {
-		return m_client->forward_play(frame_seq, play_frame_rate, how_many_frames);
+		return m_client->start_forward_play(frame_seq, play_frame_rate, how_many_frames);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
 		return FALSE;
 	}
 }
-int32_t CPlaybackCtrlClient::backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+
+int32_t CPlaybackCtrlClient::stop_forward_play() {
 	try {
-		return m_client->backward_play(frame_seq, play_frame_rate, how_many_frames);
+		return m_client->stop_forward_play();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::forward_play() {
+	try {
+		return m_client->forward_play();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+	try {
+		return m_client->start_backward_play(frame_seq, play_frame_rate, how_many_frames);
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+
+int32_t CPlaybackCtrlClient::stop_backward_play() {
+	try {
+		return m_client->stop_backward_play();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::backward_play() {
+	try {
+		return m_client->backward_play();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+	try {
+		return m_client->start_forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::stop_forward_play_temp() {
+	try {
+		return m_client->stop_forward_play_temp();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::forward_play_temp() {
+	try {
+		return m_client->forward_play_temp();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+	try {
+		return m_client->start_backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::stop_backward_play_temp() {
+	try {
+		return m_client->stop_backward_play_temp();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+int32_t CPlaybackCtrlClient::backward_play_temp() {
+	try {
+		return m_client->backward_play_temp();
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());

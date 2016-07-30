@@ -65,6 +65,37 @@ protected:
 	}
 
 private:
+		//RGRG	RGRG
+		//GBGB	GBGB
+		//RGRG	RGRG
+		//GBGB	GBGB
+
+		//RGRG	RGRG
+		//GBGB	GBGB
+		//RGRG	RGRG
+		//GBGB	GBGB
+
+	void resized_iamge() {
+		std::vector<char> resized_image(m_image_w / 4 * m_image_h / 4,0x00);
+		int k = 0;
+		for (int i = 0; i < m_image_h/4; ++i) {
+			for (int j = 0; j < m_image_w/4; ++j ) {
+				//R
+				resized_image[k++] = m_buffer[m_image_w*(2+i) + 2*(j+1)];
+				//G
+				resized_image[k++] = (m_buffer[m_image_w *(1+i) + 4*(j+1)+2] + m_buffer[m_image_w *(2 + i) + 4 * (j + 1) + 1]) /2;
+			}
+
+			for (int j = 0; j < m_image_w / 4; ++j) {
+				//G
+				resized_image[k++] = m_buffer[m_image_w*(2 + i) + 2 * (j + 1)];
+				//B
+				resized_image[k++] = (m_buffer[m_image_w *(1 + i) + 4 * (j + 1) + 2] + m_buffer[m_image_w *(2 + i) + 4 * (j + 1) + 1]) / 2;
+			}
+		}
+	}
+
+private:
 	uint16_t			m_image_w;
 	uint16_t			m_image_h;
 

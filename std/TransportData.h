@@ -13,10 +13,6 @@ public:
 
 	}
 
-	//void pause() {
-	//	m_status = TRANSPORT_STATUS_NONE;
-	//}
-
 	int64_t send(char* data, int64_t data_len) {
 		return RingBuffer_write(m_ring_buffer, data, data_len);
 	}
@@ -35,15 +31,10 @@ protected:
 		m_buffer.resize(m_elem_size, 0x00);
 		m_ring_buffer = RingBuffer_create(m_elem_size * 10);
 
-		m_status = TRANSPORT_STATUS_NONE;
+		//m_status = TRANSPORT_STATUS_NONE;
 		while (!m_exited) {
-			if (m_status != TRANSPORT_STATUS_SENDING) {
-				sleep(2);
-				continue;
-			}
-
 			if (-1 == RingBuffer_read(m_ring_buffer, m_buffer.data(), m_buffer.size())) {
-				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+				sleep(2);
 				continue;
 			}
 
@@ -89,14 +80,11 @@ private:
 	int32_t				m_elem_size;
 
 
-
-public:
-	TRANSPORT_STATUS	m_status;
 };
 
 class CRecvData : public CMyThread {
 public:
-	void init(std::string& server_ip, uint16_t port, int32_t elem_size, int64_t frame_gap = 1) {
+	void set_parameters(std::string& server_ip, uint16_t port, int32_t elem_size, int64_t frame_gap = 1) {
 		m_server_ip = server_ip;
 		m_port = port;
 		m_elem_size = elem_size;
@@ -120,9 +108,12 @@ protected:
 		zmq_setsockopt(m_zmq_sock, ZMQ_SUBSCRIBE, "", 0);
 
 		m_buffer.resize(m_elem_size, 0x00);
-		m_status = TRANSPORT_STATUS_NONE;
 		while (!m_exited) {
-			do_recv();
+			if (-1 == do_recv()) {
+				sleep(2);
+				continue;
+			}
+			sleep(5);//FIXME:
 		}
 
 		zmq_close(m_zmq_sock);
@@ -146,7 +137,7 @@ private:
 			printf("#recv %d bytes,seq:%lld,last_seq:%lld,frame_gap:%lld,timestamp:%lld\n", ret, recv_seq, m_last_recv_seq, m_frame_gap, timestamp);
 		}
 		else {
-			printf("recv %d bytes,seq:%lld,last_seq:%lld,timestamp:%lld\r", ret, recv_seq, m_last_recv_seq, timestamp);
+			printf("recv %d bytes,seq:%lld,last_seq:%lld,timestamp:%lld\n", ret, recv_seq, m_last_recv_seq, timestamp);
 		}
 		m_last_recv_seq = recv_seq;
 
@@ -173,8 +164,6 @@ private:
 	SinkDataCallback	m_cb;
 	void*				m_cb_ctx;
 
-public:
-	TRANSPORT_STATUS	m_status;
 };
 
 #endif // !__SEND_DATA_H__

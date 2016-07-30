@@ -544,7 +544,20 @@ uint32_t PlaybackCtrlService_start_play_live_args::read(::apache::thrift::protoc
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->play_frame_rate);
+          this->__isset.play_frame_rate = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -557,6 +570,10 @@ uint32_t PlaybackCtrlService_start_play_live_args::write(::apache::thrift::proto
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("PlaybackCtrlService_start_play_live_args");
 
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->play_frame_rate);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -565,6 +582,10 @@ uint32_t PlaybackCtrlService_start_play_live_args::write(::apache::thrift::proto
 uint32_t PlaybackCtrlService_start_play_live_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("PlaybackCtrlService_start_play_live_pargs");
+
+  xfer += oprot->writeFieldBegin("play_frame_rate", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->play_frame_rate)));
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -808,7 +829,148 @@ uint32_t PlaybackCtrlService_stop_play_live_presult::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_forward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_play_live_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_play_live_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_play_live_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_play_live_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_play_live_pargs");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_play_live_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_play_live_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_play_live_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_play_live_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_forward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -864,9 +1026,9 @@ uint32_t PlaybackCtrlService_forward_play_args::read(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_forward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_forward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_forward_play_args");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64(this->frame_seq);
@@ -885,9 +1047,9 @@ uint32_t PlaybackCtrlService_forward_play_args::write(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_forward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_forward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_forward_play_pargs");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64((*(this->frame_seq)));
@@ -900,6 +1062,288 @@ uint32_t PlaybackCtrlService_forward_play_pargs::write(::apache::thrift::protoco
   xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32((*(this->how_many_frames)));
   xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_forward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_forward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_forward_play_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_forward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_forward_play_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_forward_play_pargs");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_forward_play_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -1002,7 +1446,7 @@ uint32_t PlaybackCtrlService_forward_play_presult::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_backward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_start_backward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1058,9 +1502,9 @@ uint32_t PlaybackCtrlService_backward_play_args::read(::apache::thrift::protocol
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_backward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_backward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_backward_play_args");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64(this->frame_seq);
@@ -1079,9 +1523,9 @@ uint32_t PlaybackCtrlService_backward_play_args::write(::apache::thrift::protoco
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_backward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_backward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_backward_play_pargs");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64((*(this->frame_seq)));
@@ -1094,6 +1538,288 @@ uint32_t PlaybackCtrlService_backward_play_pargs::write(::apache::thrift::protoc
   xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32((*(this->how_many_frames)));
   xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_backward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_backward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_backward_play_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_backward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_backward_play_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_backward_play_pargs");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_backward_play_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -1196,7 +1922,7 @@ uint32_t PlaybackCtrlService_backward_play_presult::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_forward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_start_forward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1252,9 +1978,9 @@ uint32_t PlaybackCtrlService_forward_play_temp_args::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_forward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_forward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_temp_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_forward_play_temp_args");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64(this->frame_seq);
@@ -1273,9 +1999,9 @@ uint32_t PlaybackCtrlService_forward_play_temp_args::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_forward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_forward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_temp_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_forward_play_temp_pargs");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64((*(this->frame_seq)));
@@ -1288,6 +2014,288 @@ uint32_t PlaybackCtrlService_forward_play_temp_pargs::write(::apache::thrift::pr
   xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32((*(this->how_many_frames)));
   xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_forward_play_temp_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_forward_play_temp_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_forward_play_temp_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_forward_play_temp_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_forward_play_temp_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_forward_play_temp_pargs");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_temp_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_temp_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_forward_play_temp_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_forward_play_temp_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_temp_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_forward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_forward_play_temp_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -1390,7 +2398,7 @@ uint32_t PlaybackCtrlService_forward_play_temp_presult::read(::apache::thrift::p
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_backward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t PlaybackCtrlService_start_backward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1446,9 +2454,9 @@ uint32_t PlaybackCtrlService_backward_play_temp_args::read(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_backward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_backward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_temp_args");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_backward_play_temp_args");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64(this->frame_seq);
@@ -1467,9 +2475,9 @@ uint32_t PlaybackCtrlService_backward_play_temp_args::write(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t PlaybackCtrlService_backward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t PlaybackCtrlService_start_backward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_temp_pargs");
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_backward_play_temp_pargs");
 
   xfer += oprot->writeFieldBegin("frame_seq", ::apache::thrift::protocol::T_I64, 1);
   xfer += oprot->writeI64((*(this->frame_seq)));
@@ -1482,6 +2490,288 @@ uint32_t PlaybackCtrlService_backward_play_temp_pargs::write(::apache::thrift::p
   xfer += oprot->writeFieldBegin("how_many_frames", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32((*(this->how_many_frames)));
   xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_backward_play_temp_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_backward_play_temp_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_start_backward_play_temp_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_start_backward_play_temp_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_backward_play_temp_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_backward_play_temp_pargs");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_temp_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_temp_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_stop_backward_play_temp_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_stop_backward_play_temp_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_temp_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t PlaybackCtrlService_backward_play_temp_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlaybackCtrlService_backward_play_temp_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -7088,18 +8378,19 @@ int32_t PlaybackCtrlServiceClient::recv_set_store_file()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "set_store_file failed: unknown result");
 }
 
-int32_t PlaybackCtrlServiceClient::start_play_live()
+int32_t PlaybackCtrlServiceClient::start_play_live(const int32_t play_frame_rate)
 {
-  send_start_play_live();
+  send_start_play_live(play_frame_rate);
   return recv_start_play_live();
 }
 
-void PlaybackCtrlServiceClient::send_start_play_live()
+void PlaybackCtrlServiceClient::send_start_play_live(const int32_t play_frame_rate)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("start_play_live", ::apache::thrift::protocol::T_CALL, cseqid);
 
   PlaybackCtrlService_start_play_live_pargs args;
+  args.play_frame_rate = &play_frame_rate;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7202,21 +8493,192 @@ int32_t PlaybackCtrlServiceClient::recv_stop_play_live()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop_play_live failed: unknown result");
 }
 
-int32_t PlaybackCtrlServiceClient::forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+int32_t PlaybackCtrlServiceClient::play_live()
 {
-  send_forward_play(frame_seq, play_frame_rate, how_many_frames);
+  send_play_live();
+  return recv_play_live();
+}
+
+void PlaybackCtrlServiceClient::send_play_live()
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("play_live", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_play_live_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_play_live()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("play_live") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_play_live_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "play_live failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  send_start_forward_play(frame_seq, play_frame_rate, how_many_frames);
+  return recv_start_forward_play();
+}
+
+void PlaybackCtrlServiceClient::send_start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("start_forward_play", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_start_forward_play_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_start_forward_play()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("start_forward_play") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_start_forward_play_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "start_forward_play failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::stop_forward_play()
+{
+  send_stop_forward_play();
+  return recv_stop_forward_play();
+}
+
+void PlaybackCtrlServiceClient::send_stop_forward_play()
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("stop_forward_play", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_stop_forward_play_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_stop_forward_play()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("stop_forward_play") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_stop_forward_play_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop_forward_play failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::forward_play()
+{
+  send_forward_play();
   return recv_forward_play();
 }
 
-void PlaybackCtrlServiceClient::send_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+void PlaybackCtrlServiceClient::send_forward_play()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("forward_play", ::apache::thrift::protocol::T_CALL, cseqid);
 
   PlaybackCtrlService_forward_play_pargs args;
-  args.frame_seq = &frame_seq;
-  args.play_frame_rate = &play_frame_rate;
-  args.how_many_frames = &how_many_frames;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7262,21 +8724,135 @@ int32_t PlaybackCtrlServiceClient::recv_forward_play()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "forward_play failed: unknown result");
 }
 
-int32_t PlaybackCtrlServiceClient::backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+int32_t PlaybackCtrlServiceClient::start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
 {
-  send_backward_play(frame_seq, play_frame_rate, how_many_frames);
+  send_start_backward_play(frame_seq, play_frame_rate, how_many_frames);
+  return recv_start_backward_play();
+}
+
+void PlaybackCtrlServiceClient::send_start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("start_backward_play", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_start_backward_play_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_start_backward_play()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("start_backward_play") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_start_backward_play_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "start_backward_play failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::stop_backward_play()
+{
+  send_stop_backward_play();
+  return recv_stop_backward_play();
+}
+
+void PlaybackCtrlServiceClient::send_stop_backward_play()
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("stop_backward_play", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_stop_backward_play_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_stop_backward_play()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("stop_backward_play") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_stop_backward_play_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop_backward_play failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::backward_play()
+{
+  send_backward_play();
   return recv_backward_play();
 }
 
-void PlaybackCtrlServiceClient::send_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+void PlaybackCtrlServiceClient::send_backward_play()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("backward_play", ::apache::thrift::protocol::T_CALL, cseqid);
 
   PlaybackCtrlService_backward_play_pargs args;
-  args.frame_seq = &frame_seq;
-  args.play_frame_rate = &play_frame_rate;
-  args.how_many_frames = &how_many_frames;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7322,21 +8898,135 @@ int32_t PlaybackCtrlServiceClient::recv_backward_play()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "backward_play failed: unknown result");
 }
 
-int32_t PlaybackCtrlServiceClient::forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+int32_t PlaybackCtrlServiceClient::start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
 {
-  send_forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  send_start_forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  return recv_start_forward_play_temp();
+}
+
+void PlaybackCtrlServiceClient::send_start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("start_forward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_start_forward_play_temp_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_start_forward_play_temp()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("start_forward_play_temp") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_start_forward_play_temp_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "start_forward_play_temp failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::stop_forward_play_temp()
+{
+  send_stop_forward_play_temp();
+  return recv_stop_forward_play_temp();
+}
+
+void PlaybackCtrlServiceClient::send_stop_forward_play_temp()
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("stop_forward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_stop_forward_play_temp_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_stop_forward_play_temp()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("stop_forward_play_temp") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_stop_forward_play_temp_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop_forward_play_temp failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::forward_play_temp()
+{
+  send_forward_play_temp();
   return recv_forward_play_temp();
 }
 
-void PlaybackCtrlServiceClient::send_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+void PlaybackCtrlServiceClient::send_forward_play_temp()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("forward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
 
   PlaybackCtrlService_forward_play_temp_pargs args;
-  args.frame_seq = &frame_seq;
-  args.play_frame_rate = &play_frame_rate;
-  args.how_many_frames = &how_many_frames;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7382,21 +9072,135 @@ int32_t PlaybackCtrlServiceClient::recv_forward_play_temp()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "forward_play_temp failed: unknown result");
 }
 
-int32_t PlaybackCtrlServiceClient::backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+int32_t PlaybackCtrlServiceClient::start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
 {
-  send_backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  send_start_backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  return recv_start_backward_play_temp();
+}
+
+void PlaybackCtrlServiceClient::send_start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("start_backward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_start_backward_play_temp_pargs args;
+  args.frame_seq = &frame_seq;
+  args.play_frame_rate = &play_frame_rate;
+  args.how_many_frames = &how_many_frames;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_start_backward_play_temp()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("start_backward_play_temp") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_start_backward_play_temp_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "start_backward_play_temp failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::stop_backward_play_temp()
+{
+  send_stop_backward_play_temp();
+  return recv_stop_backward_play_temp();
+}
+
+void PlaybackCtrlServiceClient::send_stop_backward_play_temp()
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("stop_backward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  PlaybackCtrlService_stop_backward_play_temp_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t PlaybackCtrlServiceClient::recv_stop_backward_play_temp()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("stop_backward_play_temp") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  PlaybackCtrlService_stop_backward_play_temp_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stop_backward_play_temp failed: unknown result");
+}
+
+int32_t PlaybackCtrlServiceClient::backward_play_temp()
+{
+  send_backward_play_temp();
   return recv_backward_play_temp();
 }
 
-void PlaybackCtrlServiceClient::send_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames)
+void PlaybackCtrlServiceClient::send_backward_play_temp()
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("backward_play_temp", ::apache::thrift::protocol::T_CALL, cseqid);
 
   PlaybackCtrlService_backward_play_temp_pargs args;
-  args.frame_seq = &frame_seq;
-  args.play_frame_rate = &play_frame_rate;
-  args.how_many_frames = &how_many_frames;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9710,7 +11514,7 @@ void PlaybackCtrlServiceProcessor::process_start_play_live(int32_t seqid, ::apac
 
   PlaybackCtrlService_start_play_live_result result;
   try {
-    result.success = iface_->start_play_live();
+    result.success = iface_->start_play_live(args.play_frame_rate);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9795,6 +11599,168 @@ void PlaybackCtrlServiceProcessor::process_stop_play_live(int32_t seqid, ::apach
   }
 }
 
+void PlaybackCtrlServiceProcessor::process_play_live(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.play_live", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.play_live");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.play_live");
+  }
+
+  PlaybackCtrlService_play_live_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.play_live", bytes);
+  }
+
+  PlaybackCtrlService_play_live_result result;
+  try {
+    result.success = iface_->play_live();
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.play_live");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("play_live", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.play_live");
+  }
+
+  oprot->writeMessageBegin("play_live", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.play_live", bytes);
+  }
+}
+
+void PlaybackCtrlServiceProcessor::process_start_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.start_forward_play", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.start_forward_play");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.start_forward_play");
+  }
+
+  PlaybackCtrlService_start_forward_play_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.start_forward_play", bytes);
+  }
+
+  PlaybackCtrlService_start_forward_play_result result;
+  try {
+    result.success = iface_->start_forward_play(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.start_forward_play");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("start_forward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.start_forward_play");
+  }
+
+  oprot->writeMessageBegin("start_forward_play", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.start_forward_play", bytes);
+  }
+}
+
+void PlaybackCtrlServiceProcessor::process_stop_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.stop_forward_play", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.stop_forward_play");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.stop_forward_play");
+  }
+
+  PlaybackCtrlService_stop_forward_play_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.stop_forward_play", bytes);
+  }
+
+  PlaybackCtrlService_stop_forward_play_result result;
+  try {
+    result.success = iface_->stop_forward_play();
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.stop_forward_play");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("stop_forward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.stop_forward_play");
+  }
+
+  oprot->writeMessageBegin("stop_forward_play", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.stop_forward_play", bytes);
+  }
+}
+
 void PlaybackCtrlServiceProcessor::process_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
@@ -9818,7 +11784,7 @@ void PlaybackCtrlServiceProcessor::process_forward_play(int32_t seqid, ::apache:
 
   PlaybackCtrlService_forward_play_result result;
   try {
-    result.success = iface_->forward_play(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.success = iface_->forward_play();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9849,6 +11815,114 @@ void PlaybackCtrlServiceProcessor::process_forward_play(int32_t seqid, ::apache:
   }
 }
 
+void PlaybackCtrlServiceProcessor::process_start_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.start_backward_play", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.start_backward_play");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.start_backward_play");
+  }
+
+  PlaybackCtrlService_start_backward_play_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.start_backward_play", bytes);
+  }
+
+  PlaybackCtrlService_start_backward_play_result result;
+  try {
+    result.success = iface_->start_backward_play(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.start_backward_play");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("start_backward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.start_backward_play");
+  }
+
+  oprot->writeMessageBegin("start_backward_play", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.start_backward_play", bytes);
+  }
+}
+
+void PlaybackCtrlServiceProcessor::process_stop_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.stop_backward_play", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.stop_backward_play");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.stop_backward_play");
+  }
+
+  PlaybackCtrlService_stop_backward_play_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.stop_backward_play", bytes);
+  }
+
+  PlaybackCtrlService_stop_backward_play_result result;
+  try {
+    result.success = iface_->stop_backward_play();
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.stop_backward_play");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("stop_backward_play", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.stop_backward_play");
+  }
+
+  oprot->writeMessageBegin("stop_backward_play", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.stop_backward_play", bytes);
+  }
+}
+
 void PlaybackCtrlServiceProcessor::process_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
@@ -9872,7 +11946,7 @@ void PlaybackCtrlServiceProcessor::process_backward_play(int32_t seqid, ::apache
 
   PlaybackCtrlService_backward_play_result result;
   try {
-    result.success = iface_->backward_play(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.success = iface_->backward_play();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9903,6 +11977,114 @@ void PlaybackCtrlServiceProcessor::process_backward_play(int32_t seqid, ::apache
   }
 }
 
+void PlaybackCtrlServiceProcessor::process_start_forward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.start_forward_play_temp", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.start_forward_play_temp");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.start_forward_play_temp");
+  }
+
+  PlaybackCtrlService_start_forward_play_temp_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.start_forward_play_temp", bytes);
+  }
+
+  PlaybackCtrlService_start_forward_play_temp_result result;
+  try {
+    result.success = iface_->start_forward_play_temp(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.start_forward_play_temp");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("start_forward_play_temp", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.start_forward_play_temp");
+  }
+
+  oprot->writeMessageBegin("start_forward_play_temp", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.start_forward_play_temp", bytes);
+  }
+}
+
+void PlaybackCtrlServiceProcessor::process_stop_forward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.stop_forward_play_temp", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.stop_forward_play_temp");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.stop_forward_play_temp");
+  }
+
+  PlaybackCtrlService_stop_forward_play_temp_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.stop_forward_play_temp", bytes);
+  }
+
+  PlaybackCtrlService_stop_forward_play_temp_result result;
+  try {
+    result.success = iface_->stop_forward_play_temp();
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.stop_forward_play_temp");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("stop_forward_play_temp", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.stop_forward_play_temp");
+  }
+
+  oprot->writeMessageBegin("stop_forward_play_temp", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.stop_forward_play_temp", bytes);
+  }
+}
+
 void PlaybackCtrlServiceProcessor::process_forward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
@@ -9926,7 +12108,7 @@ void PlaybackCtrlServiceProcessor::process_forward_play_temp(int32_t seqid, ::ap
 
   PlaybackCtrlService_forward_play_temp_result result;
   try {
-    result.success = iface_->forward_play_temp(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.success = iface_->forward_play_temp();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9957,6 +12139,114 @@ void PlaybackCtrlServiceProcessor::process_forward_play_temp(int32_t seqid, ::ap
   }
 }
 
+void PlaybackCtrlServiceProcessor::process_start_backward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.start_backward_play_temp", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.start_backward_play_temp");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.start_backward_play_temp");
+  }
+
+  PlaybackCtrlService_start_backward_play_temp_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.start_backward_play_temp", bytes);
+  }
+
+  PlaybackCtrlService_start_backward_play_temp_result result;
+  try {
+    result.success = iface_->start_backward_play_temp(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.start_backward_play_temp");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("start_backward_play_temp", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.start_backward_play_temp");
+  }
+
+  oprot->writeMessageBegin("start_backward_play_temp", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.start_backward_play_temp", bytes);
+  }
+}
+
+void PlaybackCtrlServiceProcessor::process_stop_backward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("PlaybackCtrlService.stop_backward_play_temp", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "PlaybackCtrlService.stop_backward_play_temp");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "PlaybackCtrlService.stop_backward_play_temp");
+  }
+
+  PlaybackCtrlService_stop_backward_play_temp_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "PlaybackCtrlService.stop_backward_play_temp", bytes);
+  }
+
+  PlaybackCtrlService_stop_backward_play_temp_result result;
+  try {
+    result.success = iface_->stop_backward_play_temp();
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "PlaybackCtrlService.stop_backward_play_temp");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("stop_backward_play_temp", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "PlaybackCtrlService.stop_backward_play_temp");
+  }
+
+  oprot->writeMessageBegin("stop_backward_play_temp", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "PlaybackCtrlService.stop_backward_play_temp", bytes);
+  }
+}
+
 void PlaybackCtrlServiceProcessor::process_backward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
@@ -9980,7 +12270,7 @@ void PlaybackCtrlServiceProcessor::process_backward_play_temp(int32_t seqid, ::a
 
   PlaybackCtrlService_backward_play_temp_result result;
   try {
-    result.success = iface_->backward_play_temp(args.frame_seq, args.play_frame_rate, args.how_many_frames);
+    result.success = iface_->backward_play_temp();
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {

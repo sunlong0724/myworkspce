@@ -35,14 +35,25 @@ public:
 	int32_t set_play_frame_rate(const int32_t play_frame_rate);
 	int32_t set_store_file(const int32_t flag, const std::string& file_name);
 
-	int32_t start_play_live();
+	int32_t start_play_live(const int32_t play_frame_rate);
 	int32_t stop_play_live();
+	int32_t play_live();
 
-	int32_t forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
-	int32_t backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t stop_forward_play();
+	int32_t forward_play();
 
-	int32_t forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
-	int32_t backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t stop_backward_play();
+	int32_t backward_play();
+
+	int32_t start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t stop_forward_play_temp();
+	int32_t forward_play_temp();
+
+	int32_t start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t stop_backward_play_temp();
+	int32_t backward_play_temp();
 
 	//CAMERA
 	int32_t set_exposure_time(const double microseconds) ;

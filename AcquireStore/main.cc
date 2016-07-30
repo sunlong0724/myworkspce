@@ -24,6 +24,7 @@
 
 std::string	CFileStorage::m_file_name = "";
  long long CFileStorage::m_max_file_size = ONE_GB;
+ std::map<int64_t, int64_t> CFileStorage::m_frame_offset_map = {};
 
 using namespace std;
 using namespace apache::thrift;
@@ -109,13 +110,13 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	g_cs.m_playback_thread = new CPlaybackCtrlThread();
 	g_cs.m_post_processor_thread = new CPostProcessor();
 	g_cs.m_snd_data_thread = new CSendData();
-	g_cs.m_file_storage_object = new CFileStorage();
+	g_cs.m_file_storage_object_for_write = new CFileStorage();
+	g_cs.m_file_storage_object_for_read = new CFileStorage();
 
 	//init
 	g_cs.m_image_w = g_cs.m_camera->GetImageWidth();
 	g_cs.m_image_h = g_cs.m_camera->GetImageHeight();
 	g_cs.m_frame_rate = g_cs.m_camera->GetFrameRate();
-	g_cs.m_buffer.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h), 0x00);
 
 	//start
 	g_cs.m_playback_thread->start();
@@ -133,7 +134,8 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	g_cs.m_camera->DestroyDevice();
 
 	delete g_cs.m_camera;
-	delete g_cs.m_file_storage_object;
+	delete g_cs.m_file_storage_object_for_write;
+	delete g_cs.m_file_storage_object_for_read;
 	delete g_cs.m_snd_data_thread;
 	delete g_cs.m_post_processor_thread;
 	delete g_cs.m_playback_thread;

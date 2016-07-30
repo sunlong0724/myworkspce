@@ -18,12 +18,21 @@ class PlaybackCtrlServiceIf {
   virtual int32_t set_play_frame_rate(const int32_t play_frame_rate) = 0;
   virtual int32_t set_play_frame_resolution(const int32_t w, const int32_t h) = 0;
   virtual int32_t set_store_file(const int32_t flag, const std::string& file_name) = 0;
-  virtual int32_t start_play_live() = 0;
+  virtual int32_t start_play_live(const int32_t play_frame_rate) = 0;
   virtual int32_t stop_play_live() = 0;
-  virtual int32_t forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
-  virtual int32_t backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
-  virtual int32_t forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
-  virtual int32_t backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
+  virtual int32_t play_live() = 0;
+  virtual int32_t start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
+  virtual int32_t stop_forward_play() = 0;
+  virtual int32_t forward_play() = 0;
+  virtual int32_t start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
+  virtual int32_t stop_backward_play() = 0;
+  virtual int32_t backward_play() = 0;
+  virtual int32_t start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
+  virtual int32_t stop_forward_play_temp() = 0;
+  virtual int32_t forward_play_temp() = 0;
+  virtual int32_t start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) = 0;
+  virtual int32_t stop_backward_play_temp() = 0;
+  virtual int32_t backward_play_temp() = 0;
   virtual int32_t set_exposure_time(const double microseconds) = 0;
   virtual int32_t set_gain_by_sensor_all(const double gain) = 0;
   virtual int32_t set_gain_by_sensor_analog(const double gain) = 0;
@@ -101,7 +110,7 @@ class PlaybackCtrlServiceNull : virtual public PlaybackCtrlServiceIf {
     int32_t _return = 0;
     return _return;
   }
-  int32_t start_play_live() {
+  int32_t start_play_live(const int32_t /* play_frame_rate */) {
     int32_t _return = 0;
     return _return;
   }
@@ -109,19 +118,55 @@ class PlaybackCtrlServiceNull : virtual public PlaybackCtrlServiceIf {
     int32_t _return = 0;
     return _return;
   }
-  int32_t forward_play(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
+  int32_t play_live() {
     int32_t _return = 0;
     return _return;
   }
-  int32_t backward_play(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
+  int32_t start_forward_play(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
     int32_t _return = 0;
     return _return;
   }
-  int32_t forward_play_temp(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
+  int32_t stop_forward_play() {
     int32_t _return = 0;
     return _return;
   }
-  int32_t backward_play_temp(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
+  int32_t forward_play() {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t start_backward_play(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t stop_backward_play() {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t backward_play() {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t start_forward_play_temp(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t stop_forward_play_temp() {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t forward_play_temp() {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t start_backward_play_temp(const int64_t /* frame_seq */, const int32_t /* play_frame_rate */, const int32_t /* how_many_frames */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t stop_backward_play_temp() {
+    int32_t _return = 0;
+    return _return;
+  }
+  int32_t backward_play_temp() {
     int32_t _return = 0;
     return _return;
   }
@@ -603,18 +648,31 @@ class PlaybackCtrlService_set_store_file_presult {
 
 };
 
+typedef struct _PlaybackCtrlService_start_play_live_args__isset {
+  _PlaybackCtrlService_start_play_live_args__isset() : play_frame_rate(false) {}
+  bool play_frame_rate;
+} _PlaybackCtrlService_start_play_live_args__isset;
 
 class PlaybackCtrlService_start_play_live_args {
  public:
 
-  PlaybackCtrlService_start_play_live_args() {
+  PlaybackCtrlService_start_play_live_args() : play_frame_rate(0) {
   }
 
   virtual ~PlaybackCtrlService_start_play_live_args() throw() {}
 
+  int32_t play_frame_rate;
 
-  bool operator == (const PlaybackCtrlService_start_play_live_args & /* rhs */) const
+  _PlaybackCtrlService_start_play_live_args__isset __isset;
+
+  void __set_play_frame_rate(const int32_t val) {
+    play_frame_rate = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_start_play_live_args & rhs) const
   {
+    if (!(play_frame_rate == rhs.play_frame_rate))
+      return false;
     return true;
   }
   bool operator != (const PlaybackCtrlService_start_play_live_args &rhs) const {
@@ -635,6 +693,7 @@ class PlaybackCtrlService_start_play_live_pargs {
 
   virtual ~PlaybackCtrlService_start_play_live_pargs() throw() {}
 
+  const int32_t* play_frame_rate;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -791,26 +850,120 @@ class PlaybackCtrlService_stop_play_live_presult {
 
 };
 
-typedef struct _PlaybackCtrlService_forward_play_args__isset {
-  _PlaybackCtrlService_forward_play_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
+
+class PlaybackCtrlService_play_live_args {
+ public:
+
+  PlaybackCtrlService_play_live_args() {
+  }
+
+  virtual ~PlaybackCtrlService_play_live_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_play_live_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_play_live_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_play_live_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_play_live_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_play_live_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_play_live_result__isset {
+  _PlaybackCtrlService_play_live_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_play_live_result__isset;
+
+class PlaybackCtrlService_play_live_result {
+ public:
+
+  PlaybackCtrlService_play_live_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_play_live_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_play_live_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_play_live_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_play_live_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_play_live_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_play_live_presult__isset {
+  _PlaybackCtrlService_play_live_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_play_live_presult__isset;
+
+class PlaybackCtrlService_play_live_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_play_live_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_play_live_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _PlaybackCtrlService_start_forward_play_args__isset {
+  _PlaybackCtrlService_start_forward_play_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
   bool frame_seq;
   bool play_frame_rate;
   bool how_many_frames;
-} _PlaybackCtrlService_forward_play_args__isset;
+} _PlaybackCtrlService_start_forward_play_args__isset;
 
-class PlaybackCtrlService_forward_play_args {
+class PlaybackCtrlService_start_forward_play_args {
  public:
 
-  PlaybackCtrlService_forward_play_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
+  PlaybackCtrlService_start_forward_play_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
   }
 
-  virtual ~PlaybackCtrlService_forward_play_args() throw() {}
+  virtual ~PlaybackCtrlService_start_forward_play_args() throw() {}
 
   int64_t frame_seq;
   int32_t play_frame_rate;
   int32_t how_many_frames;
 
-  _PlaybackCtrlService_forward_play_args__isset __isset;
+  _PlaybackCtrlService_start_forward_play_args__isset __isset;
 
   void __set_frame_seq(const int64_t val) {
     frame_seq = val;
@@ -824,7 +977,7 @@ class PlaybackCtrlService_forward_play_args {
     how_many_frames = val;
   }
 
-  bool operator == (const PlaybackCtrlService_forward_play_args & rhs) const
+  bool operator == (const PlaybackCtrlService_start_forward_play_args & rhs) const
   {
     if (!(frame_seq == rhs.frame_seq))
       return false;
@@ -832,6 +985,197 @@ class PlaybackCtrlService_forward_play_args {
       return false;
     if (!(how_many_frames == rhs.how_many_frames))
       return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_forward_play_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_forward_play_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_start_forward_play_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_forward_play_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* play_frame_rate;
+  const int32_t* how_many_frames;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_forward_play_result__isset {
+  _PlaybackCtrlService_start_forward_play_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_forward_play_result__isset;
+
+class PlaybackCtrlService_start_forward_play_result {
+ public:
+
+  PlaybackCtrlService_start_forward_play_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_start_forward_play_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_start_forward_play_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_start_forward_play_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_forward_play_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_forward_play_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_forward_play_presult__isset {
+  _PlaybackCtrlService_start_forward_play_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_forward_play_presult__isset;
+
+class PlaybackCtrlService_start_forward_play_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_forward_play_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_start_forward_play_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_stop_forward_play_args {
+ public:
+
+  PlaybackCtrlService_stop_forward_play_args() {
+  }
+
+  virtual ~PlaybackCtrlService_stop_forward_play_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_stop_forward_play_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_forward_play_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_forward_play_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_stop_forward_play_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_forward_play_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_forward_play_result__isset {
+  _PlaybackCtrlService_stop_forward_play_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_forward_play_result__isset;
+
+class PlaybackCtrlService_stop_forward_play_result {
+ public:
+
+  PlaybackCtrlService_stop_forward_play_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_stop_forward_play_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_stop_forward_play_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_stop_forward_play_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_forward_play_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_forward_play_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_forward_play_presult__isset {
+  _PlaybackCtrlService_stop_forward_play_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_forward_play_presult__isset;
+
+class PlaybackCtrlService_stop_forward_play_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_forward_play_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_stop_forward_play_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_forward_play_args {
+ public:
+
+  PlaybackCtrlService_forward_play_args() {
+  }
+
+  virtual ~PlaybackCtrlService_forward_play_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_forward_play_args & /* rhs */) const
+  {
     return true;
   }
   bool operator != (const PlaybackCtrlService_forward_play_args &rhs) const {
@@ -852,9 +1196,6 @@ class PlaybackCtrlService_forward_play_pargs {
 
   virtual ~PlaybackCtrlService_forward_play_pargs() throw() {}
 
-  const int64_t* frame_seq;
-  const int32_t* play_frame_rate;
-  const int32_t* how_many_frames;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -917,26 +1258,26 @@ class PlaybackCtrlService_forward_play_presult {
 
 };
 
-typedef struct _PlaybackCtrlService_backward_play_args__isset {
-  _PlaybackCtrlService_backward_play_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
+typedef struct _PlaybackCtrlService_start_backward_play_args__isset {
+  _PlaybackCtrlService_start_backward_play_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
   bool frame_seq;
   bool play_frame_rate;
   bool how_many_frames;
-} _PlaybackCtrlService_backward_play_args__isset;
+} _PlaybackCtrlService_start_backward_play_args__isset;
 
-class PlaybackCtrlService_backward_play_args {
+class PlaybackCtrlService_start_backward_play_args {
  public:
 
-  PlaybackCtrlService_backward_play_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
+  PlaybackCtrlService_start_backward_play_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
   }
 
-  virtual ~PlaybackCtrlService_backward_play_args() throw() {}
+  virtual ~PlaybackCtrlService_start_backward_play_args() throw() {}
 
   int64_t frame_seq;
   int32_t play_frame_rate;
   int32_t how_many_frames;
 
-  _PlaybackCtrlService_backward_play_args__isset __isset;
+  _PlaybackCtrlService_start_backward_play_args__isset __isset;
 
   void __set_frame_seq(const int64_t val) {
     frame_seq = val;
@@ -950,7 +1291,7 @@ class PlaybackCtrlService_backward_play_args {
     how_many_frames = val;
   }
 
-  bool operator == (const PlaybackCtrlService_backward_play_args & rhs) const
+  bool operator == (const PlaybackCtrlService_start_backward_play_args & rhs) const
   {
     if (!(frame_seq == rhs.frame_seq))
       return false;
@@ -958,6 +1299,197 @@ class PlaybackCtrlService_backward_play_args {
       return false;
     if (!(how_many_frames == rhs.how_many_frames))
       return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_backward_play_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_backward_play_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_start_backward_play_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_backward_play_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* play_frame_rate;
+  const int32_t* how_many_frames;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_backward_play_result__isset {
+  _PlaybackCtrlService_start_backward_play_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_backward_play_result__isset;
+
+class PlaybackCtrlService_start_backward_play_result {
+ public:
+
+  PlaybackCtrlService_start_backward_play_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_start_backward_play_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_start_backward_play_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_start_backward_play_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_backward_play_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_backward_play_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_backward_play_presult__isset {
+  _PlaybackCtrlService_start_backward_play_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_backward_play_presult__isset;
+
+class PlaybackCtrlService_start_backward_play_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_backward_play_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_start_backward_play_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_stop_backward_play_args {
+ public:
+
+  PlaybackCtrlService_stop_backward_play_args() {
+  }
+
+  virtual ~PlaybackCtrlService_stop_backward_play_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_stop_backward_play_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_backward_play_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_backward_play_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_stop_backward_play_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_backward_play_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_backward_play_result__isset {
+  _PlaybackCtrlService_stop_backward_play_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_backward_play_result__isset;
+
+class PlaybackCtrlService_stop_backward_play_result {
+ public:
+
+  PlaybackCtrlService_stop_backward_play_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_stop_backward_play_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_stop_backward_play_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_stop_backward_play_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_backward_play_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_backward_play_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_backward_play_presult__isset {
+  _PlaybackCtrlService_stop_backward_play_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_backward_play_presult__isset;
+
+class PlaybackCtrlService_stop_backward_play_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_backward_play_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_stop_backward_play_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_backward_play_args {
+ public:
+
+  PlaybackCtrlService_backward_play_args() {
+  }
+
+  virtual ~PlaybackCtrlService_backward_play_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_backward_play_args & /* rhs */) const
+  {
     return true;
   }
   bool operator != (const PlaybackCtrlService_backward_play_args &rhs) const {
@@ -978,9 +1510,6 @@ class PlaybackCtrlService_backward_play_pargs {
 
   virtual ~PlaybackCtrlService_backward_play_pargs() throw() {}
 
-  const int64_t* frame_seq;
-  const int32_t* play_frame_rate;
-  const int32_t* how_many_frames;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -1043,26 +1572,26 @@ class PlaybackCtrlService_backward_play_presult {
 
 };
 
-typedef struct _PlaybackCtrlService_forward_play_temp_args__isset {
-  _PlaybackCtrlService_forward_play_temp_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
+typedef struct _PlaybackCtrlService_start_forward_play_temp_args__isset {
+  _PlaybackCtrlService_start_forward_play_temp_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
   bool frame_seq;
   bool play_frame_rate;
   bool how_many_frames;
-} _PlaybackCtrlService_forward_play_temp_args__isset;
+} _PlaybackCtrlService_start_forward_play_temp_args__isset;
 
-class PlaybackCtrlService_forward_play_temp_args {
+class PlaybackCtrlService_start_forward_play_temp_args {
  public:
 
-  PlaybackCtrlService_forward_play_temp_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
+  PlaybackCtrlService_start_forward_play_temp_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
   }
 
-  virtual ~PlaybackCtrlService_forward_play_temp_args() throw() {}
+  virtual ~PlaybackCtrlService_start_forward_play_temp_args() throw() {}
 
   int64_t frame_seq;
   int32_t play_frame_rate;
   int32_t how_many_frames;
 
-  _PlaybackCtrlService_forward_play_temp_args__isset __isset;
+  _PlaybackCtrlService_start_forward_play_temp_args__isset __isset;
 
   void __set_frame_seq(const int64_t val) {
     frame_seq = val;
@@ -1076,7 +1605,7 @@ class PlaybackCtrlService_forward_play_temp_args {
     how_many_frames = val;
   }
 
-  bool operator == (const PlaybackCtrlService_forward_play_temp_args & rhs) const
+  bool operator == (const PlaybackCtrlService_start_forward_play_temp_args & rhs) const
   {
     if (!(frame_seq == rhs.frame_seq))
       return false;
@@ -1084,6 +1613,197 @@ class PlaybackCtrlService_forward_play_temp_args {
       return false;
     if (!(how_many_frames == rhs.how_many_frames))
       return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_forward_play_temp_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_forward_play_temp_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_start_forward_play_temp_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_forward_play_temp_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* play_frame_rate;
+  const int32_t* how_many_frames;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_forward_play_temp_result__isset {
+  _PlaybackCtrlService_start_forward_play_temp_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_forward_play_temp_result__isset;
+
+class PlaybackCtrlService_start_forward_play_temp_result {
+ public:
+
+  PlaybackCtrlService_start_forward_play_temp_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_start_forward_play_temp_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_start_forward_play_temp_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_start_forward_play_temp_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_forward_play_temp_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_forward_play_temp_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_forward_play_temp_presult__isset {
+  _PlaybackCtrlService_start_forward_play_temp_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_forward_play_temp_presult__isset;
+
+class PlaybackCtrlService_start_forward_play_temp_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_forward_play_temp_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_start_forward_play_temp_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_stop_forward_play_temp_args {
+ public:
+
+  PlaybackCtrlService_stop_forward_play_temp_args() {
+  }
+
+  virtual ~PlaybackCtrlService_stop_forward_play_temp_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_stop_forward_play_temp_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_forward_play_temp_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_forward_play_temp_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_stop_forward_play_temp_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_forward_play_temp_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_forward_play_temp_result__isset {
+  _PlaybackCtrlService_stop_forward_play_temp_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_forward_play_temp_result__isset;
+
+class PlaybackCtrlService_stop_forward_play_temp_result {
+ public:
+
+  PlaybackCtrlService_stop_forward_play_temp_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_stop_forward_play_temp_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_stop_forward_play_temp_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_stop_forward_play_temp_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_forward_play_temp_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_forward_play_temp_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_forward_play_temp_presult__isset {
+  _PlaybackCtrlService_stop_forward_play_temp_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_forward_play_temp_presult__isset;
+
+class PlaybackCtrlService_stop_forward_play_temp_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_forward_play_temp_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_stop_forward_play_temp_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_forward_play_temp_args {
+ public:
+
+  PlaybackCtrlService_forward_play_temp_args() {
+  }
+
+  virtual ~PlaybackCtrlService_forward_play_temp_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_forward_play_temp_args & /* rhs */) const
+  {
     return true;
   }
   bool operator != (const PlaybackCtrlService_forward_play_temp_args &rhs) const {
@@ -1104,9 +1824,6 @@ class PlaybackCtrlService_forward_play_temp_pargs {
 
   virtual ~PlaybackCtrlService_forward_play_temp_pargs() throw() {}
 
-  const int64_t* frame_seq;
-  const int32_t* play_frame_rate;
-  const int32_t* how_many_frames;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -1169,26 +1886,26 @@ class PlaybackCtrlService_forward_play_temp_presult {
 
 };
 
-typedef struct _PlaybackCtrlService_backward_play_temp_args__isset {
-  _PlaybackCtrlService_backward_play_temp_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
+typedef struct _PlaybackCtrlService_start_backward_play_temp_args__isset {
+  _PlaybackCtrlService_start_backward_play_temp_args__isset() : frame_seq(false), play_frame_rate(false), how_many_frames(false) {}
   bool frame_seq;
   bool play_frame_rate;
   bool how_many_frames;
-} _PlaybackCtrlService_backward_play_temp_args__isset;
+} _PlaybackCtrlService_start_backward_play_temp_args__isset;
 
-class PlaybackCtrlService_backward_play_temp_args {
+class PlaybackCtrlService_start_backward_play_temp_args {
  public:
 
-  PlaybackCtrlService_backward_play_temp_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
+  PlaybackCtrlService_start_backward_play_temp_args() : frame_seq(0), play_frame_rate(0), how_many_frames(0) {
   }
 
-  virtual ~PlaybackCtrlService_backward_play_temp_args() throw() {}
+  virtual ~PlaybackCtrlService_start_backward_play_temp_args() throw() {}
 
   int64_t frame_seq;
   int32_t play_frame_rate;
   int32_t how_many_frames;
 
-  _PlaybackCtrlService_backward_play_temp_args__isset __isset;
+  _PlaybackCtrlService_start_backward_play_temp_args__isset __isset;
 
   void __set_frame_seq(const int64_t val) {
     frame_seq = val;
@@ -1202,7 +1919,7 @@ class PlaybackCtrlService_backward_play_temp_args {
     how_many_frames = val;
   }
 
-  bool operator == (const PlaybackCtrlService_backward_play_temp_args & rhs) const
+  bool operator == (const PlaybackCtrlService_start_backward_play_temp_args & rhs) const
   {
     if (!(frame_seq == rhs.frame_seq))
       return false;
@@ -1210,6 +1927,197 @@ class PlaybackCtrlService_backward_play_temp_args {
       return false;
     if (!(how_many_frames == rhs.how_many_frames))
       return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_backward_play_temp_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_backward_play_temp_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_start_backward_play_temp_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_backward_play_temp_pargs() throw() {}
+
+  const int64_t* frame_seq;
+  const int32_t* play_frame_rate;
+  const int32_t* how_many_frames;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_backward_play_temp_result__isset {
+  _PlaybackCtrlService_start_backward_play_temp_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_backward_play_temp_result__isset;
+
+class PlaybackCtrlService_start_backward_play_temp_result {
+ public:
+
+  PlaybackCtrlService_start_backward_play_temp_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_start_backward_play_temp_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_start_backward_play_temp_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_start_backward_play_temp_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_start_backward_play_temp_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_start_backward_play_temp_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_start_backward_play_temp_presult__isset {
+  _PlaybackCtrlService_start_backward_play_temp_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_start_backward_play_temp_presult__isset;
+
+class PlaybackCtrlService_start_backward_play_temp_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_start_backward_play_temp_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_start_backward_play_temp_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_stop_backward_play_temp_args {
+ public:
+
+  PlaybackCtrlService_stop_backward_play_temp_args() {
+  }
+
+  virtual ~PlaybackCtrlService_stop_backward_play_temp_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_stop_backward_play_temp_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_backward_play_temp_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_backward_play_temp_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_stop_backward_play_temp_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_backward_play_temp_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_backward_play_temp_result__isset {
+  _PlaybackCtrlService_stop_backward_play_temp_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_backward_play_temp_result__isset;
+
+class PlaybackCtrlService_stop_backward_play_temp_result {
+ public:
+
+  PlaybackCtrlService_stop_backward_play_temp_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_stop_backward_play_temp_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_stop_backward_play_temp_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_stop_backward_play_temp_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_stop_backward_play_temp_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_stop_backward_play_temp_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_stop_backward_play_temp_presult__isset {
+  _PlaybackCtrlService_stop_backward_play_temp_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_stop_backward_play_temp_presult__isset;
+
+class PlaybackCtrlService_stop_backward_play_temp_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_stop_backward_play_temp_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_stop_backward_play_temp_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_backward_play_temp_args {
+ public:
+
+  PlaybackCtrlService_backward_play_temp_args() {
+  }
+
+  virtual ~PlaybackCtrlService_backward_play_temp_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_backward_play_temp_args & /* rhs */) const
+  {
     return true;
   }
   bool operator != (const PlaybackCtrlService_backward_play_temp_args &rhs) const {
@@ -1230,9 +2138,6 @@ class PlaybackCtrlService_backward_play_temp_pargs {
 
   virtual ~PlaybackCtrlService_backward_play_temp_pargs() throw() {}
 
-  const int64_t* frame_seq;
-  const int32_t* play_frame_rate;
-  const int32_t* how_many_frames;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -4876,23 +5781,50 @@ class PlaybackCtrlServiceClient : virtual public PlaybackCtrlServiceIf {
   int32_t set_store_file(const int32_t flag, const std::string& file_name);
   void send_set_store_file(const int32_t flag, const std::string& file_name);
   int32_t recv_set_store_file();
-  int32_t start_play_live();
-  void send_start_play_live();
+  int32_t start_play_live(const int32_t play_frame_rate);
+  void send_start_play_live(const int32_t play_frame_rate);
   int32_t recv_start_play_live();
   int32_t stop_play_live();
   void send_stop_play_live();
   int32_t recv_stop_play_live();
-  int32_t forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
-  void send_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t play_live();
+  void send_play_live();
+  int32_t recv_play_live();
+  int32_t start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  void send_start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t recv_start_forward_play();
+  int32_t stop_forward_play();
+  void send_stop_forward_play();
+  int32_t recv_stop_forward_play();
+  int32_t forward_play();
+  void send_forward_play();
   int32_t recv_forward_play();
-  int32_t backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
-  void send_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  void send_start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t recv_start_backward_play();
+  int32_t stop_backward_play();
+  void send_stop_backward_play();
+  int32_t recv_stop_backward_play();
+  int32_t backward_play();
+  void send_backward_play();
   int32_t recv_backward_play();
-  int32_t forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
-  void send_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  void send_start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t recv_start_forward_play_temp();
+  int32_t stop_forward_play_temp();
+  void send_stop_forward_play_temp();
+  int32_t recv_stop_forward_play_temp();
+  int32_t forward_play_temp();
+  void send_forward_play_temp();
   int32_t recv_forward_play_temp();
-  int32_t backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
-  void send_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  void send_start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+  int32_t recv_start_backward_play_temp();
+  int32_t stop_backward_play_temp();
+  void send_stop_backward_play_temp();
+  int32_t recv_stop_backward_play_temp();
+  int32_t backward_play_temp();
+  void send_backward_play_temp();
   int32_t recv_backward_play_temp();
   int32_t set_exposure_time(const double microseconds);
   void send_set_exposure_time(const double microseconds);
@@ -5022,9 +5954,18 @@ class PlaybackCtrlServiceProcessor : public ::apache::thrift::TDispatchProcessor
   void process_set_store_file(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_start_play_live(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_stop_play_live(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_play_live(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_start_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_stop_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_forward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_start_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_stop_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_backward_play(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_start_forward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_stop_forward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_forward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_start_backward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_stop_backward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_backward_play_temp(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -5070,9 +6011,18 @@ class PlaybackCtrlServiceProcessor : public ::apache::thrift::TDispatchProcessor
     processMap_["set_store_file"] = &PlaybackCtrlServiceProcessor::process_set_store_file;
     processMap_["start_play_live"] = &PlaybackCtrlServiceProcessor::process_start_play_live;
     processMap_["stop_play_live"] = &PlaybackCtrlServiceProcessor::process_stop_play_live;
+    processMap_["play_live"] = &PlaybackCtrlServiceProcessor::process_play_live;
+    processMap_["start_forward_play"] = &PlaybackCtrlServiceProcessor::process_start_forward_play;
+    processMap_["stop_forward_play"] = &PlaybackCtrlServiceProcessor::process_stop_forward_play;
     processMap_["forward_play"] = &PlaybackCtrlServiceProcessor::process_forward_play;
+    processMap_["start_backward_play"] = &PlaybackCtrlServiceProcessor::process_start_backward_play;
+    processMap_["stop_backward_play"] = &PlaybackCtrlServiceProcessor::process_stop_backward_play;
     processMap_["backward_play"] = &PlaybackCtrlServiceProcessor::process_backward_play;
+    processMap_["start_forward_play_temp"] = &PlaybackCtrlServiceProcessor::process_start_forward_play_temp;
+    processMap_["stop_forward_play_temp"] = &PlaybackCtrlServiceProcessor::process_stop_forward_play_temp;
     processMap_["forward_play_temp"] = &PlaybackCtrlServiceProcessor::process_forward_play_temp;
+    processMap_["start_backward_play_temp"] = &PlaybackCtrlServiceProcessor::process_start_backward_play_temp;
+    processMap_["stop_backward_play_temp"] = &PlaybackCtrlServiceProcessor::process_stop_backward_play_temp;
     processMap_["backward_play_temp"] = &PlaybackCtrlServiceProcessor::process_backward_play_temp;
     processMap_["set_exposure_time"] = &PlaybackCtrlServiceProcessor::process_set_exposure_time;
     processMap_["set_gain_by_sensor_all"] = &PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_all;
@@ -5165,13 +6115,13 @@ class PlaybackCtrlServiceMultiface : virtual public PlaybackCtrlServiceIf {
     return ifaces_[i]->set_store_file(flag, file_name);
   }
 
-  int32_t start_play_live() {
+  int32_t start_play_live(const int32_t play_frame_rate) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->start_play_live();
+      ifaces_[i]->start_play_live(play_frame_rate);
     }
-    return ifaces_[i]->start_play_live();
+    return ifaces_[i]->start_play_live(play_frame_rate);
   }
 
   int32_t stop_play_live() {
@@ -5183,40 +6133,121 @@ class PlaybackCtrlServiceMultiface : virtual public PlaybackCtrlServiceIf {
     return ifaces_[i]->stop_play_live();
   }
 
-  int32_t forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t play_live() {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->forward_play(frame_seq, play_frame_rate, how_many_frames);
+      ifaces_[i]->play_live();
     }
-    return ifaces_[i]->forward_play(frame_seq, play_frame_rate, how_many_frames);
+    return ifaces_[i]->play_live();
   }
 
-  int32_t backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->backward_play(frame_seq, play_frame_rate, how_many_frames);
+      ifaces_[i]->start_forward_play(frame_seq, play_frame_rate, how_many_frames);
     }
-    return ifaces_[i]->backward_play(frame_seq, play_frame_rate, how_many_frames);
+    return ifaces_[i]->start_forward_play(frame_seq, play_frame_rate, how_many_frames);
   }
 
-  int32_t forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t stop_forward_play() {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+      ifaces_[i]->stop_forward_play();
     }
-    return ifaces_[i]->forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+    return ifaces_[i]->stop_forward_play();
   }
 
-  int32_t backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t forward_play() {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+      ifaces_[i]->forward_play();
     }
-    return ifaces_[i]->backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+    return ifaces_[i]->forward_play();
+  }
+
+  int32_t start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->start_backward_play(frame_seq, play_frame_rate, how_many_frames);
+    }
+    return ifaces_[i]->start_backward_play(frame_seq, play_frame_rate, how_many_frames);
+  }
+
+  int32_t stop_backward_play() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->stop_backward_play();
+    }
+    return ifaces_[i]->stop_backward_play();
+  }
+
+  int32_t backward_play() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->backward_play();
+    }
+    return ifaces_[i]->backward_play();
+  }
+
+  int32_t start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->start_forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+    }
+    return ifaces_[i]->start_forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  }
+
+  int32_t stop_forward_play_temp() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->stop_forward_play_temp();
+    }
+    return ifaces_[i]->stop_forward_play_temp();
+  }
+
+  int32_t forward_play_temp() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->forward_play_temp();
+    }
+    return ifaces_[i]->forward_play_temp();
+  }
+
+  int32_t start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->start_backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+    }
+    return ifaces_[i]->start_backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+  }
+
+  int32_t stop_backward_play_temp() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->stop_backward_play_temp();
+    }
+    return ifaces_[i]->stop_backward_play_temp();
+  }
+
+  int32_t backward_play_temp() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->backward_play_temp();
+    }
+    return ifaces_[i]->backward_play_temp();
   }
 
   int32_t set_exposure_time(const double microseconds) {

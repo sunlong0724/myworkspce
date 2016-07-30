@@ -26,7 +26,7 @@ public:
 	void run() {
 		int64_t frame_no = 0;
 		int k = 0;
-		std::vector<char> buffer(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h), 0x00);
+		std::vector<char> buffer_for_file_io(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h), 0x00);
 		while (true) {
 			int64_t	now = get_current_time_in_ms();
 			if (m_exited)
@@ -35,54 +35,50 @@ public:
 			if (Playback_NONE == m_status|| Playback_PAUSE == m_status) {
 				sleep(2);
 				continue;
-			}else if (Playback_START_PLAY_FILE == m_status || Playback_START_PLAY_FILE_TEMP == m_status) {
-				if (m_start_play_frame_no == -1) {
-					sleep(2);//FIXME:
-					continue;
-				}
-				m_status = Playback_PLAYING_FILE;
 			}else if (Playback_PLAYING_FILE == m_status || Playback_PLAYING_FILE_TEMP == m_status) {
+				if (m_playback_how_many_frames > 0) {
+					if (m_has_playback_how_many_frames >= m_playback_how_many_frames) {
+						sleep(2);
+						continue;
+					}
+				}
+				else if (m_playback_how_many_frames == 0) {//unlimitied
 
-				if (g_cs.m_file_storage_object->read_file(buffer.data(), buffer.size(), m_start_play_frame_no) <= 0) {
-					sleep(2);
+				}
+
+				if (g_cs.m_file_storage_object_for_read->read_file(buffer_for_file_io.data(), buffer_for_file_io.size(), m_start_play_frame_no) <= 0) {
+					m_status = Playback_NONE;
 					continue;
 				}
 
 				if (g_cs.m_processor_data_flag) {
-					g_cs.m_post_processor_thread->writeImageData(buffer.data(), buffer.size());
+					g_cs.m_post_processor_thread->writeImageData(buffer_for_file_io.data(), buffer_for_file_io.size());
 				}
 				else {
-					processor_sink_data_cb((unsigned char*)buffer.data(), buffer.size(), &g_cs);
+					processor_sink_data_cb((unsigned char*)buffer_for_file_io.data(), buffer_for_file_io.size(), &g_cs);
 				}
 
-				if (m_is_forward) {
-					m_start_play_frame_no += g_cs.m_frame_gap;
+				++m_has_playback_how_many_frames;
+
+				if (Playback_PLAYING_FILE_TEMP == m_status) {
+					if (m_is_forward) {
+						m_start_play_frame_no += g_cs.m_play_frame_gap_temp;
+					}
+					else {
+						m_start_play_frame_no -= g_cs.m_play_frame_gap_temp;
+					}
 				}
 				else {
-					m_start_play_frame_no -= g_cs.m_frame_gap;
+					if (m_is_forward) {
+						m_start_play_frame_no += g_cs.m_play_frame_gap;
+					}
+					else {
+						m_start_play_frame_no -= g_cs.m_play_frame_gap;
+					}
 				}
-			}else if (Playback_START_PLAY_CAMERAS == m_status) {
-				m_buffer.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h), 0x00);
-				m_buffer_for_porcessor.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h), 0x00);
-				m_ring_buffer = RingBuffer_create(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h) * 10);
-
-				g_cs.m_processor_data_flag = (g_cs.m_image_w != g_cs.m_play_frame_w || g_cs.m_image_h != g_cs.m_play_frame_h);
-				if (g_cs.m_processor_data_flag) {
-					g_cs.m_post_processor_thread->set_parameters(g_cs.m_image_w, g_cs.m_image_h, g_cs.m_play_frame_w, g_cs.m_play_frame_h);
-					g_cs.m_post_processor_thread->set_sink_callback(processor_sink_data_cb, &g_cs);
-					g_cs.m_post_processor_thread->start();
-				}
-				g_cs.m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, &g_cs);
-				if (!g_cs.m_camera->CreateOtherObjects()) {
-					fprintf(stdout, "%s CreateOtherObjects failed!\n", __FUNCTION__);
-				}
-
-				g_cs.m_snd_frame_flag = TRUE;
-
-				g_cs.m_camera->Start();
-				m_status = Playback_PLAYING_CAMERAS;
-			}else if (Playback_PLAYING_CAMERAS == m_status) {
-				if (-1 == RingBuffer_read(m_ring_buffer, m_buffer_for_porcessor.data(), m_buffer_for_porcessor.size()))	{
+			}
+			else if (Playback_PLAYING_CAMERAS == m_status) {
+				if (-1 == RingBuffer_read(m_ring_buffer, m_buffer_for_porcessor.data(), m_buffer_for_porcessor.size())) {
 					sleep(2);
 					continue;
 				}
@@ -93,17 +89,7 @@ public:
 				else {
 					processor_sink_data_cb((unsigned char*)m_buffer_for_porcessor.data(), m_buffer_for_porcessor.size(), &g_cs);
 				}
-			}else if (Playback_STOP_PLAY_CAMERAS == m_status) {
-				g_cs.m_camera->Stop();
-				g_cs.m_camera->DestroyOtherObjects();
-				m_buffer.clear();
-				m_buffer_for_porcessor.clear();
-				RingBuffer_clear(m_ring_buffer);
-				g_cs.m_post_processor_thread->stop();
-
-				RingBuffer_destroy(m_ring_buffer);
 			}
-
 			int64_t now2 = get_current_time_in_ms();
 			int64_t	time_gap = 1000 / g_cs.m_play_frame_rate;
 			int64_t t_gap = now2 - now;
@@ -118,11 +104,12 @@ public:
 
 public:
 	std::vector<char>	m_buffer_for_porcessor;
-	std::vector<char>	m_buffer;
+	std::vector<char>	m_buffer_for_camera_io;
 	
 	BOOL				m_is_forward;
 	int64_t				m_start_play_frame_no;
-	int64_t				m_play_how_many_frames;
+	int64_t				m_playback_how_many_frames;
+	int64_t				m_has_playback_how_many_frames;
 
 	RingBuffer			*m_ring_buffer;
 	CtrlStatus			m_status;

@@ -76,6 +76,7 @@ public:
 
 		if (m_has_reach_max_file_size) {
 			m_frame_offset_map.erase(m_frame_offset_map.begin());
+			fprintf(stdout, "map size(%lld),beg(seq:%lld,offset:%lld),end(seq:%lld,offset:%lld)\n", m_frame_offset_map.size(), m_frame_offset_map.begin()->first, m_frame_offset_map.begin()->second, m_frame_offset_map.rbegin()->first, m_frame_offset_map.rbegin()->second);
 		}
 
 		return nBytesWritten;
@@ -119,7 +120,7 @@ private:
 	HANDLE						m_reader_handle;
 	HANDLE						m_writter_handle;
 
-	std::map<int64_t, int64_t>   m_frame_offset_map;//<frame_no,frame offset in file>
+	static std::map<int64_t, int64_t>   m_frame_offset_map;//<frame_no,frame offset in file>
 	uint64_t					m_written_bytes;
 	BOOL						m_has_reach_max_file_size;
 	uint64_t					m_frame_counter;
