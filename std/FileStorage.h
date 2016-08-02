@@ -25,7 +25,7 @@ public:
 		if (m_writter_handle == NULL|| m_writter_handle == INVALID_HANDLE_VALUE) {
 			//check sector size
 			//FILE_FLAG_NO_BUFFERING check aligin
-			m_writter_handle = CreateFile(m_file_name.c_str(), GENERIC_WRITE | GENERIC_READ, FILE_SHARE_WRITE|FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL/* | FILE_FLAG_NO_BUFFERING*/, NULL);//aligin??
+			m_writter_handle = CreateFile(m_file_name.c_str(), GENERIC_WRITE | GENERIC_READ, FILE_SHARE_WRITE|FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL| FILE_FLAG_NO_BUFFERING, NULL);//aligin??
 			if (m_writter_handle == INVALID_HANDLE_VALUE) {
 				dw = GetLastError();
 				fprintf(stdout, "CreateFile failed, errno:%lu!!!\n", dw);
@@ -54,15 +54,23 @@ public:
 
 		//FIXEM:
 		//BOOL ret = WriteFile(m_writter_handle, &buffer[sizeof int64_t + sizeof int64_t], buffer_len - sizeof int64_t - sizeof int64_t, &nBytesWritten, NULL);
-		BOOL ret = WriteFile(m_writter_handle, buffer, buffer_len, &nBytesWritten, NULL);
-		if (FALSE == ret) {
-			dw = GetLastError();
-			fprintf(stdout, "WriteFile failed, errno:%lu!!!\n", dw);
-		}
 
+		BOOL ret = FALSE;
+		if (buffer != NULL) {
+			ret = WriteFile(m_writter_handle, buffer+16, buffer_len-16, &nBytesWritten, NULL);
+			if (FALSE == ret) {
+				dw = GetLastError();
+				fprintf(stdout, "WriteFile failed, errno:%lu!!!\n", dw);
+			}
+		}
+		else {
+			m_frame_offset_map.insert(std::make_pair(m_frame_offset_map.rbegin()->first+1, -1));
+			return 0;
+		}
 		
 		int64_t frame_counter = 0;
 		memcpy(&frame_counter, &buffer[FRAME_SEQ_START], sizeof int64_t);
+
 		m_frame_offset_map.insert(std::make_pair(frame_counter, m_written_bytes));
 		m_written_bytes += nBytesWritten;
 
@@ -76,7 +84,7 @@ public:
 
 		if (m_has_reach_max_file_size) {
 			m_frame_offset_map.erase(m_frame_offset_map.begin());
-			fprintf(stdout, "map size(%lld),beg(seq:%lld,offset:%lld),end(seq:%lld,offset:%lld)\n", m_frame_offset_map.size(), m_frame_offset_map.begin()->first, m_frame_offset_map.begin()->second, m_frame_offset_map.rbegin()->first, m_frame_offset_map.rbegin()->second);
+			//fprintf(stdout, "map size(%lld),beg(seq:%lld,offset:%lld),end(seq:%lld,offset:%lld)\n", m_frame_offset_map.size(), m_frame_offset_map.begin()->first, m_frame_offset_map.begin()->second, m_frame_offset_map.rbegin()->first, m_frame_offset_map.rbegin()->second);
 		}
 
 		return nBytesWritten;
@@ -85,7 +93,7 @@ public:
 	int64_t read_file(char* buffer, int64_t buffer_len, int64_t frame_no) {
 		DWORD dw = 0;
 		if (INVALID_HANDLE_VALUE == m_reader_handle || NULL == m_reader_handle) {
-			m_reader_handle = CreateFile(m_file_name.c_str(), GENERIC_WRITE | GENERIC_READ, FILE_SHARE_WRITE|FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL /*| FILE_FLAG_NO_BUFFERING*/, NULL);
+			m_reader_handle = CreateFile(m_file_name.c_str(), GENERIC_WRITE | GENERIC_READ, FILE_SHARE_WRITE|FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING, NULL);
 			if (m_reader_handle == INVALID_HANDLE_VALUE) {
 				dw = GetLastError();
 				fprintf(stderr, "fopen failed, errno:%lu!!!\n", dw);
@@ -99,6 +107,9 @@ public:
 		}
 		else {
 			int64_t	frame_offset = m_frame_offset_map[frame_no];
+			if (-1 == frame_offset) {//this frame is lost!!!
+				return 0;
+			}
 			//fprintf(stdout, "%s frame_no:%lld, frame_offset:%lld\n", __FUNCTION__,frame_no, frame_offset);
 			LARGE_INTEGER offset;
 			offset.QuadPart = frame_offset;
@@ -106,12 +117,13 @@ public:
 		}
 		DWORD nBytesRead = 0;
 		//BOOL ret = ReadFile(m_reader_handle, &buffer[sizeof int64_t + sizeof int64_t], buffer_len - sizeof int64_t - sizeof int64_t, &nBytesRead, NULL);
-		BOOL ret = ReadFile(m_reader_handle, buffer, buffer_len, &nBytesRead, NULL);
+		BOOL ret = ReadFile(m_reader_handle, buffer+16, buffer_len-16, &nBytesRead, NULL);
 		if (FALSE == ret) {
 			dw = GetLastError();
 			fprintf(stdout, "ReadFile failed, errno:%lu!!!\n", dw);
 		}
 
+		memcpy(&buffer[FRAME_SEQ_START], &frame_no, sizeof frame_no);
 		return nBytesRead;
 	}
 

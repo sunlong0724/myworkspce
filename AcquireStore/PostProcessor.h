@@ -4,7 +4,6 @@
 #include "utils.h"
 #include <opencv2\opencv.hpp>
 
-#define MAX_IMAGE_COUNT 10
 
 
 
@@ -19,6 +18,12 @@ public:
 		m_image_h = image_h;
 		m_image_resized_w = image_resized_w;
 		m_image_resized_h = image_resized_h;
+
+		int64_t	s = GET_IMAGE_BUFFER_SIZE(m_image_w, m_image_h);
+		m_ring_buffer = RingBuffer_create(s * 1);
+		m_buffer.resize(s, 0x00);
+		m_buffer_resized.resize(GET_IMAGE_BUFFER_SIZE(m_image_resized_w, m_image_resized_h), 0x00);
+
 	}
 
 	int64_t writeImageData(char* buffer, int len) {
@@ -26,71 +31,76 @@ public:
 	}
 protected:
 	virtual void run() {
-		m_bayer_image = m_rgb_image = m_rgb_image_resized = NULL;
-		m_image_h = m_image_w = m_image_resized_h = m_image_resized_w = 0;
-
-		int64_t	s = sizeof int64_t * sizeof int64_t + m_image_w * m_image_w;
-		m_ring_buffer = RingBuffer_create(s * MAX_IMAGE_COUNT);
-		m_buffer.resize(s, 0x00);
-
-		m_bayer_image = cvCreateImageHeader(cvSize(m_image_w, m_image_h), 8, 1);
-		cvSetData(m_bayer_image, &m_buffer[sizeof int64_t + sizeof int64_t], m_image_w);
-
-		m_rgb_image = cvCreateImage(cvSize(m_image_w, m_image_h), 8, 3);
+		timeBeginPeriod(1);
+		m_bayer_image_resized =  NULL;
+		m_bayer_image_resized = cvCreateImageHeader(cvSize(m_image_resized_w, m_image_resized_h), 8, 1);
+		cvSetData(m_bayer_image_resized, &m_buffer_resized[FRAME_DATA_START], m_image_resized_w);
 
 		while (!m_exited) {
-			if (-1 == RingBuffer_read(m_ring_buffer, m_buffer.data(), m_buffer.size())) {
+			if ( NULL == m_ring_buffer || -1 == RingBuffer_read(m_ring_buffer, m_buffer.data(), m_buffer.size())) {
 				sleep(2);
 				continue;
 			}
 
-			cvCvtColor(m_bayer_image, m_rgb_image, CV_BayerRG2RGB);
-			cvResize(m_rgb_image, m_rgb_image_resized);
-			//FIXME: rgb 2 bayer 
+			resized_iamge();
 
-
-			//cvShowImage("win", pProcessor->m_rgb_image_resized);
-			//cvWaitKey(1);
-			//m_sink_cb()
 			if (m_sink_cb) {
-				std::vector<char> buffer(320 * 240, 0x00);
-				m_sink_cb((unsigned char*)buffer.data(), buffer.size(), m_sink_cb_ctx);
+				m_sink_cb((unsigned char*)m_buffer_resized.data(), m_buffer_resized.size(), m_sink_cb_ctx);
 			}
 		}
-		cvRelease((void**)&m_rgb_image);
-		cvRelease((void**)&m_bayer_image);
-		cvRelease((void**)&m_rgb_image_resized);
-
+		timeEndPeriod(1);
+		if (m_bayer_image_resized)
+			cvRelease((void**)&m_bayer_image_resized);
 		RingBuffer_destroy(m_ring_buffer);
 	}
 
 private:
-		//RGRG	RGRG
-		//GBGB	GBGB
-		//RGRG	RGRG
-		//GBGB	GBGB
+	//RGRG	RGRG RGRG RGRG RGRG RGRG
+	//GBGB	GBGB GBGB GBGB GBGB GBGB
+	//RGRG	RGRG RGRG RGRG RGRG RGRG
+	//GBGB	GBGB GBGB GBGB GBGB GBGB
 
-		//RGRG	RGRG
-		//GBGB	GBGB
-		//RGRG	RGRG
-		//GBGB	GBGB
+	//RGRG	RGRG RGRG RGRG RGRG RGRG
+	//GBGB	GBGB GBGB GBGB GBGB GBGB
+	//RGRG	RGRG RGRG RGRG RGRG RGRG
+	//GBGB	GBGB GBGB GBGB GBGB GBGB
+
+	//RGRG	RGRG RGRG RGRG RGRG RGRG
+	//GBGB	GBGB GBGB GBGB GBGB GBGB
+	//RGRG	RGRG RGRG RGRG RGRG RGRG
+	//GBGB	GBGB GBGB GBGB GBGB GBGB
+
 
 	void resized_iamge() {
-		std::vector<char> resized_image(m_image_w / 4 * m_image_h / 4,0x00);
 		int k = 0;
-		for (int i = 0; i < m_image_h/4; ++i) {
-			for (int j = 0; j < m_image_w/4; ++j ) {
-				//R
-				resized_image[k++] = m_buffer[m_image_w*(2+i) + 2*(j+1)];
-				//G
-				resized_image[k++] = (m_buffer[m_image_w *(1+i) + 4*(j+1)+2] + m_buffer[m_image_w *(2 + i) + 4 * (j + 1) + 1]) /2;
-			}
+		memcpy(m_buffer_resized.data(), m_buffer.data(), FRAME_DATA_START);
+		unsigned char*p = (unsigned char*)(&m_buffer_resized[FRAME_DATA_START]);
 
-			for (int j = 0; j < m_image_w / 4; ++j) {
-				//G
-				resized_image[k++] = m_buffer[m_image_w*(2 + i) + 2 * (j + 1)];
-				//B
-				resized_image[k++] = (m_buffer[m_image_w *(1 + i) + 4 * (j + 1) + 2] + m_buffer[m_image_w *(2 + i) + 4 * (j + 1) + 1]) / 2;
+		unsigned char* src = (unsigned char*)(&m_buffer[FRAME_DATA_START]);
+		for (int i = 0; i < m_image_h/4; ++i) {
+			if (i % 2 == 0) {
+				for (int j = 0; j < m_image_w/4; ++j ) {
+					if (j % 2 == 0) {
+						//R
+						p[k++] = src[m_image_w*(2 + i * 4) + (j * 4 + 2)];
+					}
+					else {
+						//G = (G1+G2)/2
+						p[k++] = (src[m_image_w *(1 + i * 4) + (j * 4 + 2)] + src[m_image_w *(2 + i*4) + 4 * j + 1]) / 2;
+					}
+				}
+			}
+			else {
+				for (int j = 0; j < m_image_w / 4; ++j) {
+					if (j % 2 == 0) {
+						//G = (G1+G2)/2
+						p[k++] = (src[m_image_w *(1 + i * 4) + (j * 4 + 2)] + src[m_image_w *(2 + i * 4) + 4 * j + 1]) / 2;
+					}
+					else {
+						//B
+						p[k++] = src[m_image_w*(1 + i * 4) + (j * 4 + 2)];
+					}
+				}
 			}
 		}
 	}
@@ -106,11 +116,10 @@ private:
 	void*				m_sink_cb_ctx;
 
 	std::vector<char>	m_buffer;
+	std::vector<char>   m_buffer_resized;
 	RingBuffer			*m_ring_buffer;
 
-	IplImage*			m_bayer_image;
-	IplImage*			m_rgb_image;
-	IplImage*			m_rgb_image_resized;
+	IplImage*			m_bayer_image_resized;
 };
 
 #endif // __POST_PROCESSOR_H__

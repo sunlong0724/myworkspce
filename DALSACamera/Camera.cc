@@ -34,12 +34,12 @@ CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffer
 	g_err_fp = fopen("log.txt", "w");
 }
 
-void CCamera::SetSinkBayerDataCallback(SinkDataCallback cb, void* ctx) {
+void CCamera::SetSinkBayerDataCallback(CameraSinkDataCallback cb, void* ctx) {
 	m_sink_bayer_cb = cb;
 	m_ctx0 = ctx;
 }
 
-void CCamera::SetSinkRGBDataCallback(SinkDataCallback cb, void* ctx) {
+void CCamera::SetSinkRGBDataCallback(CameraSinkDataCallback cb, void* ctx) {
 	m_sink_rgb_cb = cb;
 	m_ctx1 = ctx;
 }
@@ -58,6 +58,7 @@ void CCamera::Start() {
 		if (m_Xfer->Grab()) {
 			m_last_is_grabbing = m_grabbing = TRUE;
 			fprintf(stdout, "grab start!\n");
+			m_lost = 0;
 		}
 	}
 }
@@ -526,6 +527,9 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 	// appropriate number of frames on the status bar instead
 	if (pInfo->IsTrash()) {
 		fprintf(stdout, "Frames acquired in trash buffer: %03d\n", pInfo->GetEventCount());
+		if (camera->m_sink_bayer_cb) {
+			int64_t ret = camera->m_sink_bayer_cb(NULL, 0, 0, camera->m_ctx0);//FIXME: bufferlen 
+		}
 	}
 	else {
 		PUINT8 pData;
@@ -536,7 +540,7 @@ void XferCallback(SapXferCallbackInfo *pInfo) {
 		if (status) {
 			//fprintf(stdout, "%s %d %x\r\n", __FUNCTION__, status, pData);
 			if (camera->m_sink_bayer_cb) {
-				int64_t ret = camera->m_sink_bayer_cb(pData, pBuffer->GetWidth() * pBuffer->GetHeight(), camera->m_ctx0);//FIXME: bufferlen 
+				int64_t ret = camera->m_sink_bayer_cb(pData, pBuffer->GetWidth() * pBuffer->GetHeight(), camera->m_lost,camera->m_ctx0);//FIXME: bufferlen 
 				//fprintf(stdout, "%s send %lld bytes!\r\n", __FUNCTION__,  ret);
 			}
 			if (camera->m_dummy_bayer_fp) {
@@ -576,7 +580,7 @@ void ProCallback(SapProCallbackInfo *pInfo) {
 		if (status) {
 			//fprintf(stdout, "%s %d %x\r\n", __FUNCTION__, status, pData);
 			if (camera->m_sink_rgb_cb) {
-				camera->m_sink_rgb_cb(pData, pBuffer->GetPitch() * pBuffer->GetHeight(), camera->m_ctx1);//FIXME: bufferlen 
+				camera->m_sink_rgb_cb(pData, pBuffer->GetPitch() * pBuffer->GetHeight(), camera->m_lost, camera->m_ctx1);//FIXME: bufferlen 
 			}
 
 			if (camera->m_dummy_rgb_fp) {

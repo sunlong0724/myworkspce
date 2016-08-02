@@ -15,11 +15,11 @@
 extern FILE* g_err_fp;
 
 #ifdef FPRINTF_
-#define stdout	g_err_fp
+//#define stdout	g_err_fp
 #endif
 
 
-typedef int (*SinkDataCallback)(unsigned char*, int, void*);
+typedef int (*CameraSinkDataCallback)(unsigned char*, int,int,void*);
 
 
 class DLL_API CCamera {
@@ -31,8 +31,8 @@ public:
 	static BOOL FindCamera(std::map<std::string, std::map<int32_t, std::string>>  *cameras);
 	void		RegisterConnectionEventCallback();
 
-	void		SetSinkBayerDataCallback(SinkDataCallback cb, void* ctx);
-	void		SetSinkRGBDataCallback(SinkDataCallback cb, void* ctx);
+	void		SetSinkBayerDataCallback(CameraSinkDataCallback cb, void* ctx);
+	void		SetSinkRGBDataCallback(CameraSinkDataCallback cb, void* ctx);
 
 	void		Start();
 	void		Stop();
@@ -128,10 +128,10 @@ public:
 	//SapView			*m_View;
 	SapProcessing		*m_Pro;
 
-	SinkDataCallback	m_sink_bayer_cb;
+	CameraSinkDataCallback	m_sink_bayer_cb;
 	void				*m_ctx0;
 
-	SinkDataCallback	m_sink_rgb_cb;
+	CameraSinkDataCallback	m_sink_rgb_cb;
 	void				*m_ctx1;
 	
 	void				*m_dummy_bayer_fp;
@@ -147,6 +147,8 @@ public:
 	BOOL				m_last_is_connected;
 
 	int					m_index;
+
+	int64_t				m_lost;
 };
 
 #endif

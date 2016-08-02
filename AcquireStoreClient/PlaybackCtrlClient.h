@@ -17,6 +17,9 @@ using namespace apache::thrift::transport;
 
 using namespace hawkeye;
 
+typedef int(*SinkDataCallback)(unsigned char*, int, void*);
+
+
 class CPlaybackCtrlClient {
 public:
 
@@ -31,29 +34,38 @@ public:
 
 	//PLAYBACK
 
+	void	set_recv_sink_callback(SinkDataCallback cb, void* context);
+	void	set_recv_image_parameters(int32_t elem_size, int64_t frame_gap = 1);
+
 	int32_t	set_play_frame_resolution(const int32_t width, const int32_t height);//FIXME:  
-	int32_t set_play_frame_rate(const int32_t play_frame_rate);
+	int32_t set_play_frame_rate(const int32_t play_frame_rate, const int32_t sample_gap);
 	int32_t set_store_file(const int32_t flag, const std::string& file_name);
 
-	int32_t start_play_live(const int32_t play_frame_rate);
+	int32_t	get_frames_data(int32_t frame_seq, int32_t how_many_frames);
+
+	int32_t start_play_live(const int32_t play_frame_rate,const int32_t sample_gap);
 	int32_t stop_play_live();
 	int32_t play_live();
 
-	int32_t start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t start_forward_play(const int32_t play_frame_rate, const int32_t sample_gap);
 	int32_t stop_forward_play();
 	int32_t forward_play();
 
-	int32_t start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t start_backward_play(const int32_t play_frame_rate, const int32_t sample_gap);
 	int32_t stop_backward_play();
 	int32_t backward_play();
 
-	int32_t start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t start_forward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap);
 	int32_t stop_forward_play_temp();
 	int32_t forward_play_temp();
 
-	int32_t start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames);
+	int32_t start_backward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap);
 	int32_t stop_backward_play_temp();
 	int32_t backward_play_temp();
+
+	double  get_camera__grab_fps();
+	double  get_soft_grab_fps();
+	double  get_soft_snd_fps();
 
 	//CAMERA
 	int32_t set_exposure_time(const double microseconds) ;
@@ -97,7 +109,7 @@ public:
 
 	//WATCH
 	//int32_t	query_camrea_status();
-	CRecvData						m_recv_thread;
+	
 private:
 	PlaybackCtrlServiceClient		*m_client;
 
@@ -108,6 +120,6 @@ private:
 	std::string						m_server_ip;
 	uint16_t						m_data_port;
 
-
+	CRecvData						m_recv_thread;
 };
 #endif // !__ACQUIRE_STORE_CLIENT_H__

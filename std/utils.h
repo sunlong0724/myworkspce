@@ -54,11 +54,14 @@ inline std::vector<std::string> scan_ip0(std::string& start_ip, std::string& end
 }
 
 inline int64_t get_current_time_in_ms() {
+	//DWORD d = timeGetTime();
+	//return d;
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
 inline void sleep(int32_t milliseconds) {
-	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+	//std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+	::Sleep(milliseconds);
 }
 
 

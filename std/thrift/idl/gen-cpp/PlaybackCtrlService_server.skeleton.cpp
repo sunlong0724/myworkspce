@@ -22,7 +22,12 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     // Your initialization goes here
   }
 
-  int32_t set_play_frame_rate(const int32_t play_frame_rate) {
+  int32_t get_data_port() {
+    // Your implementation goes here
+    printf("get_data_port\n");
+  }
+
+  int32_t set_play_frame_rate(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
     printf("set_play_frame_rate\n");
   }
@@ -37,7 +42,12 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("set_store_file\n");
   }
 
-  int32_t start_play_live(const int32_t play_frame_rate) {
+  int32_t get_frames_data(const int32_t frame_seq, const int32_t how_many_frames) {
+    // Your implementation goes here
+    printf("get_frames_data\n");
+  }
+
+  int32_t start_play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
     printf("start_play_live\n");
   }
@@ -52,7 +62,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("play_live\n");
   }
 
-  int32_t start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t start_forward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
     printf("start_forward_play\n");
   }
@@ -67,7 +77,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("forward_play\n");
   }
 
-  int32_t start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t start_backward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
     printf("start_backward_play\n");
   }
@@ -82,7 +92,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("backward_play\n");
   }
 
-  int32_t start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t start_forward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
     printf("start_forward_play_temp\n");
   }
@@ -97,7 +107,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("forward_play_temp\n");
   }
 
-  int32_t start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+  int32_t start_backward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
     printf("start_backward_play_temp\n");
   }
@@ -110,6 +120,21 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
   int32_t backward_play_temp() {
     // Your implementation goes here
     printf("backward_play_temp\n");
+  }
+
+  double get_camera_grab_fps() {
+    // Your implementation goes here
+    printf("get_camera_grab_fps\n");
+  }
+
+  double get_soft_grab_fps() {
+    // Your implementation goes here
+    printf("get_soft_grab_fps\n");
+  }
+
+  double get_soft_snd_fps() {
+    // Your implementation goes here
+    printf("get_soft_snd_fps\n");
   }
 
   int32_t set_exposure_time(const double microseconds) {

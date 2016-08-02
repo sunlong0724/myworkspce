@@ -36,8 +36,18 @@ BOOL CPlaybackCtrlClient::connect(const std::string& ip, const uint16_t port) {
 
 		m_client = new PlaybackCtrlServiceClient(m_protocol);
 		m_client->getInputProtocol().get()->getTransport()->open();
-
 		m_server_ip = ip;
+		uint16_t data_port = 0;
+		try {
+			data_port=  m_client->get_data_port();
+			m_recv_thread.init(m_server_ip, data_port);
+			m_recv_thread.start();
+		}
+		catch (TException& e) {
+			fprintf(stdout, "%s\n", e.what());
+			return FALSE;
+		}
+
 		return TRUE;
 	}
 	catch (TException& e) {
@@ -48,6 +58,7 @@ BOOL CPlaybackCtrlClient::connect(const std::string& ip, const uint16_t port) {
 
 BOOL CPlaybackCtrlClient::close() {
 	try {
+		m_recv_thread.stop();
 		m_client->getInputProtocol().get()->getTransport()->close();
 		delete m_client;
 		m_protocol.reset();
@@ -72,9 +83,22 @@ BOOL CPlaybackCtrlClient::is_connected() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_play_live(const int32_t play_frame_rate) {
+void	CPlaybackCtrlClient::set_recv_sink_callback(SinkDataCallback cb, void* context) {
+	m_recv_thread.set_sink_data_callback(cb, context);
+}
+void	CPlaybackCtrlClient::set_recv_image_parameters(int32_t elem_size, int64_t frame_gap) {
+	m_recv_thread.set_parameters(elem_size, frame_gap);
+}
+
+int32_t	CPlaybackCtrlClient::get_frames_data(int32_t frame_seq, int32_t how_many_frames) {
+	return 0;
+}
+
+
+
+int32_t CPlaybackCtrlClient::start_play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
 	try {
-		return m_client->start_play_live(play_frame_rate);
+		return m_client->start_play_live(play_frame_rate,sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -108,9 +132,9 @@ int32_t	CPlaybackCtrlClient::set_play_frame_resolution(const int32_t width, cons
 		return FALSE;
 	}
 }
-int32_t CPlaybackCtrlClient::set_play_frame_rate(const int32_t play_frame_rate) {
+int32_t CPlaybackCtrlClient::set_play_frame_rate(const int32_t play_frame_rate,const int32_t sample_gap) {
 	try {
-		return m_client->set_play_frame_rate(play_frame_rate);
+		return m_client->set_play_frame_rate(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -127,9 +151,9 @@ int32_t CPlaybackCtrlClient::set_store_file(const int32_t flag, const std::strin
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_forward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+int32_t CPlaybackCtrlClient::start_forward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
 	try {
-		return m_client->start_forward_play(frame_seq, play_frame_rate, how_many_frames);
+		return m_client->start_forward_play(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -157,9 +181,9 @@ int32_t CPlaybackCtrlClient::forward_play() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_backward_play(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+int32_t CPlaybackCtrlClient::start_backward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
 	try {
-		return m_client->start_backward_play(frame_seq, play_frame_rate, how_many_frames);
+		return m_client->start_backward_play(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -188,9 +212,9 @@ int32_t CPlaybackCtrlClient::backward_play() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_forward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+int32_t CPlaybackCtrlClient::start_forward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
 	try {
-		return m_client->start_forward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+		return m_client->start_forward_play_temp(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -218,9 +242,9 @@ int32_t CPlaybackCtrlClient::forward_play_temp() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_backward_play_temp(const int64_t frame_seq, const int32_t play_frame_rate, const int32_t how_many_frames) {
+int32_t CPlaybackCtrlClient::start_backward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
 	try {
-		return m_client->start_backward_play_temp(frame_seq, play_frame_rate, how_many_frames);
+		return m_client->start_backward_play_temp(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -241,6 +265,34 @@ int32_t CPlaybackCtrlClient::stop_backward_play_temp() {
 int32_t CPlaybackCtrlClient::backward_play_temp() {
 	try {
 		return m_client->backward_play_temp();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+
+double  CPlaybackCtrlClient::get_camera__grab_fps() {
+	try {
+		return m_client->get_camera_grab_fps();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+double  CPlaybackCtrlClient::get_soft_grab_fps() {
+	try {
+		return m_client->get_soft_grab_fps();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
+double  CPlaybackCtrlClient::get_soft_snd_fps() {
+	try {
+		return m_client->get_soft_snd_fps();
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());

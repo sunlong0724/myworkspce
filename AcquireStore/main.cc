@@ -73,6 +73,8 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	uint16_t camera_index = 0;
 	uint16_t data_port = 55555;
 	static long long raw_file_max_size_in_GB = 10;
+
+	timeBeginPeriod(1);
 	
 	if (argc >= 2) {//thrift server port
 		server_port = ::atoi(argv[1]);
@@ -106,6 +108,8 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 		return 0;
 	}
 	g_cs.m_camera->RegisterConnectionEventCallback();
+	g_cs.m_how_many_frames = -1;
+	g_cs.m_how_many_frames_flag = FALSE;
 
 	g_cs.m_playback_thread = new CPlaybackCtrlThread();
 	g_cs.m_post_processor_thread = new CPostProcessor();
@@ -122,7 +126,7 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	g_cs.m_playback_thread->start();
 	//do not start here!!! g_cs.m_post_processor_thread->start();
 
-	g_cs.m_snd_data_thread->init(g_cs.m_data_port, GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h));
+	g_cs.m_snd_data_thread->init(g_cs.m_data_port);
 	g_cs.m_snd_data_thread->start();
 
 	std::thread cmd_thread(cmd_run,handler, server_port);
@@ -132,6 +136,8 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	g_cs.m_snd_data_thread->stop();
 
 	g_cs.m_camera->DestroyDevice();
+
+	timeEndPeriod(1);
 
 	delete g_cs.m_camera;
 	delete g_cs.m_file_storage_object_for_write;

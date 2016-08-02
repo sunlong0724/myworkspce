@@ -1,14 +1,29 @@
 #ifndef __DEFS__H__
 #define __DEFS__H__
 
-#define ONE_GB 1024*1024*1024
+#define FRAME_TIMESTAMP_START  (0)
+#define FRAME_SEQ_START   (sizeof int64_t)
+#define FRAME_DATA_START (sizeof int64_t+sizeof int64_t)
 
-#define FRAME_TIMESTAMP_START  0
-#define FRAME_SEQ_START   sizeof int64_t
-#define FRAME_DATA_START sizeof int64_t+sizeof int64_t
-
-#define CAMERA_MAX_FPS 180
+#define CAMERA_MAX_FPS (180)
 #define GET_IMAGE_BUFFER_SIZE(w,h)  (sizeof int64_t + sizeof int64_t + (w) * (h))
+
+#define MAX_CACHE_IMAGE_COUNT	(30)
+
+
+#define ONE_MB	(1024*1024)
+#define ONE_GB  (1024 * ONE_MB)
+
+
+#define PRINT_FRAME_INFO(A) 	do { \
+				break;\
+				int64_t seq = 0;\
+				int64_t timestamp = 0;\
+				memcpy(&seq, &A[FRAME_SEQ_START], sizeof seq);\
+				memcpy(&timestamp, &A[FRAME_TIMESTAMP_START], sizeof timestamp);\
+				fprintf(stdout, "%s seq:%lld,timestamp:%lld\n", __FUNCTION__, seq, timestamp);\
+				}while(0)
+
 
 class CPlaybackCtrlThread;
 class CPostProcessor;
@@ -20,6 +35,7 @@ class CCamera;
 #include <vector>
 #include <winSock2.h>
 #include <Windows.h>
+#include "FPSCounter.h"
 
 enum CtrlStatus {
 	Playback_NONE					= 0x001,
@@ -40,8 +56,11 @@ enum CtrlStatus {
 
 enum TRANSPORT_STATUS {
 	TRANSPORT_STATUS_NONE,
+	TRANSPORT_STATUS_DISCONNECTED,
+	TRANSPORT_STATUS_CONNECTED,
 	TRANSPORT_STATUS_SENDING,
-	TRANSPORT_STATUS_RECVING
+	TRANSPORT_STATUS_RECVING,
+
 };
 
 typedef struct _CustomStruct {
@@ -56,6 +75,8 @@ typedef struct _CustomStruct {
 	CFileStorage				*m_file_storage_object_for_write;
 	CFileStorage				*m_file_storage_object_for_read;
 	CCamera						*m_camera;
+
+	CFPSCounter					m_soft_grab_counter;
 
 	//std::vector<char>			m_buffer;
 
@@ -82,6 +103,9 @@ typedef struct _CustomStruct {
 
 	int32_t						m_play_frame_w;
 	int32_t						m_play_frame_h;
+
+	int32_t						m_how_many_frames;
+	BOOL						m_how_many_frames_flag;
 }CustomStruct;
 
 
