@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 
 	std::vector<std::string> ips;
 	CAgentClient ac;
-	ips = ac.scan_ip(std::string("192.168.0.10"), std::string("192.168.0.19"));
+	ips = ac.scan_ip(std::string("192.168.1.18"), std::string("192.168.1.19"));
 
 	for (auto& ip : ips) {
 		
@@ -50,17 +50,17 @@ int main(int argc, char** argv) {
 		printf_cameras(cameras);
 
 		char cmdline[1024];
-		//.\AcquireStore 9070 Nano-C1280_1 0 55555
-		sprintf(cmdline, ".\\AcquireStore.exe 9070 %s %d 55555", cameras.begin()->second.begin()->second.c_str(), cameras.begin()->second.begin()->first);
+		//AcquireStore 9070 55555 192.168.0.100 10 e:\\data.raw
+		sprintf(cmdline, ".\\AcquireStore.exe 9070 55555 %s 10 e:\\data.raw", cameras.begin()->first.c_str());
 		printf("%s\n", cmdline);
 		int32_t process_id = ac.exec_program(cmdline);
 
 
 
-		//Sleep(5000);
+		Sleep(5000);
 
-		//ac.kill_program(process_id);
-		//ac.close();
+		ac.kill_program(process_id);
+		ac.close();
 	}
 
 	return 0;

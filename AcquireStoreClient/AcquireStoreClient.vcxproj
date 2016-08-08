@@ -39,13 +39,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -78,6 +78,7 @@
     <IntDir>$(OutDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\3rdParty\boost_1_59_0-x64;..\std\thrift\gen-cpp;..\..\3rdParty\thrift-0.9.1\lib\cpp\src;..\DALSACamera;..\..\Teledyne DALSA\Sapera\Classes\Basic;..\..\Teledyne DALSA\Sapera\Include;..\std;..\..\3rdParty\libzmq\include;.\;..\..\3rdParty\opencv\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(OutDir);..\..\3rdParty\thrift-0.9.1\lib\cpp\x64\Debug;..\..\3rdParty\boost_1_59_0-x64\stage\lib;..\..\3rdParty\libzmq\bin\x64\Release\v140\dynamic;..\..\3rdParty\opencv\x64\vc10\lib</LibraryPath>
+    <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -152,18 +153,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\std\lcthw\bstrlib.c" />
+    <ClCompile Include="..\std\lcthw\ringbuffer.c" />
     <ClCompile Include="..\std\ping\Ping.cc" />
     <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService.cpp" />
     <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.cpp" />
     <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.cpp" />
+    <ClCompile Include="..\std\TransportData.cc" />
     <ClCompile Include="PlaybackCtrlClient.cc" />
     <ClCompile Include="main.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\std\defs.h" />
+    <ClInclude Include="..\std\lcthw\bstrlib.h" />
+    <ClInclude Include="..\std\lcthw\dbg.h" />
+    <ClInclude Include="..\std\lcthw\ringbuffer.h" />
     <ClInclude Include="..\std\ping\Ping.h" />
     <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService.h" />
     <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_constants.h" />
     <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.h" />
+    <ClInclude Include="..\std\TransportData.h" />
     <ClInclude Include="..\std\utils.h" />
     <ClInclude Include="PlaybackCtrlClient.h" />
   </ItemGroup>

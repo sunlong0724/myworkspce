@@ -38,6 +38,7 @@ class PlaybackCtrlServiceIf {
   virtual double get_camera_grab_fps() = 0;
   virtual double get_soft_grab_fps() = 0;
   virtual double get_soft_snd_fps() = 0;
+  virtual double get_file_write_fps() = 0;
   virtual int32_t set_exposure_time(const double microseconds) = 0;
   virtual int32_t set_gain_by_sensor_all(const double gain) = 0;
   virtual int32_t set_gain_by_sensor_analog(const double gain) = 0;
@@ -192,6 +193,10 @@ class PlaybackCtrlServiceNull : virtual public PlaybackCtrlServiceIf {
     return _return;
   }
   double get_soft_snd_fps() {
+    double _return = (double)0;
+    return _return;
+  }
+  double get_file_write_fps() {
     double _return = (double)0;
     return _return;
   }
@@ -2695,6 +2700,100 @@ class PlaybackCtrlService_get_soft_snd_fps_presult {
   double* success;
 
   _PlaybackCtrlService_get_soft_snd_fps_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_get_file_write_fps_args {
+ public:
+
+  PlaybackCtrlService_get_file_write_fps_args() {
+  }
+
+  virtual ~PlaybackCtrlService_get_file_write_fps_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_get_file_write_fps_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_get_file_write_fps_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_get_file_write_fps_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_get_file_write_fps_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_get_file_write_fps_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_get_file_write_fps_result__isset {
+  _PlaybackCtrlService_get_file_write_fps_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_get_file_write_fps_result__isset;
+
+class PlaybackCtrlService_get_file_write_fps_result {
+ public:
+
+  PlaybackCtrlService_get_file_write_fps_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_get_file_write_fps_result() throw() {}
+
+  double success;
+
+  _PlaybackCtrlService_get_file_write_fps_result__isset __isset;
+
+  void __set_success(const double val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_get_file_write_fps_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_get_file_write_fps_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_get_file_write_fps_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_get_file_write_fps_presult__isset {
+  _PlaybackCtrlService_get_file_write_fps_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_get_file_write_fps_presult__isset;
+
+class PlaybackCtrlService_get_file_write_fps_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_get_file_write_fps_presult() throw() {}
+
+  double* success;
+
+  _PlaybackCtrlService_get_file_write_fps_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -6341,6 +6440,9 @@ class PlaybackCtrlServiceClient : virtual public PlaybackCtrlServiceIf {
   double get_soft_snd_fps();
   void send_get_soft_snd_fps();
   double recv_get_soft_snd_fps();
+  double get_file_write_fps();
+  void send_get_file_write_fps();
+  double recv_get_file_write_fps();
   int32_t set_exposure_time(const double microseconds);
   void send_set_exposure_time(const double microseconds);
   int32_t recv_set_exposure_time();
@@ -6487,6 +6589,7 @@ class PlaybackCtrlServiceProcessor : public ::apache::thrift::TDispatchProcessor
   void process_get_camera_grab_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_soft_grab_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_soft_snd_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_get_file_write_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_gain_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -6549,6 +6652,7 @@ class PlaybackCtrlServiceProcessor : public ::apache::thrift::TDispatchProcessor
     processMap_["get_camera_grab_fps"] = &PlaybackCtrlServiceProcessor::process_get_camera_grab_fps;
     processMap_["get_soft_grab_fps"] = &PlaybackCtrlServiceProcessor::process_get_soft_grab_fps;
     processMap_["get_soft_snd_fps"] = &PlaybackCtrlServiceProcessor::process_get_soft_snd_fps;
+    processMap_["get_file_write_fps"] = &PlaybackCtrlServiceProcessor::process_get_file_write_fps;
     processMap_["set_exposure_time"] = &PlaybackCtrlServiceProcessor::process_set_exposure_time;
     processMap_["set_gain_by_sensor_all"] = &PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_all;
     processMap_["set_gain_by_sensor_analog"] = &PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_analog;
@@ -6818,6 +6922,15 @@ class PlaybackCtrlServiceMultiface : virtual public PlaybackCtrlServiceIf {
       ifaces_[i]->get_soft_snd_fps();
     }
     return ifaces_[i]->get_soft_snd_fps();
+  }
+
+  double get_file_write_fps() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->get_file_write_fps();
+    }
+    return ifaces_[i]->get_file_write_fps();
   }
 
   int32_t set_exposure_time(const double microseconds) {

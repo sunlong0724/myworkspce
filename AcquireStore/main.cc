@@ -22,7 +22,16 @@
 #include "MyThread.h"
 #include "SinkBayerDatasCallbackImpl.h"
 
-std::string	CFileStorage::m_file_name = "";
+#include <iostream>
+#include <exception>
+#include <boost/filesystem.hpp>
+#include <boost/system/error_code.hpp>
+
+using namespace boost::filesystem;
+using namespace boost::system;
+
+
+std::string	CFileStorage::m_file_name = "data.raw";
  long long CFileStorage::m_max_file_size = ONE_GB;
  std::map<int64_t, int64_t> CFileStorage::m_frame_offset_map = {};
 
@@ -48,7 +57,7 @@ void cmd_run(PlaybackCtrlServiceHandler* h, uint16_t port) {
 	boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
 	boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
 
-	int workerCount = 1;
+	int workerCount = 16;//for 16 clients max!!!
 	boost::shared_ptr<ThreadManager> threadManager = ThreadManager::newSimpleThreadManager(workerCount);
 	boost::shared_ptr<StdThreadFactory> threadFactory = boost::shared_ptr<StdThreadFactory>(new StdThreadFactory());
 	threadManager->threadFactory(threadFactory);
@@ -64,57 +73,130 @@ void cmd_run(PlaybackCtrlServiceHandler* h, uint16_t port) {
 	WSACleanup();
 }
 
+BOOL check_avaiable_driver(std::string driver) {
+	path p(driver);
+	if (is_directory(p))
+	{
+		std::cout << p << " is a directory containing:\n";
+		for (auto&& x : directory_iterator(p)) {
+			if (strcmp("raw", x.path().extension().string().c_str()) == 0) {
+				return FALSE;
+			}
+		}
+	}
+	return TRUE;
+}
+
+
 CustomStruct g_cs;
-
-int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_name camera_index data_port(eg. .\\AcquireStore.exe 9090 name 1 55555)
-
-	uint16_t server_port = 9090;
-	char*	 gige_server_name = NULL;
-	uint16_t camera_index = 0;
-	uint16_t data_port = 55555;
-	static long long raw_file_max_size_in_GB = 10;
-
+int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_name camera_index data_port(eg. .\\AcquireStore.exe 9090 55555 camera_ip file_path)
 	timeBeginPeriod(1);
-	
+
+	std::map<std::string, std::string>	Parameters_map;
+
+	uint16_t	server_port = 9090;
+	uint16_t	data_port   = 55555;
+	std:string	camera_ip;
+	long long raw_file_max_size_in_GB = 10;
+	std::string   data_file_name;
+
+	//Read Config
+
+	//Parameters 
 	if (argc >= 2) {//thrift server port
 		server_port = ::atoi(argv[1]);
+		fprintf(stdout, "server_port(%d)!\n", server_port);
+		Parameters_map["server_port"] = std::to_string(server_port);
 	}
-	if (argc >= 3) {//gige_server_name
-		gige_server_name = argv[2];
-	}
-	else {
-		fprintf(stdout, "No GigEServer found!\n!");
-		return 0;
-	}
-	if (argc >= 4) {//the index of the camera on the gigeServer
-		camera_index = ::atoi(argv[3]);
-	}
-	if (argc >= 5) {//data port 
-		data_port = ::atoi(argv[4]);
+	
+	if (argc >= 3) {//data port 
+		data_port = ::atoi(argv[2]);
+		fprintf(stdout, "data_port(%d)!\n", data_port);
+		Parameters_map["data_port"] = std::to_string(data_port);
 	}
 
-	if (argc >= 6) {//raw_file_max_size in GB
-		raw_file_max_size_in_GB = ::atoll(argv[5]);
+	if (argc >= 4) {//camera_ip
+		camera_ip = argv[3];
+		fprintf(stdout, "camera_ip(%s)!\n", camera_ip.c_str());
+		Parameters_map["camera_ip"] = camera_ip;
 	}
 
+	if (argc >= 5) {//raw_file_max_size in GB
+		raw_file_max_size_in_GB = ::atoll(argv[4]);
+		fprintf(stdout, "raw_file_max_size_in_GB(%d)!\n", raw_file_max_size_in_GB);
+		Parameters_map["raw_file_max_size_in_GB"] = std::to_string(raw_file_max_size_in_GB);
+	}
+
+	if (argc >= 6) {
+		data_file_name.assign(argv[5]);
+		fprintf(stdout, "data_file_name(%s)!\n", data_file_name.c_str());
+		Parameters_map["data_file_name"] = data_file_name;
+	}
+
+	//save config;
+	if (Parameters_map.size() > 0) {
+		std::ofstream ofs(camera_ip, std::ofstream::trunc | std::ofstream::out);
+		if (ofs.good()) {
+			for (auto& a : Parameters_map) {
+				std::string line;
+				line.append(a.first + "=" + a.second + "\n");
+				ofs.write(line.c_str(), line.size());
+			}
+		}
+		ofs.close();
+	}
+
+	//start Create Resource
+	std::map<std::string, std::map<int32_t, std::string>>  cameras;
+	CCamera::FindCamera(&cameras);
+	if (cameras.find(camera_ip) == cameras.end()) {
+		fprintf(stdout, "This PC has no the camera(%s)!\n", camera_ip.c_str());
+		exit(-1);
+	}
 
 	CFileStorage::m_max_file_size = raw_file_max_size_in_GB* ONE_GB;
 	PlaybackCtrlServiceHandler* handler = new PlaybackCtrlServiceHandler();
 	g_cs.m_data_port = data_port;
 
-	g_cs.m_camera = new CCamera(gige_server_name, camera_index);
+	g_cs.m_camera = new CCamera(cameras[camera_ip].begin()->second.c_str(), cameras[camera_ip].begin()->first);
 	if (!g_cs.m_camera->CreateDevice()) {
 		fprintf(stdout, "CreateDevice failed!\n");
 		return 0;
 	}
-	g_cs.m_camera->RegisterConnectionEventCallback();
-	g_cs.m_how_many_frames = -1;
-	g_cs.m_how_many_frames_flag = FALSE;
+	g_cs.m_camera->RegisterConnectionEventCallback();//camera reconnect function!!!
 
+	if (data_file_name.size() > 0) {
+		CFileStorage::m_file_name = data_file_name;
+	}
+	else {//auto find a driver!!!
+		char camera_ip[30];
+		g_cs.m_camera->GetCurrentIPAddress(camera_ip, sizeof camera_ip);
+		//CFileStorage::m_file_name = std::string(camera_ip)  + ".raw";
+
+		char drives_c[256] = { 0 };
+		DWORD ds = GetLogicalDriveStrings(sizeof drives_c, drives_c);
+		if (ds == 0) {
+			DWORD err = GetLastError();
+			fprintf(stdout, "%s GetLogicalDrives failed! err %d\n", __FUNCTION__, err);
+			exit(0);
+		}
+		for (int i = ds; i >= 0; --i) {
+			if (drives_c[i] > 'C' && drives_c[i] <= 'Z') {
+				fprintf(stdout, "%s driver %s was found!\n", __FUNCTION__, &drives_c[i]);
+				//CHECK!!!
+				if (check_avaiable_driver(&drives_c[i])) {
+					CFileStorage::m_file_name.assign(std::string(&drives_c[i]) + std::string(camera_ip) + ".raw");
+					break;
+				}
+			}
+		}
+	}
+
+
+	g_cs.m_file_storage_object_for_write_thread = new CFileStorage();
 	g_cs.m_playback_thread = new CPlaybackCtrlThread();
 	g_cs.m_post_processor_thread = new CPostProcessor();
 	g_cs.m_snd_data_thread = new CSendData();
-	g_cs.m_file_storage_object_for_write = new CFileStorage();
 	g_cs.m_file_storage_object_for_read = new CFileStorage();
 
 	//init
@@ -122,7 +204,9 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	g_cs.m_image_h = g_cs.m_camera->GetImageHeight();
 	g_cs.m_frame_rate = g_cs.m_camera->GetFrameRate();
 
+
 	//start
+	g_cs.m_file_storage_object_for_write_thread->start();
 	g_cs.m_playback_thread->start();
 	//do not start here!!! g_cs.m_post_processor_thread->start();
 
@@ -132,19 +216,21 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	std::thread cmd_thread(cmd_run,handler, server_port);
 	cmd_thread.join();
 
+
+
 	g_cs.m_playback_thread->stop();
+	g_cs.m_file_storage_object_for_write_thread->stop();
 	g_cs.m_snd_data_thread->stop();
 
 	g_cs.m_camera->DestroyDevice();
 
-	timeEndPeriod(1);
-
 	delete g_cs.m_camera;
-	delete g_cs.m_file_storage_object_for_write;
+	delete g_cs.m_file_storage_object_for_write_thread;
 	delete g_cs.m_file_storage_object_for_read;
 	delete g_cs.m_snd_data_thread;
 	delete g_cs.m_post_processor_thread;
 	delete g_cs.m_playback_thread;
 
+	timeEndPeriod(1);
 	return 0;
 }

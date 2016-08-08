@@ -80,36 +80,6 @@ BOOL CAgentClient::find_cameras(std::map<std::string, std::map<int, std::string>
 	}
 }
 
-int32_t CAgentClient::add_cameras(const std::vector<std::string> & l) {
-	try {
-		return m_client->add_cameras(l);
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		return -1;
-	}
-}
-
-BOOL CAgentClient::get_hold_cameras(std::vector<std::string> & cameras) {
-	try {
-		m_client->get_hold_cameras( cameras);
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		return FALSE;
-	}
-	return TRUE;
-}
-
-int32_t CAgentClient::del_cameras(const std::vector<std::string> & l) {
-	try {
-		return m_client->del_cameras(l);
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		return -1;
-	}
-}
 
 int32_t CAgentClient::exec_program(const std::string& cmdline) {
 	// Your implementation goes here

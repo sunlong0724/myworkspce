@@ -1,8 +1,10 @@
 #ifndef __MY_THREAD_H__
 #define __MY_THREAD_H__
+#define DLL_API __declspec(dllexport)  
+
 #include <thread>
 
-class CMyThread {
+class DLL_API CMyThread {
 
 public:
 	CMyThread():m_exited(true){

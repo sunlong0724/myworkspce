@@ -28,7 +28,8 @@ void RingBuffer_destroy(RingBuffer * buffer)
 int RingBuffer_write(RingBuffer * buffer, char *data, int length)
 {
     if (RingBuffer_available_data(buffer) == 0) {
-        buffer->start = buffer->end = 0;
+		buffer->end = 0;
+		buffer->start =  0;
     }
 
     //check(length <= RingBuffer_available_space(buffer),
@@ -62,9 +63,9 @@ int RingBuffer_read(RingBuffer * buffer, char *target, int amount)
 
     RingBuffer_commit_read(buffer, amount);
 
-    if (buffer->end == buffer->start) {
-        buffer->start = buffer->end = 0;
-    }
+    //if (buffer->end == buffer->start) {
+    //    buffer->start = buffer->end = 0;
+    //}
 
     return amount;
 error:

@@ -1,6 +1,6 @@
 #ifndef __ACQUIRE_STORE_CLIENT_H__
 #define __ACQUIRE_STORE_CLIENT_H__
-
+#define DLL_API __declspec(dllexport)  
 
 #include "PlaybackCtrlService.h"
 
@@ -17,10 +17,16 @@ using namespace apache::thrift::transport;
 
 using namespace hawkeye;
 
+enum ConnectStatus {
+	ConnectStatus_NONE,
+	ConnectStatus_DISCONNECT,
+	ConnectStatus_CONNECTED
+};
+
 typedef int(*SinkDataCallback)(unsigned char*, int, void*);
+typedef void(*ConnectedCallback)(ConnectStatus, void*);
 
-
-class CPlaybackCtrlClient {
+class DLL_API CPlaybackCtrlClient :public CMyThread{
 public:
 
 	CPlaybackCtrlClient();
@@ -28,14 +34,16 @@ public:
 
 	std::vector<std::string> scan_ip(std::string& start_ip, std::string& end_ip);
 
-	BOOL			connect(const std::string& ip, const uint16_t port);
-	BOOL			close();
-	BOOL			is_connected();
+
+	void			set_connected_callback(ConnectedCallback cb, void* ctx);
+	void			set_connect_parameters(const std::string& ip, const uint16_t port);
 
 	//PLAYBACK
-
 	void	set_recv_sink_callback(SinkDataCallback cb, void* context);
 	void	set_recv_image_parameters(int32_t elem_size, int64_t frame_gap = 1);
+
+	void    start();
+	void	stop();
 
 	int32_t	set_play_frame_resolution(const int32_t width, const int32_t height);//FIXME:  
 	int32_t set_play_frame_rate(const int32_t play_frame_rate, const int32_t sample_gap);
@@ -66,6 +74,9 @@ public:
 	double  get_camera__grab_fps();
 	double  get_soft_grab_fps();
 	double  get_soft_snd_fps();
+	double  get_soft_recv_fps();
+	double  get_write_file_fps();
+
 
 	//CAMERA
 	int32_t set_exposure_time(const double microseconds) ;
@@ -107,8 +118,16 @@ public:
 	void save_feature(std::string& _return) ;
 	int32_t update_feature(const std::string& content) ;
 
-	//WATCH
-	//int32_t	query_camrea_status();
+
+protected:
+	void run();
+
+private:
+	BOOL			connect(const std::string& ip, const uint16_t port);
+	BOOL			close();
+	BOOL			is_connected();
+	void			connect_pingpong();
+	void			close_pingpong();
 	
 private:
 	PlaybackCtrlServiceClient		*m_client;
@@ -117,9 +136,21 @@ private:
 	boost::shared_ptr<TTransport>	m_transport;
 	boost::shared_ptr<TProtocol>	m_protocol;
 
+	PlaybackCtrlServiceClient		*m_client_pingpong;
+	boost::shared_ptr<TTransport>	m_socket_pingpong;
+	boost::shared_ptr<TTransport>	m_transport_pingpong;
+	boost::shared_ptr<TProtocol>	m_protocol_pingpong;
+
 	std::string						m_server_ip;
+	uint16_t						m_cmd_port;
 	uint16_t						m_data_port;
 
 	CRecvData						m_recv_thread;
+
+	ConnectStatus					m_status;
+	ConnectStatus					m_last_status;
+	ConnectedCallback				m_connect_callback;
+	void*							m_connect_ctx;
+
 };
 #endif // !__ACQUIRE_STORE_CLIENT_H__

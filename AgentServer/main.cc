@@ -36,7 +36,7 @@ void cmd_run(AgentServerServiceHandler* h, uint16_t port) {
 	boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
 	boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
 
-	int workerCount = 1;
+	int workerCount = 16;
 	boost::shared_ptr<ThreadManager> threadManager = ThreadManager::newSimpleThreadManager(workerCount);
 	boost::shared_ptr<StdThreadFactory> threadFactory = boost::shared_ptr<StdThreadFactory>(new StdThreadFactory());
 	threadManager->threadFactory(threadFactory);

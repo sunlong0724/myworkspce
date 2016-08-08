@@ -137,6 +137,11 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("get_soft_snd_fps\n");
   }
 
+  double get_file_write_fps() {
+    // Your implementation goes here
+    printf("get_file_write_fps\n");
+  }
+
   int32_t set_exposure_time(const double microseconds) {
     // Your implementation goes here
     printf("set_exposure_time\n");

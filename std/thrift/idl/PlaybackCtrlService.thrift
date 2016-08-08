@@ -37,6 +37,7 @@ service PlaybackCtrlService{
  double       get_camera_grab_fps(),
  double				get_soft_grab_fps(),
  double				get_soft_snd_fps(),
+ double       get_file_write_fps(),
  
  i32 					set_exposure_time(1: double microseconds),
  i32 					set_gain_by_sensor_all(1: double gain),

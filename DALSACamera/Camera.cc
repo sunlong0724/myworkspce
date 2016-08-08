@@ -208,7 +208,19 @@ BOOL CCamera::FindCamera(std::map<std::string, std::map<int32_t, std::string>>  
 
 			std::map<int, std::string> tmp;
 			tmp[cameraIndex] = std::string(serverName);
-			cameras->insert(std::make_pair(std::string(cameraName), tmp) );
+
+			char camera_ip[30] = { 0 };
+			CCamera* camera = new CCamera(serverName, cameraIndex);
+			if (camera->CreateDevice()) {
+				camera->GetCurrentIPAddress(camera_ip, sizeof camera_ip);
+				camera->DestroyDevice();
+
+				if (strlen(camera_ip) > 0) {
+					cameras->insert(std::make_pair(std::string(camera_ip), tmp));
+				}
+			}
+			delete camera;
+
 		}
 	}
 

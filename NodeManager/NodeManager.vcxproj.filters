@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="thrift">
+      <UniqueIdentifier>{c3697f38-4b5d-495c-93f7-7961a0391258}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cc">
@@ -25,13 +28,13 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServer_constants.cpp">
-      <Filter>源文件</Filter>
+      <Filter>thrift</Filter>
     </ClCompile>
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServer_types.cpp">
-      <Filter>源文件</Filter>
+      <Filter>thrift</Filter>
     </ClCompile>
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServerService.cpp">
-      <Filter>源文件</Filter>
+      <Filter>thrift</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,17 +44,17 @@
     <ClInclude Include="..\std\ping\Ping.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\std\thrift\gen-cpp\AgentServer_constants.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\thrift\gen-cpp\AgentServer_types.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\thrift\gen-cpp\AgentServerService.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\std\utils.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\AgentServer_constants.h">
+      <Filter>thrift</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\AgentServer_types.h">
+      <Filter>thrift</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\thrift\gen-cpp\AgentServerService.h">
+      <Filter>thrift</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

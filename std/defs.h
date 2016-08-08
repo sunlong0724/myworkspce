@@ -64,15 +64,14 @@ enum TRANSPORT_STATUS {
 };
 
 typedef struct _CustomStruct {
-	_CustomStruct():m_playback_thread(NULL), m_post_processor_thread(NULL), m_snd_data_thread(NULL), m_file_storage_object_for_write(NULL), m_file_storage_object_for_read(NULL), m_camera(NULL),
-		m_frame_counter(0),	m_store_file_flag(0), m_snd_live_frame_flag(0), m_processor_data_flag(0), m_play_frame_gap(0), m_last_live_play_seq(0), m_data_port(0), m_play_frame_rate(1){}
+	_CustomStruct():m_playback_thread(NULL), m_post_processor_thread(NULL), m_snd_data_thread(NULL), m_file_storage_object_for_write_thread(NULL), m_file_storage_object_for_read(NULL), m_camera(NULL),
+		m_frame_counter(0),	m_store_file_flag(0), m_snd_live_frame_flag(0), m_processor_data_flag(0), m_play_frame_gap(0), m_last_live_play_seq(0), m_data_port(0), m_play_frame_rate(1), m_connected_client(0){}
 
 
-	
 	CPlaybackCtrlThread			*m_playback_thread;
 	CPostProcessor				*m_post_processor_thread;
 	CSendData					*m_snd_data_thread;
-	CFileStorage				*m_file_storage_object_for_write;
+	CFileStorage				*m_file_storage_object_for_write_thread;
 	CFileStorage				*m_file_storage_object_for_read;
 	CCamera						*m_camera;
 
@@ -104,8 +103,8 @@ typedef struct _CustomStruct {
 	int32_t						m_play_frame_w;
 	int32_t						m_play_frame_h;
 
-	int32_t						m_how_many_frames;
-	BOOL						m_how_many_frames_flag;
+	int8_t						m_connected_client;
+
 }CustomStruct;
 
 

@@ -27,21 +27,6 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
     printf("find_cameras\n");
   }
 
-  int32_t add_cameras(const std::vector<std::string> & l) {
-    // Your implementation goes here
-    printf("add_cameras\n");
-  }
-
-  void get_hold_cameras(std::vector<std::string> & _return) {
-    // Your implementation goes here
-    printf("get_hold_cameras\n");
-  }
-
-  int32_t del_cameras(const std::vector<std::string> & l) {
-    // Your implementation goes here
-    printf("del_cameras\n");
-  }
-
   int32_t exec_program(const std::string& cmdline) {
     // Your implementation goes here
     printf("exec_program\n");

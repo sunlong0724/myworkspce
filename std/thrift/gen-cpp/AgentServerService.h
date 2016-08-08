@@ -16,9 +16,6 @@ class AgentServerServiceIf {
  public:
   virtual ~AgentServerServiceIf() {}
   virtual void find_cameras(std::map<std::string, std::map<int32_t, std::string> > & _return) = 0;
-  virtual int32_t add_cameras(const std::vector<std::string> & l) = 0;
-  virtual void get_hold_cameras(std::vector<std::string> & _return) = 0;
-  virtual int32_t del_cameras(const std::vector<std::string> & l) = 0;
   virtual int32_t exec_program(const std::string& cmdline) = 0;
   virtual int32_t kill_program(const int64_t process_id) = 0;
 };
@@ -52,17 +49,6 @@ class AgentServerServiceNull : virtual public AgentServerServiceIf {
   virtual ~AgentServerServiceNull() {}
   void find_cameras(std::map<std::string, std::map<int32_t, std::string> > & /* _return */) {
     return;
-  }
-  int32_t add_cameras(const std::vector<std::string> & /* l */) {
-    int32_t _return = 0;
-    return _return;
-  }
-  void get_hold_cameras(std::vector<std::string> & /* _return */) {
-    return;
-  }
-  int32_t del_cameras(const std::vector<std::string> & /* l */) {
-    int32_t _return = 0;
-    return _return;
   }
   int32_t exec_program(const std::string& /* cmdline */) {
     int32_t _return = 0;
@@ -163,316 +149,6 @@ class AgentServerService_find_cameras_presult {
   std::map<std::string, std::map<int32_t, std::string> > * success;
 
   _AgentServerService_find_cameras_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _AgentServerService_add_cameras_args__isset {
-  _AgentServerService_add_cameras_args__isset() : l(false) {}
-  bool l;
-} _AgentServerService_add_cameras_args__isset;
-
-class AgentServerService_add_cameras_args {
- public:
-
-  AgentServerService_add_cameras_args() {
-  }
-
-  virtual ~AgentServerService_add_cameras_args() throw() {}
-
-  std::vector<std::string>  l;
-
-  _AgentServerService_add_cameras_args__isset __isset;
-
-  void __set_l(const std::vector<std::string> & val) {
-    l = val;
-  }
-
-  bool operator == (const AgentServerService_add_cameras_args & rhs) const
-  {
-    if (!(l == rhs.l))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_add_cameras_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_add_cameras_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class AgentServerService_add_cameras_pargs {
- public:
-
-
-  virtual ~AgentServerService_add_cameras_pargs() throw() {}
-
-  const std::vector<std::string> * l;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_add_cameras_result__isset {
-  _AgentServerService_add_cameras_result__isset() : success(false) {}
-  bool success;
-} _AgentServerService_add_cameras_result__isset;
-
-class AgentServerService_add_cameras_result {
- public:
-
-  AgentServerService_add_cameras_result() : success(0) {
-  }
-
-  virtual ~AgentServerService_add_cameras_result() throw() {}
-
-  int32_t success;
-
-  _AgentServerService_add_cameras_result__isset __isset;
-
-  void __set_success(const int32_t val) {
-    success = val;
-  }
-
-  bool operator == (const AgentServerService_add_cameras_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_add_cameras_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_add_cameras_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_add_cameras_presult__isset {
-  _AgentServerService_add_cameras_presult__isset() : success(false) {}
-  bool success;
-} _AgentServerService_add_cameras_presult__isset;
-
-class AgentServerService_add_cameras_presult {
- public:
-
-
-  virtual ~AgentServerService_add_cameras_presult() throw() {}
-
-  int32_t* success;
-
-  _AgentServerService_add_cameras_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-
-class AgentServerService_get_hold_cameras_args {
- public:
-
-  AgentServerService_get_hold_cameras_args() {
-  }
-
-  virtual ~AgentServerService_get_hold_cameras_args() throw() {}
-
-
-  bool operator == (const AgentServerService_get_hold_cameras_args & /* rhs */) const
-  {
-    return true;
-  }
-  bool operator != (const AgentServerService_get_hold_cameras_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_get_hold_cameras_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class AgentServerService_get_hold_cameras_pargs {
- public:
-
-
-  virtual ~AgentServerService_get_hold_cameras_pargs() throw() {}
-
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_get_hold_cameras_result__isset {
-  _AgentServerService_get_hold_cameras_result__isset() : success(false) {}
-  bool success;
-} _AgentServerService_get_hold_cameras_result__isset;
-
-class AgentServerService_get_hold_cameras_result {
- public:
-
-  AgentServerService_get_hold_cameras_result() {
-  }
-
-  virtual ~AgentServerService_get_hold_cameras_result() throw() {}
-
-  std::vector<std::string>  success;
-
-  _AgentServerService_get_hold_cameras_result__isset __isset;
-
-  void __set_success(const std::vector<std::string> & val) {
-    success = val;
-  }
-
-  bool operator == (const AgentServerService_get_hold_cameras_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_get_hold_cameras_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_get_hold_cameras_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_get_hold_cameras_presult__isset {
-  _AgentServerService_get_hold_cameras_presult__isset() : success(false) {}
-  bool success;
-} _AgentServerService_get_hold_cameras_presult__isset;
-
-class AgentServerService_get_hold_cameras_presult {
- public:
-
-
-  virtual ~AgentServerService_get_hold_cameras_presult() throw() {}
-
-  std::vector<std::string> * success;
-
-  _AgentServerService_get_hold_cameras_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _AgentServerService_del_cameras_args__isset {
-  _AgentServerService_del_cameras_args__isset() : l(false) {}
-  bool l;
-} _AgentServerService_del_cameras_args__isset;
-
-class AgentServerService_del_cameras_args {
- public:
-
-  AgentServerService_del_cameras_args() {
-  }
-
-  virtual ~AgentServerService_del_cameras_args() throw() {}
-
-  std::vector<std::string>  l;
-
-  _AgentServerService_del_cameras_args__isset __isset;
-
-  void __set_l(const std::vector<std::string> & val) {
-    l = val;
-  }
-
-  bool operator == (const AgentServerService_del_cameras_args & rhs) const
-  {
-    if (!(l == rhs.l))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_del_cameras_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_del_cameras_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class AgentServerService_del_cameras_pargs {
- public:
-
-
-  virtual ~AgentServerService_del_cameras_pargs() throw() {}
-
-  const std::vector<std::string> * l;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_del_cameras_result__isset {
-  _AgentServerService_del_cameras_result__isset() : success(false) {}
-  bool success;
-} _AgentServerService_del_cameras_result__isset;
-
-class AgentServerService_del_cameras_result {
- public:
-
-  AgentServerService_del_cameras_result() : success(0) {
-  }
-
-  virtual ~AgentServerService_del_cameras_result() throw() {}
-
-  int32_t success;
-
-  _AgentServerService_del_cameras_result__isset __isset;
-
-  void __set_success(const int32_t val) {
-    success = val;
-  }
-
-  bool operator == (const AgentServerService_del_cameras_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const AgentServerService_del_cameras_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AgentServerService_del_cameras_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _AgentServerService_del_cameras_presult__isset {
-  _AgentServerService_del_cameras_presult__isset() : success(false) {}
-  bool success;
-} _AgentServerService_del_cameras_presult__isset;
-
-class AgentServerService_del_cameras_presult {
- public:
-
-
-  virtual ~AgentServerService_del_cameras_presult() throw() {}
-
-  int32_t* success;
-
-  _AgentServerService_del_cameras_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -717,15 +393,6 @@ class AgentServerServiceClient : virtual public AgentServerServiceIf {
   void find_cameras(std::map<std::string, std::map<int32_t, std::string> > & _return);
   void send_find_cameras();
   void recv_find_cameras(std::map<std::string, std::map<int32_t, std::string> > & _return);
-  int32_t add_cameras(const std::vector<std::string> & l);
-  void send_add_cameras(const std::vector<std::string> & l);
-  int32_t recv_add_cameras();
-  void get_hold_cameras(std::vector<std::string> & _return);
-  void send_get_hold_cameras();
-  void recv_get_hold_cameras(std::vector<std::string> & _return);
-  int32_t del_cameras(const std::vector<std::string> & l);
-  void send_del_cameras(const std::vector<std::string> & l);
-  int32_t recv_del_cameras();
   int32_t exec_program(const std::string& cmdline);
   void send_exec_program(const std::string& cmdline);
   int32_t recv_exec_program();
@@ -748,18 +415,12 @@ class AgentServerServiceProcessor : public ::apache::thrift::TDispatchProcessor 
   typedef std::map<std::string, ProcessFunction> ProcessMap;
   ProcessMap processMap_;
   void process_find_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_add_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_get_hold_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_del_cameras(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_exec_program(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_kill_program(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   AgentServerServiceProcessor(boost::shared_ptr<AgentServerServiceIf> iface) :
     iface_(iface) {
     processMap_["find_cameras"] = &AgentServerServiceProcessor::process_find_cameras;
-    processMap_["add_cameras"] = &AgentServerServiceProcessor::process_add_cameras;
-    processMap_["get_hold_cameras"] = &AgentServerServiceProcessor::process_get_hold_cameras;
-    processMap_["del_cameras"] = &AgentServerServiceProcessor::process_del_cameras;
     processMap_["exec_program"] = &AgentServerServiceProcessor::process_exec_program;
     processMap_["kill_program"] = &AgentServerServiceProcessor::process_kill_program;
   }
@@ -798,34 +459,6 @@ class AgentServerServiceMultiface : virtual public AgentServerServiceIf {
     }
     ifaces_[i]->find_cameras(_return);
     return;
-  }
-
-  int32_t add_cameras(const std::vector<std::string> & l) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->add_cameras(l);
-    }
-    return ifaces_[i]->add_cameras(l);
-  }
-
-  void get_hold_cameras(std::vector<std::string> & _return) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->get_hold_cameras(_return);
-    }
-    ifaces_[i]->get_hold_cameras(_return);
-    return;
-  }
-
-  int32_t del_cameras(const std::vector<std::string> & l) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->del_cameras(l);
-    }
-    return ifaces_[i]->del_cameras(l);
   }
 
   int32_t exec_program(const std::string& cmdline) {
