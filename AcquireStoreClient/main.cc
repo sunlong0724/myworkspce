@@ -19,8 +19,8 @@ int recv_data_cb(unsigned char* data, int data_len, void* ctx) {
 	}
 
 	if (g_bayer_image->imageSize != data_len- FRAME_DATA_START) {
-		//cvReleaseImage(&g_bayer_image);
-		//cvReleaseImage(&g_rgb_image);
+		cvReleaseImageHeader(&g_bayer_image);
+		cvReleaseImage(&g_rgb_image);
 
 		g_bayer_image = cvCreateImageHeader(cvSize(g_width, g_height), 8, 1);
 		g_rgb_image = cvCreateImage(cvSize(g_width, g_height), 8, 3);
@@ -92,8 +92,7 @@ int main(int argc, char** argv) {
 		port = atoi(argv[2]);
 
 	client.set_connected_callback(connect_cb, NULL);
-	client.set_connect_parameters(server_ip, port);
-	client.start();
+	client.start(server_ip, port, 1);
 
 again:
 
@@ -115,14 +114,12 @@ again:
 	std::string name;
 	client.get_user_defined_name(name);
 	
-	client.set_store_file(1, name);
+	client.set_store_file(1);
 
 	client.set_play_frame_resolution(g_width, g_height);
-	client.start_play_live(play_frame_rate, sample);
+	client.play_live(play_frame_rate, sample);
 		
-	client.set_recv_image_parameters(GET_IMAGE_BUFFER_SIZE(g_width, g_height), (full_frame_rate+1)/play_frame_rate);
 	client.set_recv_sink_callback(recv_data_cb, &client);
-	client.play_live();
 
 	int64_t now = time(NULL);
 

@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="main.cc" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PlaybackCtrlClient.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0D21BBB9-B61C-4B3D-9CF0-15EBBC435617}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -114,7 +117,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Winmm.lib;opencv_highgui246.lib;opencv_imgproc246.lib;opencv_core246.lib;libzmq.lib;libthrift.lib;DALSACamera.lib;AcquireStoreClientd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Winmm.lib;opencv_highgui246d.lib;opencv_imgproc246d.lib;opencv_core246d.lib;libzmq.lib;libthrift.lib;DALSACamerad.lib;AcquireStoreClientd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

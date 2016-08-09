@@ -37,6 +37,16 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
     printf("kill_program\n");
   }
 
+  void get_disk_info(std::map<std::string, std::vector<double> > & _return) {
+    // Your implementation goes here
+    printf("get_disk_info\n");
+  }
+
+  int32_t get_cpu_usage() {
+    // Your implementation goes here
+    printf("get_cpu_usage\n");
+  }
+
 };
 
 int main(int argc, char **argv) {

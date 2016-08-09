@@ -2,6 +2,10 @@
 #include "PlaybackCtrlClient.h"	
 #include "utils.h"
 
+
+#define CHECK_CONNECT_STATUS(status) do{if ((status) !=ConnectStatus_CONNECTED) return FALSE; }while(0)
+#define CHECK_CONNECT_STATUS_VOID(status) do{if ((status) !=ConnectStatus_CONNECTED) return; }while(0)
+
 CPlaybackCtrlClient::CPlaybackCtrlClient(){
 	m_connect_callback = NULL;
 	m_connect_ctx = NULL;
@@ -19,12 +23,11 @@ void CPlaybackCtrlClient::set_connected_callback(ConnectedCallback cb, void* ctx
 	m_connect_ctx = ctx;
 }
 
-void	CPlaybackCtrlClient::set_connect_parameters(const std::string& ip, const uint16_t port) {
+
+void    CPlaybackCtrlClient::start(const std::string& ip, const uint16_t port, int64_t frame_gap) {
 	m_server_ip = ip;
 	m_cmd_port = port;
-}
-
-void    CPlaybackCtrlClient::start() {
+	m_frame_gap = frame_gap;
 	CMyThread::start();
 }
 void	CPlaybackCtrlClient::stop() {
@@ -64,7 +67,7 @@ BOOL CPlaybackCtrlClient::connect(const std::string& ip, const uint16_t cmd_port
 			return FALSE;
 		}
 		
-		m_recv_thread.init(m_server_ip, m_data_port);
+		m_recv_thread.init(m_server_ip, m_data_port, m_frame_gap);
 		m_recv_thread.start();
 		m_status = ConnectStatus_CONNECTED;
 		return TRUE;
@@ -94,8 +97,31 @@ BOOL CPlaybackCtrlClient::close() {
 	}
 }
 
-#define CHECK_CONNECT_STATUS(status) do{if ((status) !=ConnectStatus_CONNECTED) return FALSE; }while(0)
-#define CHECK_CONNECT_STATUS_VOID(status) do{if ((status) !=ConnectStatus_CONNECTED) return; }while(0)
+
+int32_t	CPlaybackCtrlClient::start_grab() {
+	CHECK_CONNECT_STATUS(m_status);
+
+	try {
+		return m_client->start_grab();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		m_status = ConnectStatus_DISCONNECT;
+		return FALSE;
+	}
+}
+int32_t CPlaybackCtrlClient::stop_grab() {
+	CHECK_CONNECT_STATUS(m_status);
+
+	try {
+		return m_client->stop_grab();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		m_status = ConnectStatus_DISCONNECT;
+		return FALSE;
+	}
+}
 
 BOOL CPlaybackCtrlClient::is_connected() {
 	CHECK_CONNECT_STATUS(m_status);
@@ -112,51 +138,9 @@ BOOL CPlaybackCtrlClient::is_connected() {
 void	CPlaybackCtrlClient::set_recv_sink_callback(SinkDataCallback cb, void* context) {
 	m_recv_thread.set_sink_data_callback(cb, context);
 }
-void	CPlaybackCtrlClient::set_recv_image_parameters(int32_t elem_size, int64_t frame_gap) {
-	m_recv_thread.set_parameters(elem_size, frame_gap);
-}
-
-int32_t	CPlaybackCtrlClient::get_frames_data(int32_t frame_seq, int32_t how_many_frames) {
-	return 0;
-}
 
 
-int32_t CPlaybackCtrlClient::start_play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
-	CHECK_CONNECT_STATUS(m_status);
 
-	try {
-		return m_client->start_play_live(play_frame_rate,sample_gap);
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
-int32_t CPlaybackCtrlClient::stop_play_live() {
-	CHECK_CONNECT_STATUS(m_status);
-
-	try {
-		return  m_client->stop_play_live();
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
-int32_t CPlaybackCtrlClient::play_live() {
-	CHECK_CONNECT_STATUS(m_status);
-
-	try {
-		return  m_client->play_live();
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
 int32_t	CPlaybackCtrlClient::set_play_frame_resolution(const int32_t width, const int32_t height) {
 	CHECK_CONNECT_STATUS(m_status);
 
@@ -181,63 +165,11 @@ int32_t CPlaybackCtrlClient::set_play_frame_rate(const int32_t play_frame_rate,c
 		return FALSE;
 	}
 }
-int32_t CPlaybackCtrlClient::set_store_file(const int32_t flag, const std::string& file_name) {
+int32_t CPlaybackCtrlClient::set_store_file(const int32_t flag) {
 	CHECK_CONNECT_STATUS(m_status);
 
 	try {
-		return m_client->set_store_file(flag, file_name);
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
-
-int32_t CPlaybackCtrlClient::start_forward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
-	CHECK_CONNECT_STATUS(m_status);
-
-	try {
-		return m_client->start_forward_play(play_frame_rate, sample_gap);
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
-
-int32_t CPlaybackCtrlClient::stop_forward_play() {
-	CHECK_CONNECT_STATUS(m_status);
-
-	try {
-		return m_client->stop_forward_play();
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
-
-int32_t CPlaybackCtrlClient::forward_play() {
-	CHECK_CONNECT_STATUS(m_status);
-
-	try {
-		return m_client->forward_play();
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
-
-int32_t CPlaybackCtrlClient::start_backward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
-	CHECK_CONNECT_STATUS(m_status);
-
-	try {
-		return m_client->start_backward_play(play_frame_rate, sample_gap);
+		return m_client->set_store_file(flag);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -247,11 +179,12 @@ int32_t CPlaybackCtrlClient::start_backward_play(const int32_t play_frame_rate, 
 }
 
 
-int32_t CPlaybackCtrlClient::stop_backward_play() {
+
+int32_t CPlaybackCtrlClient::play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
 	CHECK_CONNECT_STATUS(m_status);
 
 	try {
-		return m_client->stop_backward_play();
+		return m_client->play_live(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -260,11 +193,11 @@ int32_t CPlaybackCtrlClient::stop_backward_play() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::backward_play() {
+int32_t CPlaybackCtrlClient::play_forward(const int32_t play_frame_rate, const int32_t sample_gap) {
 	CHECK_CONNECT_STATUS(m_status);
 
 	try {
-		return m_client->backward_play();
+		return m_client->play_forward(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -273,11 +206,14 @@ int32_t CPlaybackCtrlClient::backward_play() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_forward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
+
+
+
+int32_t CPlaybackCtrlClient::play_backward(const int32_t play_frame_rate, const int32_t sample_gap) {
 	CHECK_CONNECT_STATUS(m_status);
 
 	try {
-		return m_client->start_forward_play_temp(play_frame_rate, sample_gap);
+		return m_client->play_backward(play_frame_rate, sample_gap);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -286,11 +222,11 @@ int32_t CPlaybackCtrlClient::start_forward_play_temp(const int32_t play_frame_ra
 	}
 }
 
-int32_t CPlaybackCtrlClient::stop_forward_play_temp() {
+int32_t CPlaybackCtrlClient::play_pause() {
 	CHECK_CONNECT_STATUS(m_status);
 
 	try {
-		return m_client->stop_forward_play_temp();
+		return m_client->play_pause();
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -299,11 +235,11 @@ int32_t CPlaybackCtrlClient::stop_forward_play_temp() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::forward_play_temp() {
+int32_t	CPlaybackCtrlClient::play_from_a2b(const int64_t a, const int64_t b) {
 	CHECK_CONNECT_STATUS(m_status);
 
 	try {
-		return m_client->forward_play_temp();
+		return m_client->play_from_a2b(a,b);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -312,44 +248,9 @@ int32_t CPlaybackCtrlClient::forward_play_temp() {
 	}
 }
 
-int32_t CPlaybackCtrlClient::start_backward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
-	CHECK_CONNECT_STATUS(m_status);
 
-	try {
-		return m_client->start_backward_play_temp(play_frame_rate, sample_gap);
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
 
-int32_t CPlaybackCtrlClient::stop_backward_play_temp() {
-	CHECK_CONNECT_STATUS(m_status);
 
-	try {
-		return m_client->stop_backward_play_temp();
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
-
-int32_t CPlaybackCtrlClient::backward_play_temp() {
-	CHECK_CONNECT_STATUS(m_status);
-
-	try {
-		return m_client->backward_play_temp();
-	}
-	catch (TException& e) {
-		fprintf(stdout, "%s\n", e.what());
-		m_status = ConnectStatus_DISCONNECT;
-		return FALSE;
-	}
-}
 
 double  CPlaybackCtrlClient::get_camera__grab_fps() {
 	CHECK_CONNECT_STATUS(m_status);

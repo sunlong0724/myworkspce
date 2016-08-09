@@ -37,21 +37,13 @@ class CCamera;
 #include <Windows.h>
 #include "FPSCounter.h"
 
-enum CtrlStatus {
-	Playback_NONE					= 0x001,
-	Playback_PAUSE					= 0x002,
-
-	Playback_START_PLAY_CAMERAS		= 0x004,
-	Playback_STOP_PLAY_CAMERAS		= 0x008,
-	Playback_PLAYING_CAMERAS		= 0x010,
-
-	Playback_START_PLAY_FILE		= 0x020,
-	Playback_STOP_PLAY_FILE			= 0x040,
-	Playback_PLAYING_FILE			= 0x080,
-
-	Playback_START_PLAY_FILE_TEMP	= 0x100,
-	Playback_STOP_PLAY_FILE_TEMP	= 0x200,
-	Playback_PLAYING_FILE_TEMP		= 0x400,
+enum Playback_Status {
+	Pb_STATUS_NONE					,
+	Pb_STATUS_PLAY_PAUSE			,
+	Pb_STATUS_PLAY_CAMERAS			,
+	Pb_STATUS_PLAY_BACKWARD			,
+	Pb_STATUS_PLAY_FORWARD			,
+	Pb_STATUS_PLAY_FROM_A2B_LOOP	,
 };
 
 enum TRANSPORT_STATUS {
@@ -63,9 +55,17 @@ enum TRANSPORT_STATUS {
 
 };
 
+
+enum ConnectStatus {
+	ConnectStatus_NONE,
+	ConnectStatus_DISCONNECT,
+	ConnectStatus_CONNECTED
+};
+
+
 typedef struct _CustomStruct {
 	_CustomStruct():m_playback_thread(NULL), m_post_processor_thread(NULL), m_snd_data_thread(NULL), m_file_storage_object_for_write_thread(NULL), m_file_storage_object_for_read(NULL), m_camera(NULL),
-		m_frame_counter(0),	m_store_file_flag(0), m_snd_live_frame_flag(0), m_processor_data_flag(0), m_play_frame_gap(0), m_last_live_play_seq(0), m_data_port(0), m_play_frame_rate(1), m_connected_client(0){}
+		m_frame_counter(0),	m_store_file_flag(0), m_snd_live_frame_flag(0), m_processor_data_flag(0), m_play_frame_gap(0), m_last_live_play_seq(0), m_data_port(0), m_play_frame_rate(1){}
 
 
 	CPlaybackCtrlThread			*m_playback_thread;
@@ -94,18 +94,18 @@ typedef struct _CustomStruct {
 	int64_t						m_play_frame_gap;
 	int64_t						m_play_frame_rate;
 
-	int64_t						m_play_frame_gap_temp;
-	int64_t						m_play_frame_rate_temp;
-
 
 	int64_t						m_last_live_play_seq;
 
 	int32_t						m_play_frame_w;
 	int32_t						m_play_frame_h;
 
-	int8_t						m_connected_client;
 
 }CustomStruct;
+
+
+typedef int(*SinkDataCallback)(unsigned char*, int, void*);
+typedef void(*ConnectedCallback)(ConnectStatus, void*);
 
 
 #endif // !__DEFS__H_

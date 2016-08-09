@@ -16,6 +16,9 @@
     <Filter Include="thrift">
       <UniqueIdentifier>{c3697f38-4b5d-495c-93f7-7961a0391258}</UniqueIdentifier>
     </Filter>
+    <Filter Include="std">
+      <UniqueIdentifier>{bcb27f91-5b4b-456f-bb65-077921dae590}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cc">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="..\std\thrift\gen-cpp\AgentServerService.h">
       <Filter>thrift</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\MyThread.h">
+      <Filter>std</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

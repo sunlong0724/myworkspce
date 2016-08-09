@@ -7,9 +7,7 @@
 #include <signal.h>
 #include "AgentClient.h"
 
-void sleep(int32_t milliseconds) {
-	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
-}
+#include "utils.h"
 
 bool g_running_flag = true;
 void sig_cb(int sig)
@@ -23,6 +21,25 @@ void sig_cb(int sig)
 void printf_cameras(std::map<std::string, std::map<int, std::string>>& cs) {
 	for (auto& a : cs) {
 		printf("%s:%d,%s\n ", a.first.c_str(), a.second.begin()->first, a.second.begin()->second.c_str());
+	}
+}
+
+
+void connected_callback(ConnectStatus status, void* ctx) {
+	if (status == ConnectStatus_CONNECTED) {
+		CAgentClient *ac = (CAgentClient*)ctx;
+		std::map<std::string, std::map<int, std::string>>  cameras;
+		ac->find_cameras(cameras);
+		printf_cameras(cameras);
+
+		char cmdline[1024];
+		sprintf(cmdline, ".\\AcquireStore.exe 9070 55555 %s 10 e:\\data.raw", cameras.begin()->first.c_str());
+		printf("%s\n", cmdline);
+		int32_t process_id = ac->exec_program(cmdline);
+
+	}
+	else if (status == ConnectStatus_DISCONNECT) {
+		int a = 0;
 	}
 }
 
@@ -42,26 +59,15 @@ int main(int argc, char** argv) {
 	CAgentClient ac;
 	ips = ac.scan_ip(std::string("192.168.1.18"), std::string("192.168.1.19"));
 
-	for (auto& ip : ips) {
-		
-		ac.connect(ip, port);
 
-		ac.find_cameras(cameras);
-		printf_cameras(cameras);
+	ac.set_connected_callback(connected_callback, &ac);
+	ac.set_connect_parameters(ips[0], port);
+	ac.start();
 
-		char cmdline[1024];
-		//AcquireStore 9070 55555 192.168.0.100 10 e:\\data.raw
-		sprintf(cmdline, ".\\AcquireStore.exe 9070 55555 %s 10 e:\\data.raw", cameras.begin()->first.c_str());
-		printf("%s\n", cmdline);
-		int32_t process_id = ac.exec_program(cmdline);
-
-
-
-		Sleep(5000);
-
-		ac.kill_program(process_id);
-		ac.close();
+	while (1) {
+		sleep(1);
 	}
 
+	ac.stop();
 	return 0;
 }

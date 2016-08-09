@@ -37,89 +37,44 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("set_play_frame_resolution\n");
   }
 
-  int32_t set_store_file(const int32_t flag, const std::string& file_name) {
+  int32_t set_store_file(const int32_t flag) {
     // Your implementation goes here
     printf("set_store_file\n");
   }
 
-  int32_t get_frames_data(const int32_t frame_seq, const int32_t how_many_frames) {
+  int32_t start_grab() {
     // Your implementation goes here
-    printf("get_frames_data\n");
+    printf("start_grab\n");
   }
 
-  int32_t start_play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
+  int32_t stop_grab() {
     // Your implementation goes here
-    printf("start_play_live\n");
+    printf("stop_grab\n");
   }
 
-  int32_t stop_play_live() {
+  int32_t play_pause() {
     // Your implementation goes here
-    printf("stop_play_live\n");
+    printf("play_pause\n");
   }
 
-  int32_t play_live() {
+  int32_t play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
     printf("play_live\n");
   }
 
-  int32_t start_forward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
+  int32_t play_forward(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
-    printf("start_forward_play\n");
+    printf("play_forward\n");
   }
 
-  int32_t stop_forward_play() {
+  int32_t play_backward(const int32_t play_frame_rate, const int32_t sample_gap) {
     // Your implementation goes here
-    printf("stop_forward_play\n");
+    printf("play_backward\n");
   }
 
-  int32_t forward_play() {
+  int32_t play_from_a2b(const int64_t from, const int64_t to) {
     // Your implementation goes here
-    printf("forward_play\n");
-  }
-
-  int32_t start_backward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
-    // Your implementation goes here
-    printf("start_backward_play\n");
-  }
-
-  int32_t stop_backward_play() {
-    // Your implementation goes here
-    printf("stop_backward_play\n");
-  }
-
-  int32_t backward_play() {
-    // Your implementation goes here
-    printf("backward_play\n");
-  }
-
-  int32_t start_forward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
-    // Your implementation goes here
-    printf("start_forward_play_temp\n");
-  }
-
-  int32_t stop_forward_play_temp() {
-    // Your implementation goes here
-    printf("stop_forward_play_temp\n");
-  }
-
-  int32_t forward_play_temp() {
-    // Your implementation goes here
-    printf("forward_play_temp\n");
-  }
-
-  int32_t start_backward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
-    // Your implementation goes here
-    printf("start_backward_play_temp\n");
-  }
-
-  int32_t stop_backward_play_temp() {
-    // Your implementation goes here
-    printf("stop_backward_play_temp\n");
-  }
-
-  int32_t backward_play_temp() {
-    // Your implementation goes here
-    printf("backward_play_temp\n");
+    printf("play_from_a2b\n");
   }
 
   double get_camera_grab_fps() {

@@ -17,14 +17,6 @@ using namespace apache::thrift::transport;
 
 using namespace hawkeye;
 
-enum ConnectStatus {
-	ConnectStatus_NONE,
-	ConnectStatus_DISCONNECT,
-	ConnectStatus_CONNECTED
-};
-
-typedef int(*SinkDataCallback)(unsigned char*, int, void*);
-typedef void(*ConnectedCallback)(ConnectStatus, void*);
 
 class DLL_API CPlaybackCtrlClient :public CMyThread{
 public:
@@ -35,41 +27,23 @@ public:
 	std::vector<std::string> scan_ip(std::string& start_ip, std::string& end_ip);
 
 
-	void			set_connected_callback(ConnectedCallback cb, void* ctx);
-	void			set_connect_parameters(const std::string& ip, const uint16_t port);
-
-	//PLAYBACK
+	void	set_connected_callback(ConnectedCallback cb, void* ctx);
 	void	set_recv_sink_callback(SinkDataCallback cb, void* context);
-	void	set_recv_image_parameters(int32_t elem_size, int64_t frame_gap = 1);
-
-	void    start();
+	void    start(const std::string& ip, const uint16_t port, int64_t frame_gap);
 	void	stop();
+
+	int32_t	start_grab();
+	int32_t stop_grab();
 
 	int32_t	set_play_frame_resolution(const int32_t width, const int32_t height);//FIXME:  
 	int32_t set_play_frame_rate(const int32_t play_frame_rate, const int32_t sample_gap);
-	int32_t set_store_file(const int32_t flag, const std::string& file_name);
+	int32_t set_store_file(const int32_t flag);
 
-	int32_t	get_frames_data(int32_t frame_seq, int32_t how_many_frames);
-
-	int32_t start_play_live(const int32_t play_frame_rate,const int32_t sample_gap);
-	int32_t stop_play_live();
-	int32_t play_live();
-
-	int32_t start_forward_play(const int32_t play_frame_rate, const int32_t sample_gap);
-	int32_t stop_forward_play();
-	int32_t forward_play();
-
-	int32_t start_backward_play(const int32_t play_frame_rate, const int32_t sample_gap);
-	int32_t stop_backward_play();
-	int32_t backward_play();
-
-	int32_t start_forward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap);
-	int32_t stop_forward_play_temp();
-	int32_t forward_play_temp();
-
-	int32_t start_backward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap);
-	int32_t stop_backward_play_temp();
-	int32_t backward_play_temp();
+	int32_t play_live(const int32_t play_frame_rate, const int32_t sample_gap);;
+	int32_t play_forward(const int32_t play_frame_rate, const int32_t sample_gap);
+	int32_t play_backward(const int32_t play_frame_rate, const int32_t sample_gap);
+	int32_t play_pause();
+	int32_t	play_from_a2b(const int64_t a, const int64_t b);
 
 	double  get_camera__grab_fps();
 	double  get_soft_grab_fps();
@@ -145,6 +119,7 @@ private:
 	uint16_t						m_cmd_port;
 	uint16_t						m_data_port;
 
+	int64_t							m_frame_gap;
 	CRecvData						m_recv_thread;
 
 	ConnectStatus					m_status;

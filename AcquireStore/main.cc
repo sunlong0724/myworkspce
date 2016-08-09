@@ -147,13 +147,16 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	}
 
 	//start Create Resource
-	std::map<std::string, std::map<int32_t, std::string>>  cameras;
+	std::map<std::string, std::map<int32_t, std::string>>  cameras = {};
+	fprintf(stdout, "1cameras size(%d)!\n", cameras.size());
 	CCamera::FindCamera(&cameras);
+	fprintf(stdout, "2cameras size(%d)!\n", cameras.size());
+
 	if (cameras.find(camera_ip) == cameras.end()) {
 		fprintf(stdout, "This PC has no the camera(%s)!\n", camera_ip.c_str());
 		exit(-1);
 	}
-
+	fprintf(stdout, "3cameras size(%d)!\n", cameras.size());
 	CFileStorage::m_max_file_size = raw_file_max_size_in_GB* ONE_GB;
 	PlaybackCtrlServiceHandler* handler = new PlaybackCtrlServiceHandler();
 	g_cs.m_data_port = data_port;

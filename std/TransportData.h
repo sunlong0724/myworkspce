@@ -35,8 +35,7 @@ private:
 
 class CRecvData : public CMyThread {
 public:
-	void init(std::string& server_ip, uint16_t port);
-	void set_parameters(int32_t elem_size, int64_t frame_gap = 1);
+	void init(std::string& server_ip, uint16_t port, int64_t frame_gap = 1);
 
 	void set_sink_data_callback(SinkDataCallback cb, void* context);
 protected:
@@ -50,7 +49,8 @@ public:
 private:
 	void				*m_zmq_ctx;
 	void				*m_zmq_sock;
-	std::vector<char>	m_buffer;
+	char*				m_buffer;
+	int64_t				m_buffer_len;
 
 	int64_t				m_frame_counter;
 	int64_t				m_last_recv_seq;
@@ -58,9 +58,6 @@ private:
 
 	std::string			m_server_ip;
 	uint16_t			m_port;
-
-	int32_t				m_elem_size;
-	BOOL				m_flag;
 
 	SinkDataCallback	m_cb;
 	void*				m_cb_ctx;

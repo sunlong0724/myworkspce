@@ -35,14 +35,6 @@ inline void calc_frame_rate_some(const int32_t play_frame_rate, const int32_t sa
 	//g_cs.m_last_play_seq = 0;
 }
 
-inline void calc_frame_rate_some_temp(const int32_t play_frame_rate, const int32_t sample) {
-	g_cs.m_play_frame_rate_temp = play_frame_rate;
-	g_cs.m_frame_rate = g_cs.m_camera->GetFrameRate();
-	g_cs.m_play_frame_gap_temp = sample;
-	//g_cs.m_last_play_seq = 0;
-}
-
-
 class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
  public:
   PlaybackCtrlServiceHandler() {
@@ -51,18 +43,14 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t get_data_port() {
 	  // Your implementation goes here
-	  printf("get_data_port/PingPong\r");
+	  //printf("get_data_port/PingPong\n");
 	  return g_cs.m_data_port;
   }
 
   int32_t set_play_frame_rate(const int32_t play_frame_rate, const int32_t sample_gap) {
 	  // Your implementation goes here
 	  printf("set_play_frame_rate\n");
-	  if (Playback_PLAYING_FILE_TEMP == g_cs.m_playback_thread->m_status)
-		calc_frame_rate_some_temp(play_frame_rate,sample_gap);
-	  else 
-		 calc_frame_rate_some(play_frame_rate, sample_gap);
-
+     calc_frame_rate_some(play_frame_rate,sample_gap);
 	  return 1;
   }
 
@@ -88,177 +76,97 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	return 1;
   }
 
-  int32_t set_store_file(const int32_t flag, const std::string& file_name) {
-    // Your implementation goes here
-    printf("set_store_file\n");
-	if (0 == CFileStorage::m_file_name.size()) {
-		char ip[30] = { 0 };
-		if (g_cs.m_camera->GetCurrentIPAddress(ip, sizeof ip)) {
-			std::string name(ip);
-			//CFileStorage::m_file_name = name + ".raw";
-		}
-	}
-	return g_cs.m_store_file_flag = flag;
+  int32_t set_store_file(const int32_t flag) {
+	  // Your implementation goes here
+	  printf("set_store_file\n");
+	  return g_cs.m_store_file_flag = flag;
   }
 
-  int32_t get_frames_data(const int32_t frame_seq, const int32_t how_many_frames) {
+  int32_t start_grab() {
 	  // Your implementation goes here
-	  printf("get_frames_data\n");
-	  g_cs.m_playback_thread->m_start_play_frame_no = frame_seq;
-	  return 0;
-  }
-
-  int32_t start_play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
-	  // Your implementation goes here
-	  printf("start_play_live\n");
-	  calc_frame_rate_some(play_frame_rate, sample_gap);
-
-	  g_cs.m_snd_live_frame_flag = TRUE;
-	  g_cs.m_last_live_play_seq = g_cs.m_frame_counter;
-
+	  printf("start_grab\n");
 	  g_cs.m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, &g_cs);
 	  if (!g_cs.m_camera->CreateOtherObjects()) {
 		  fprintf(stdout, "%s CreateOtherObjects failed!\n", __FUNCTION__);
 	  }
 	  g_cs.m_camera->Start();
-
-	  g_cs.m_playback_thread->m_status = Playback_START_PLAY_CAMERAS;
-	  ++g_cs.m_connected_client;
-	  return TRUE;
-  }
-
-  int32_t stop_play_live() {
-	  // Your implementation goes here
-	  printf("stop_play_live\n");
-	  --g_cs.m_connected_client;
-	  if (0 == g_cs.m_connected_client) {
-		  g_cs.m_playback_thread->m_status = Playback_STOP_PLAY_CAMERAS;
-
-		  g_cs.m_camera->Stop();
-		  g_cs.m_camera->DestroyOtherObjects();
-	  }
 	  return 1;
   }
 
-  int32_t play_live() {
+  int32_t stop_grab() {
 	  // Your implementation goes here
-	  printf("play_live\n");	 
-	  g_cs.m_playback_thread->m_start_play_frame_no_begin = 0;
-	  return g_cs.m_playback_thread->m_status = Playback_PLAYING_CAMERAS;
+	  printf("stop_grab\n");
+	  g_cs.m_playback_thread->m_status = Pb_STATUS_NONE;
+
+	  g_cs.m_camera->Stop();
+	  g_cs.m_camera->DestroyOtherObjects();
+	  return 1;
   }
 
-  int32_t start_forward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
+  int32_t play_pause() {
 	  // Your implementation goes here
-	  calc_frame_rate_some(play_frame_rate, sample_gap);
-	  g_cs.m_playback_thread->m_is_forward = TRUE;
-	  return g_cs.m_playback_thread->m_status = Playback_START_PLAY_FILE;
-  }
-
-  int32_t stop_forward_play() {
-	  // Your implementation goes here
-	  printf("stop_forward_play\n");
-	  g_cs.m_playback_thread->m_status = Playback_STOP_PLAY_FILE;
-	  return 0;
-  }
-
-  int32_t forward_play() {
-	  // Your implementation goes here
-	  printf("forward_play\n");
-	  g_cs.m_playback_thread->m_status = Playback_PLAYING_FILE;
-	  return 0;
-  }
-
-  int32_t start_backward_play(const int32_t play_frame_rate, const int32_t sample_gap) {
-	  // Your implementation goes here
-	  calc_frame_rate_some(play_frame_rate,sample_gap);
-	  if (g_cs.m_playback_thread->m_start_play_frame_no_begin == 0) {
-		  g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_file_storage_object_for_read->m_frame_offset_map.rbegin()->first - 1;/*g_cs.m_frame_counter - 1;*/
+	  printf("play_pause %d %d\n", g_cs.m_playback_thread->m_status, g_cs.m_playback_thread->m_last_status);
+	  if (g_cs.m_playback_thread->m_last_status == Pb_STATUS_NONE) {
+		  g_cs.m_playback_thread->m_last_status = g_cs.m_playback_thread->m_status;
+		  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_PAUSE;
 	  }
-	  g_cs.m_playback_thread->m_is_forward = FALSE;
-	  return g_cs.m_playback_thread->m_status = Playback_START_PLAY_FILE;
+	  else {
+		   g_cs.m_playback_thread->m_status = g_cs.m_playback_thread->m_last_status;
+		   g_cs.m_playback_thread->m_last_status = Pb_STATUS_NONE;
+		   return g_cs.m_playback_thread->m_status;
+	  }
   }
 
-  int32_t stop_backward_play() {
+  int32_t play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
 	  // Your implementation goes here
-	  printf("stop_backward_play\n");
-	  g_cs.m_playback_thread->m_status = Playback_STOP_PLAY_FILE;
-	  return 0;
-  }
-
-  int32_t backward_play() {
-	  // Your implementation goes here
-	  printf("backward_play\n");
-	  g_cs.m_playback_thread->m_status = Playback_PLAYING_FILE;
-	  return 0;
-  }
-
-  int32_t start_forward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
-	  // Your implementation goes here
-
-	  g_cs.m_snd_live_frame_flag = FALSE;
-
-	  calc_frame_rate_some_temp(play_frame_rate, sample_gap);
-	  g_cs.m_playback_thread->m_is_forward = TRUE;
-	  return g_cs.m_playback_thread->m_status = Playback_START_PLAY_FILE_TEMP;
-  }
-
-  int32_t stop_forward_play_temp() {
-	  // Your implementation goes here
-	  printf("stop_forward_play_temp\n");
+	  printf("play_live\n");
+	  calc_frame_rate_some(play_frame_rate, sample_gap);
 	  g_cs.m_snd_live_frame_flag = TRUE;
-	  g_cs.m_playback_thread->m_status = Playback_STOP_PLAY_FILE_TEMP;
 	  g_cs.m_last_live_play_seq = g_cs.m_frame_counter;
-	  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
-	  return 0;
+
+	  g_cs.m_playback_thread->m_start_play_frame_no_begin = 0;
+
+	  g_cs.m_playback_thread->m_last_status = Pb_STATUS_NONE;
+	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_CAMERAS;
   }
 
-  int32_t forward_play_temp() {
+  int32_t play_forward(const int32_t play_frame_rate, const int32_t sample_gap) {
 	  // Your implementation goes here
-	  printf("forward_play_temp\n");
-	  g_cs.m_playback_thread->m_status = Playback_PLAYING_FILE_TEMP;
-	  return 0;
-  }
-
-  int32_t start_backward_play_temp(const int32_t play_frame_rate, const int32_t sample_gap) {
-	  // Your implementation goes here
-	  
+	  printf("play_forward\n");
+	  calc_frame_rate_some(play_frame_rate, sample_gap);
 	  g_cs.m_snd_live_frame_flag = FALSE;
+	  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
+	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_FORWARD;
+  }
 
-	  calc_frame_rate_some_temp(play_frame_rate,sample_gap);
+  int32_t play_backward(const int32_t play_frame_rate, const int32_t sample_gap) {
+	  // Your implementation goes here
+	  printf("play_backward\n");
+	  calc_frame_rate_some(play_frame_rate, sample_gap);
+	  g_cs.m_snd_live_frame_flag = FALSE;
 	  if (g_cs.m_playback_thread->m_start_play_frame_no_begin == 0) {
 		  g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_file_storage_object_for_read->m_frame_offset_map.rbegin()->first - 1;/*g_cs.m_frame_counter - 1;*/
 	  }
 	  else {
-		   g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq-1;//update m_start_play_frame_no as m_last_snd_seq-1
+		  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
 	  }
-	  g_cs.m_playback_thread->m_is_forward = FALSE;
+	 
 	  printf("start_backward_play_temp m_start_play_frame_no %d, m_start_play_frame_no_begin %d\n", g_cs.m_playback_thread->m_start_play_frame_no, g_cs.m_playback_thread->m_start_play_frame_no_begin);
-
 	  fprintf(stdout, "%s map size(%lld),beg(seq:%lld,offset:%lld),end(seq:%lld,offset:%lld)\n", __FUNCTION__, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.size(), \
 		  g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.begin()->first, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.begin()->second, \
 		  g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.rbegin()->first, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.rbegin()->second);
-	  return g_cs.m_playback_thread->m_status = Playback_START_PLAY_FILE_TEMP;
+	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_BACKWARD;
   }
 
-  int32_t stop_backward_play_temp() {
+  int32_t play_from_a2b(const int64_t from, const int64_t to) {
 	  // Your implementation goes here
-	  printf("stop_backward_play_temp\n");
-	  g_cs.m_snd_live_frame_flag = TRUE;
-	  g_cs.m_playback_thread->m_status = Playback_STOP_PLAY_FILE_TEMP;
-	  g_cs.m_last_live_play_seq = g_cs.m_frame_counter;
+	  printf("play_from_a2b %d %d\n", from ,to);
+	  g_cs.m_playback_thread->m_from_a2b_to = to;
+	  g_cs.m_playback_thread->m_from_a2b_from = g_cs.m_playback_thread->m_from_a2b_index = from;
 
-	  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq-1;//update m_start_play_frame_no as m_last_snd_seq-1
-	  return 0;
+	  g_cs.m_playback_thread->m_toward_2b = TRUE;
+	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_FROM_A2B_LOOP;
   }
-
-  int32_t backward_play_temp() {
-	  // Your implementation goes here
-	  printf("backward_play_temp\n");
-	  g_cs.m_playback_thread->m_status = Playback_PLAYING_FILE_TEMP;
-	  return 0;
-  }  
-
-
 
 
   double get_camera_grab_fps() {

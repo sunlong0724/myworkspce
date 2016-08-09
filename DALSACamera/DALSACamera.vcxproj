@@ -81,6 +81,7 @@
     <IntDir>$(OutDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);DALSA\Classes\Basic;DALSA\Include;..\std</IncludePath>
     <LibraryPath>DALSA\x64;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

@@ -16,6 +16,8 @@ using namespace ::apache::thrift::server;
 using boost::shared_ptr;
 
 using namespace  ::hawkeye;
+extern std::map<std::string, std::vector<double>>  GetDiskInfo();
+extern int getCpuUsage();
 
 class AgentServerServiceHandler : virtual public AgentServerServiceIf {
  public:
@@ -38,7 +40,7 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 	  si.dwFlags = STARTF_USESHOWWINDOW;
 	  si.wShowWindow = TRUE;
 	  fprintf(stdout, "%s cmd:%s\n", __FUNCTION__, cmdline.c_str());
-	  BOOL bRet = ::CreateProcess(NULL, (char*)cmdline.c_str(), NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi);
+	  BOOL bRet = ::CreateProcess(NULL, (char*)cmdline.c_str(), NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi);
 	  int error = GetLastError();
 	  if (bRet) {
 		  ::CloseHandle(pi.hThread);
@@ -70,6 +72,19 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 
 	  CloseHandle(hPrc);
 	  return TRUE;
+  }
+
+
+  void get_disk_info(std::map<std::string, std::vector<double> > & _return) {
+	  // Your implementation goes here
+	  printf("get_disk_info\n");
+	  _return = GetDiskInfo();
+  }
+
+  int32_t get_cpu_usage() {
+	  // Your implementation goes here
+	  printf("get_cpu_usage\n");
+	  return getCpuUsage();
   }
 
 };

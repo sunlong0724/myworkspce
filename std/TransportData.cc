@@ -95,18 +95,13 @@ int64_t CSendData::do_send(char* data, int64_t data_len) {
 }
 
 
-void CRecvData::init(std::string& server_ip, uint16_t port) {
+void CRecvData::init(std::string& server_ip, uint16_t port, int64_t frame_gap) {
 	m_server_ip = server_ip;
 	m_port = port;
-	m_flag = FALSE;
 	m_status = 0;
-	m_elem_size = 0;
-}
-void CRecvData::set_parameters(int32_t elem_size, int64_t frame_gap) {
-	m_elem_size = elem_size;
 	m_frame_gap = frame_gap;
-	m_flag = TRUE;
 }
+
 
 void CRecvData::set_sink_data_callback(SinkDataCallback cb, void* context) {
 	m_cb = cb;
@@ -114,12 +109,10 @@ void CRecvData::set_sink_data_callback(SinkDataCallback cb, void* context) {
 }
 
 void CRecvData::run() {
-	while (!m_exited) {
-		if (m_flag) {
-			m_flag = FALSE;
-			m_buffer.resize(m_elem_size, 0x00);
-		}
 
+	m_buffer_len = ONE_MB * 3;
+	m_buffer = new char[m_buffer_len];
+	while (!m_exited) {
 		if (0 == m_status) {
 			m_zmq_ctx = zmq_ctx_new();
 			zmq_ctx_set(m_zmq_ctx, ZMQ_IO_THREADS, ZMQ_IO_THREADS_USED);
@@ -149,12 +142,12 @@ void CRecvData::run() {
 		zmq_close(m_zmq_sock);
 	if (m_zmq_ctx)
 		zmq_ctx_destroy(m_zmq_ctx);
+
+	delete[] m_buffer;
 }
 int64_t CRecvData::do_recv() {
-	if (m_buffer.size() <= 0) {
-		return -1;
-	}
-	int ret = zmq_recv(m_zmq_sock, (void*)m_buffer.data(), m_buffer.size(), ZMQ_DONTWAIT);
+
+	int ret = zmq_recv(m_zmq_sock, m_buffer, m_buffer_len, ZMQ_DONTWAIT);
 	if (ret == -1) {
 		int err = zmq_errno();
 		if (err == EAGAIN) {
@@ -187,9 +180,9 @@ int64_t CRecvData::do_recv() {
 	m_last_recv_seq = recv_seq;
 
 	if (m_cb)
-		m_cb((unsigned char*)m_buffer.data(), m_buffer.size(), m_cb_ctx);
+		m_cb((unsigned char*)m_buffer, ret, m_cb_ctx);
 
 	m_soft_recv_counter.statistics(__FUNCTION__, FALSE);
-	return m_buffer.size();
+	return ret;
 }
 
