@@ -95,11 +95,13 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t stop_grab() {
 	  // Your implementation goes here
-	  printf("stop_grab\n");
+	  printf("1stop_grab\n");
 	  g_cs.m_playback_thread->m_status = Pb_STATUS_NONE;
-
+	  printf("2stop_grab \n");
 	  g_cs.m_camera->Stop();
+	  printf("3stop_grab \n");
 	  g_cs.m_camera->DestroyOtherObjects();
+	  printf("4stop_grab \n");
 	  return 1;
   }
 
@@ -136,6 +138,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	  calc_frame_rate_some(play_frame_rate, sample_gap);
 	  g_cs.m_snd_live_frame_flag = FALSE;
 	  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
+	  g_cs.m_playback_thread->m_last_status = Pb_STATUS_NONE;
 	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_FORWARD;
   }
 
@@ -155,6 +158,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	  fprintf(stdout, "%s map size(%lld),beg(seq:%lld,offset:%lld),end(seq:%lld,offset:%lld)\n", __FUNCTION__, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.size(), \
 		  g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.begin()->first, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.begin()->second, \
 		  g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.rbegin()->first, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.rbegin()->second);
+	  g_cs.m_playback_thread->m_last_status = Pb_STATUS_NONE;
 	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_BACKWARD;
   }
 
@@ -165,6 +169,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	  g_cs.m_playback_thread->m_from_a2b_from = g_cs.m_playback_thread->m_from_a2b_index = from;
 
 	  g_cs.m_playback_thread->m_toward_2b = TRUE;
+	  g_cs.m_playback_thread->m_last_status = Pb_STATUS_NONE;
 	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_FROM_A2B_LOOP;
   }
 

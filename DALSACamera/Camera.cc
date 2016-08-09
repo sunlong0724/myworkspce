@@ -22,6 +22,7 @@ CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffer
 	m_AcqDevice = new SapAcqDevice(loc);
 	m_Buffers = new SapBufferWithTrash(5, m_AcqDevice);
 	m_ColorConv = new SapColorConversion(m_Buffers);
+	fprintf(stdout, "%s 3 %p\n", __FUNCTION__, m_ColorConv);
 	m_Xfer = new SapAcqDeviceToBuf(m_AcqDevice, m_Buffers, XferCallback, this);
 	m_Pro = new SapMyProcessing(m_Buffers, m_ColorConv, ProCallback, this);
 	memset(m_UserDefinedName, 0x00, sizeof m_UserDefinedName);
@@ -65,7 +66,9 @@ void CCamera::Start() {
 
 void CCamera::Stop() {
 	if (m_grabbing) {
+		fprintf(stdout, "1%s!\n", __FUNCTION__);
 		m_Xfer->Abort();
+		fprintf(stdout, "2%s!\n", __FUNCTION__);
 		m_grabbing = FALSE;
 	}
 }
@@ -159,19 +162,19 @@ void CCamera::DestroyDevice() {
 void CCamera::DestroyOtherObjects() {
 	// Destroy processing object
 	if (m_Pro && *m_Pro) m_Pro->Destroy();
-
+	fprintf(stdout, "%s 1\n", __FUNCTION__);
 	// Destroy transfer object
 	if (m_Xfer && *m_Xfer) m_Xfer->Destroy();
-
+	fprintf(stdout, "%s 2\n", __FUNCTION__);
 	// Destroy view object
 	//if (m_View && *m_View) m_View->Destroy();
-
+	fprintf(stdout, "%s 3 %p\n", __FUNCTION__, m_ColorConv);
 	// Destroy bayer object
 	if (m_ColorConv && *m_ColorConv) m_ColorConv->Destroy();
-
+	fprintf(stdout, "%s 4\n", __FUNCTION__);
 	// Destroy buffer object
 	if (m_Buffers && *m_Buffers) m_Buffers->Destroy();
-
+	fprintf(stdout, "%s 5\n", __FUNCTION__);
 }
 
 void CCamera::RegisterConnectionEventCallback() {
