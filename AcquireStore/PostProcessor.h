@@ -127,12 +127,51 @@ private:
 		}
 	}
 
+public:
+	void resized_iamge(unsigned char* src_buffer,int src_w, int src_h, unsigned char* resized_buffer) {
+		int k = 0;
+		memcpy(resized_buffer, src_buffer, FRAME_DATA_START);
+		unsigned char*p = (unsigned char*)(&resized_buffer[FRAME_DATA_START]);
+
+		unsigned char* src = (unsigned char*)(&src_buffer[FRAME_DATA_START]);
+		for (int i = 0; i < src_h / 4; ++i) {
+			if (i % 2 == 0) {
+				for (int j = 0; j < src_w / 4; ++j) {
+					if (j % 2 == 0) {
+						//R
+						p[k++] = src[src_w*(2 + i * 4) + (j * 4 + 2)];
+					}
+					else {
+						//G = (G1+G2)/2
+						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)] + src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
+					}
+				}
+			}
+			else {
+				for (int j = 0; j < src_w / 4; ++j) {
+					if (j % 2 == 0) {
+						//G = (G1+G2)/2
+						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)] + src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
+					}
+					else {
+						//B
+						p[k++] = src[src_w*(1 + i * 4) + (j * 4 + 2)];
+					}
+				}
+			}
+		}
+	}
+
+public:
+	std::vector<char>   m_buffer_resized;
+	uint16_t			m_image_resized_w;
+	uint16_t			m_image_resized_h;
 private:
 	uint16_t			m_image_w;
 	uint16_t			m_image_h;
 
-	uint16_t			m_image_resized_w;
-	uint16_t			m_image_resized_h;
+	//uint16_t			m_image_resized_w;
+	//uint16_t			m_image_resized_h;
 
 	BOOL				m_set_parameter_flag;
 
@@ -140,7 +179,8 @@ private:
 	void*				m_sink_cb_ctx;
 
 	std::vector<char>	m_buffer;
-	std::vector<char>   m_buffer_resized;
+	//std::vector<char>   m_buffer_resized;
+
 	RingBuffer			*m_ring_buffer;
 
 	IplImage*			m_bayer_image_resized;

@@ -2,7 +2,8 @@
 
 #include "defs.h"
 
-#define ZMQ_IO_THREADS_USED 2
+#define ZMQ_IO_THREADS_USED 1
+#define ZMQ_HIGHT_WATER_MARKER 1
 
 void CSendData::init(uint16_t port) {
 	m_port = port;
@@ -15,16 +16,22 @@ void CSendData::set_parameters(int32_t elem_size) {
 }
 
 int64_t CSendData::send(char* data, int64_t data_len) {
+	if (TRUE == m_flag) {
+		return 0;
+	}
 	return RingBuffer_write(m_ring_buffer, data, data_len);
 }
 
 void CSendData::run() {
 	timeBeginPeriod(1);
 
-
+	
 	while (!m_exited) {
 		if (m_flag) {
 			m_buffer.resize(m_elem_size, 0x00);
+			if (m_ring_buffer)
+				RingBuffer_destroy(m_ring_buffer);
+			m_ring_buffer = RingBuffer_create(m_elem_size * 1);
 			m_flag = FALSE;
 		}
 
@@ -32,14 +39,14 @@ void CSendData::run() {
 			m_zmq_ctx = zmq_ctx_new();
 			zmq_ctx_set(m_zmq_ctx, ZMQ_IO_THREADS, ZMQ_IO_THREADS_USED);
 			std::string addr("tcp://");
-			int high_water_mark = 9;
+			int high_water_mark = ZMQ_HIGHT_WATER_MARKER;
 
 			addr.append("*:" + std::to_string(m_port));
 			m_zmq_sock = zmq_socket(m_zmq_ctx, ZMQ_PUB);
 			zmq_setsockopt(m_zmq_sock, ZMQ_SNDHWM, &high_water_mark, sizeof high_water_mark);
 
 			zmq_bind(m_zmq_sock, addr.c_str());
-			m_ring_buffer = RingBuffer_create(ONE_MB * MAX_CACHE_IMAGE_COUNT);
+			m_ring_buffer = RingBuffer_create(m_elem_size*1);
 			m_status = 1;
 		}
 
@@ -120,7 +127,7 @@ void CRecvData::run() {
 
 			addr.append(m_server_ip + ":" + std::to_string(m_port));
 			m_zmq_sock = zmq_socket(m_zmq_ctx, ZMQ_SUB);
-			int high_water_mark = 9;
+			int high_water_mark = ZMQ_HIGHT_WATER_MARKER;
 			zmq_setsockopt(m_zmq_sock, ZMQ_RCVHWM, &high_water_mark, sizeof high_water_mark);
 			
 			int ret = zmq_connect(m_zmq_sock, addr.c_str());

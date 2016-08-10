@@ -30,3 +30,4 @@
 *.bak
 /DALSACamera/Release
 */log.txt
+/DeckLink

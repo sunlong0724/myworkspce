@@ -7,9 +7,14 @@
 #include "SinkBayerDatasCallbackImpl.h"
 
 #include "PlaybackCtrl.h"
+#include "defs.h"
 
 extern CustomStruct g_cs;
 extern int processor_sink_data_cb(unsigned char* data, int data_len, void* ctx);
+
+
+
+
 
 CPlaybackCtrlThread::CPlaybackCtrlThread() : m_start_play_frame_no(-1), m_status(Pb_STATUS_NONE){
 
@@ -53,7 +58,7 @@ void CPlaybackCtrlThread::run() {
 			if (nByteRead < 0) {
 				//this frame was overwrittern!!!
 				if (Pb_STATUS_PLAY_FORWARD == m_status) {
-					if (m_start_play_frame_no + g_cs.m_play_frame_gap < m_start_play_frame_no_begin) {
+					if (m_start_play_frame_no + g_cs.m_play_frame_gap < g_cs.m_frame_counter /*m_start_play_frame_no_begin*/) {
 						m_start_play_frame_no += g_cs.m_play_frame_gap;
 					}
 					else {
@@ -74,8 +79,15 @@ void CPlaybackCtrlThread::run() {
 				continue;
 			}
 			else {
+				//if (g_cs.m_processor_data_flag) {
+				//	g_cs.m_post_processor->writeImageData(buffer_io.data(), buffer_io.size());
+				//}
 				if (g_cs.m_processor_data_flag) {
-					g_cs.m_post_processor_thread->writeImageData(buffer_io.data(), buffer_io.size());
+					if (g_cs.m_post_processor->m_buffer_resized.size() != GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h))
+						g_cs.m_post_processor->m_buffer_resized.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h), 0x00);
+					//g_cs.m_post_processor_thread->writeImageData(buffer_io.data(), buffer_io.size());
+					g_cs.m_post_processor->resized_iamge((unsigned char*)buffer_io.data(), g_cs.m_image_w, g_cs.m_image_h, (unsigned char*)g_cs.m_post_processor->m_buffer_resized.data());
+					processor_sink_data_cb((unsigned char*)g_cs.m_post_processor->m_buffer_resized.data(), g_cs.m_post_processor->m_buffer_resized.size(), &g_cs);
 				}
 				else {
 					processor_sink_data_cb((unsigned char*)buffer_io.data(), buffer_io.size(), &g_cs);
@@ -105,8 +117,10 @@ void CPlaybackCtrlThread::run() {
 			cvShowImage("win_playback_ctrl", g_bayer);
 #endif
 			if (g_cs.m_processor_data_flag) {
-				PRINT_FRAME_INFO(buffer_io.data());
-				g_cs.m_post_processor_thread->writeImageData(buffer_io.data(), buffer_io.size());
+				if (g_cs.m_post_processor->m_buffer_resized.size() != GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h))
+					g_cs.m_post_processor->m_buffer_resized.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h), 0x00);
+				g_cs.m_post_processor->resized_iamge((unsigned char*)buffer_io.data(), g_cs.m_image_w, g_cs.m_image_h, (unsigned char*)g_cs.m_post_processor->m_buffer_resized.data());
+				processor_sink_data_cb((unsigned char*)g_cs.m_post_processor->m_buffer_resized.data(), g_cs.m_post_processor->m_buffer_resized.size(), &g_cs);
 			}
 			else {
 				processor_sink_data_cb((unsigned char*)buffer_io.data(), buffer_io.size(), &g_cs);
@@ -155,7 +169,11 @@ void CPlaybackCtrlThread::run() {
 			}
 			else {
 				if (g_cs.m_processor_data_flag) {
-					g_cs.m_post_processor_thread->writeImageData(buffer_io.data(), buffer_io.size());
+					if (g_cs.m_post_processor->m_buffer_resized.size() != GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h))
+						g_cs.m_post_processor->m_buffer_resized.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h), 0x00);
+					//g_cs.m_post_processor_thread->writeImageData(buffer_io.data(), buffer_io.size());
+					g_cs.m_post_processor->resized_iamge((unsigned char*)buffer_io.data(), g_cs.m_image_w, g_cs.m_image_h, (unsigned char*)g_cs.m_post_processor->m_buffer_resized.data());
+					processor_sink_data_cb((unsigned char*)g_cs.m_post_processor->m_buffer_resized.data(), g_cs.m_post_processor->m_buffer_resized.size(), &g_cs);
 				}
 				else {
 					processor_sink_data_cb((unsigned char*)buffer_io.data(), buffer_io.size(), &g_cs);

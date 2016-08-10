@@ -198,7 +198,7 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 
 	g_cs.m_file_storage_object_for_write_thread = new CFileStorage();
 	g_cs.m_playback_thread = new CPlaybackCtrlThread();
-	g_cs.m_post_processor_thread = new CPostProcessor();
+	g_cs.m_post_processor = new CPostProcessor();
 	g_cs.m_snd_data_thread = new CSendData();
 	g_cs.m_file_storage_object_for_read = new CFileStorage();
 
@@ -214,6 +214,7 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	//do not start here!!! g_cs.m_post_processor_thread->start();
 
 	g_cs.m_snd_data_thread->init(g_cs.m_data_port);
+	g_cs.m_snd_data_thread->set_parameters(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h));
 	g_cs.m_snd_data_thread->start();
 
 	std::thread cmd_thread(cmd_run,handler, server_port);
@@ -231,7 +232,7 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	delete g_cs.m_file_storage_object_for_write_thread;
 	delete g_cs.m_file_storage_object_for_read;
 	delete g_cs.m_snd_data_thread;
-	delete g_cs.m_post_processor_thread;
+	delete g_cs.m_post_processor;
 	delete g_cs.m_playback_thread;
 
 	timeEndPeriod(1);

@@ -61,18 +61,18 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	g_cs.m_play_frame_w = w;
 	g_cs.m_play_frame_h = h;
 
-	g_cs.m_processor_data_flag = (g_cs.m_image_w != g_cs.m_play_frame_w || g_cs.m_image_h != g_cs.m_play_frame_h);
-	if (g_cs.m_processor_data_flag) {
-		g_cs.m_post_processor_thread->set_parameters(g_cs.m_image_w, g_cs.m_image_h, g_cs.m_play_frame_w, g_cs.m_play_frame_h);
-		g_cs.m_post_processor_thread->set_sink_callback(processor_sink_data_cb, &g_cs);
-		g_cs.m_post_processor_thread->start();
-	}
-	else {
-		g_cs.m_post_processor_thread->stop();
-	}
-
+	BOOL flag = (g_cs.m_image_w != g_cs.m_play_frame_w || g_cs.m_image_h != g_cs.m_play_frame_h);
 	g_cs.m_snd_data_thread->set_parameters(GET_IMAGE_BUFFER_SIZE(w, h));
+	g_cs.m_processor_data_flag = flag;
 
+	//if (g_cs.m_processor_data_flag) {
+	//	g_cs.m_post_processor_thread->set_parameters(g_cs.m_image_w, g_cs.m_image_h, g_cs.m_play_frame_w, g_cs.m_play_frame_h);
+	//	g_cs.m_post_processor_thread->set_sink_callback(processor_sink_data_cb, &g_cs);
+	//	g_cs.m_post_processor_thread->start();
+	//}
+	//else {
+	//	g_cs.m_post_processor_thread->stop();
+	//}
 	return 1;
   }
 
@@ -107,7 +107,9 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t play_pause() {
 	  // Your implementation goes here
+	  printf("play_pause m_last_snd_seq %d\n", g_cs.m_snd_data_thread->m_last_snd_seq);
 	  printf("play_pause %d %d\n", g_cs.m_playback_thread->m_status, g_cs.m_playback_thread->m_last_status);
+	  g_cs.m_snd_live_frame_flag = FALSE;
 	  if (g_cs.m_playback_thread->m_last_status == Pb_STATUS_NONE) {
 		  g_cs.m_playback_thread->m_last_status = g_cs.m_playback_thread->m_status;
 		  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_PAUSE;
@@ -144,14 +146,16 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t play_backward(const int32_t play_frame_rate, const int32_t sample_gap) {
 	  // Your implementation goes here
-	  printf("play_backward\n");
+	  printf("play_backward m_last_snd_seq %d\n", g_cs.m_snd_data_thread->m_last_snd_seq);
 	  calc_frame_rate_some(play_frame_rate, sample_gap);
 	  g_cs.m_snd_live_frame_flag = FALSE;
-	  if (g_cs.m_playback_thread->m_start_play_frame_no_begin == 0) {
-		  g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_file_storage_object_for_read->m_frame_offset_map.rbegin()->first - 1;/*g_cs.m_frame_counter - 1;*/
-	  }
-	  else {
-		  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
+	  //if (g_cs.m_playback_thread->m_start_play_frame_no_begin == 0) {
+		 // g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_file_storage_object_for_read->m_frame_offset_map.rbegin()->first - 1;/*g_cs.m_frame_counter - 1;*/
+	  //}
+	  //else 
+	  {
+		  //g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
+		  g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
 	  }
 	 
 	  printf("start_backward_play_temp m_start_play_frame_no %d, m_start_play_frame_no_begin %d\n", g_cs.m_playback_thread->m_start_play_frame_no, g_cs.m_playback_thread->m_start_play_frame_no_begin);

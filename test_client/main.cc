@@ -20,26 +20,20 @@ BOOL				g_mode_ab_for_b_pressed = FALSE;
 int recv_data_cb(unsigned char* data, int data_len, void* ctx) {
 	memcpy(&g_recv_frame_no, &data[FRAME_SEQ_START], sizeof int64_t);
 	//fprintf(stdout, "%s recv frame no:%lld\n", __FUNCTION__,frame_no);
-	if (NULL == g_bayer_image ) {
-		g_bayer_image = cvCreateImageHeader(cvSize(g_width, g_height), 8, 1);
-		g_rgb_image = cvCreateImage(cvSize(g_width, g_height), 8, 3);
-	}
+	int width = g_width;
+	int height = g_height;
 
-	if (g_bayer_image->imageSize != data_len- FRAME_DATA_START) {
-		cvReleaseImageHeader(&g_bayer_image);
-		cvReleaseImage(&g_rgb_image);
+	
+	g_bayer_image = cvCreateImageHeader(cvSize(width, height), 8, 1);
+	g_rgb_image = cvCreateImage(cvSize(width,height), 8, 3);
 
-		g_bayer_image = cvCreateImageHeader(cvSize(g_width, g_height), 8, 1);
-		g_rgb_image = cvCreateImage(cvSize(g_width, g_height), 8, 3);
-	}
-
-	if (data_len < g_width * g_height)
-		return -1;
-
-	cvSetData(g_bayer_image, &data[FRAME_DATA_START], g_width);
+	cvSetData(g_bayer_image, &data[FRAME_DATA_START], width);
 	cvCvtColor(g_bayer_image, g_rgb_image, CV_BayerRG2RGB);
 	cvShowImage("mywin0", g_rgb_image);
 	cvWaitKey(1);
+
+	cvReleaseImageHeader(&g_bayer_image);
+	cvReleaseImage(&g_rgb_image);
 	return 0;
 }
 
@@ -100,6 +94,7 @@ void run() {
 		switch (ci)
 		{
 		case 'p'://pause
+			printf("pause frame no %d\n", g_recv_frame_no);
 			client.play_pause();
 			break;
 		case 'f'://forward
@@ -115,7 +110,7 @@ void run() {
 			 client.set_play_frame_resolution(g_width, g_height);
 			client.play_live(30, 6);
 			break;
-		case 'L'://live
+		case 'k'://live
 			g_frame_a = g_frame_b = 0;
 			g_width = 320;
 			g_height = 180;
