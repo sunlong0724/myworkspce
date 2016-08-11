@@ -79,9 +79,13 @@ void CPlaybackCtrlThread::run() {
 				continue;
 			}
 			else {
+				//if (g_cs.m_processor_data_flag) {
+				//	g_cs.m_post_processor->writeImageData(buffer_io.data(), buffer_io.size());
+				//}
 				if (g_cs.m_processor_data_flag) {
 					if (g_cs.m_post_processor->m_buffer_resized.size() != GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h))
 						g_cs.m_post_processor->m_buffer_resized.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h), 0x00);
+					//g_cs.m_post_processor_thread->writeImageData(buffer_io.data(), buffer_io.size());
 					g_cs.m_post_processor->resized_iamge((unsigned char*)buffer_io.data(), g_cs.m_image_w, g_cs.m_image_h, (unsigned char*)g_cs.m_post_processor->m_buffer_resized.data());
 					processor_sink_data_cb((unsigned char*)g_cs.m_post_processor->m_buffer_resized.data(), g_cs.m_post_processor->m_buffer_resized.size(), &g_cs);
 				}
@@ -167,6 +171,7 @@ void CPlaybackCtrlThread::run() {
 				if (g_cs.m_processor_data_flag) {
 					if (g_cs.m_post_processor->m_buffer_resized.size() != GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h))
 						g_cs.m_post_processor->m_buffer_resized.resize(GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w, g_cs.m_play_frame_h), 0x00);
+					//g_cs.m_post_processor_thread->writeImageData(buffer_io.data(), buffer_io.size());
 					g_cs.m_post_processor->resized_iamge((unsigned char*)buffer_io.data(), g_cs.m_image_w, g_cs.m_image_h, (unsigned char*)g_cs.m_post_processor->m_buffer_resized.data());
 					processor_sink_data_cb((unsigned char*)g_cs.m_post_processor->m_buffer_resized.data(), g_cs.m_post_processor->m_buffer_resized.size(), &g_cs);
 				}

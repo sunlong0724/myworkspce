@@ -116,7 +116,17 @@ void run() {
 			g_height = 180;
 			client.set_play_frame_resolution(g_width, g_height);
 			client.play_live(30, 6);
-
+			break;
+		case 's'://live
+			g_width = 1280;
+			g_height = 720;
+			client.set_play_frame_resolution(g_width, g_height);
+			break;
+		case 'd'://live
+			g_width = 320;
+			g_height = 180;
+			client.set_play_frame_resolution(g_width, g_height);
+			break;
 		case ' '://abmode
 			if (0 == g_frame_a) {
 				g_frame_a = g_recv_frame_no;

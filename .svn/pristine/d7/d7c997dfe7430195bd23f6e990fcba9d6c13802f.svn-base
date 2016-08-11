@@ -22,6 +22,7 @@ CCamera::CCamera(const char* serverName, int index) :m_AcqDevice(NULL), m_Buffer
 	m_AcqDevice = new SapAcqDevice(loc);
 	m_Buffers = new SapBufferWithTrash(5, m_AcqDevice);
 	m_ColorConv = new SapColorConversion(m_Buffers);
+	fprintf(stdout, "%s 3 %p\n", __FUNCTION__, m_ColorConv);
 	m_Xfer = new SapAcqDeviceToBuf(m_AcqDevice, m_Buffers, XferCallback, this);
 	m_Pro = new SapMyProcessing(m_Buffers, m_ColorConv, ProCallback, this);
 	memset(m_UserDefinedName, 0x00, sizeof m_UserDefinedName);
@@ -167,7 +168,7 @@ void CCamera::DestroyOtherObjects() {
 	fprintf(stdout, "%s 2\n", __FUNCTION__);
 	// Destroy view object
 	//if (m_View && *m_View) m_View->Destroy();
-	fprintf(stdout, "%s 3\n", __FUNCTION__);
+	fprintf(stdout, "%s 3 %p\n", __FUNCTION__, m_ColorConv);
 	// Destroy bayer object
 	if (m_ColorConv && *m_ColorConv) m_ColorConv->Destroy();
 	fprintf(stdout, "%s 4\n", __FUNCTION__);
@@ -189,7 +190,6 @@ BOOL CCamera::FindCamera(std::map<std::string, std::map<int32_t, std::string>>  
 		return FALSE;
 	}
 
-	printf("%s GetServerCount:%d\n",__FUNCTION__, serverCount);
 	//cameras->clear();
 	for (int serverIndex = 1; serverIndex < serverCount; ++serverIndex) {
 		char serverName[CORSERVER_MAX_STRLEN];
@@ -223,6 +223,7 @@ BOOL CCamera::FindCamera(std::map<std::string, std::map<int32_t, std::string>>  
 				}
 			}
 			delete camera;
+
 		}
 	}
 
@@ -613,22 +614,19 @@ void SapManCallbackMy(SapManCallbackInfo *pInfo) {
 	int type = pInfo->GetEventType();
 	CCamera* camera = (CCamera*)pInfo->GetContext();
 
-	char serverName[100];
+	fprintf(stdout, "connect status :%d\n", type);
+
+	char serverName[30];
 	SapManager::GetServerName(pInfo->GetServerIndex(), serverName, sizeof(serverName));
 
 	if (pInfo->GetResourceIndex() != camera->m_index || strcmp(serverName, camera->m_AcqServerName) != 0) {
 		return;
 	}
 
-	fprintf(stdout, "Camera(%d,%s) status:%d.(Disconnected(%d),Connected(%d))\n", pInfo->GetResourceIndex(), serverName, type, SapManager::EventServerDisconnected, SapManager::EventServerConnected);
-
 	if (type == SapManager::EventServerDisconnected) {
 		camera->Stop();
 	}
 	else if (type == SapManager::EventServerConnected) {
-		char val[30] = {0};
-		camera->GetCurrentIPAddress(val, sizeof val);
-		fprintf(stdout, "%s %s Connected!!!\n", __FUNCTION__, val);
 		if (camera->m_last_is_connected) {
 			fprintf(stdout, "%s m_last_is_connected %d\n", __FUNCTION__, camera->m_last_is_connected);
 		}
@@ -636,9 +634,6 @@ void SapManCallbackMy(SapManCallbackInfo *pInfo) {
 			fprintf(stdout, "%s m_last_is_grabbing %d\n", __FUNCTION__, camera->m_last_is_grabbing);
 			camera->Start();
 		}
-	}
-	else {
-		fprintf(stdout, "#######%s status %d\n", __FUNCTION__, type);
 	}
 }
 

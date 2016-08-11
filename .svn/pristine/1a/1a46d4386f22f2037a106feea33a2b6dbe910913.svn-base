@@ -100,41 +100,63 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	long long raw_file_max_size_in_GB = 10;
 	std::string   data_file_name;
 
+	//Read Config
+
 	//Parameters 
 	if (argc >= 2) {//thrift server port
 		server_port = ::atoi(argv[1]);
 		fprintf(stdout, "server_port(%d)!\n", server_port);
+		Parameters_map["server_port"] = std::to_string(server_port);
 	}
 	
 	if (argc >= 3) {//data port 
 		data_port = ::atoi(argv[2]);
 		fprintf(stdout, "data_port(%d)!\n", data_port);
+		Parameters_map["data_port"] = std::to_string(data_port);
 	}
 
 	if (argc >= 4) {//camera_ip
 		camera_ip = argv[3];
 		fprintf(stdout, "camera_ip(%s)!\n", camera_ip.c_str());
+		Parameters_map["camera_ip"] = camera_ip;
 	}
 
 	if (argc >= 5) {//raw_file_max_size in GB
 		raw_file_max_size_in_GB = ::atoll(argv[4]);
 		fprintf(stdout, "raw_file_max_size_in_GB(%d)!\n", raw_file_max_size_in_GB);
+		Parameters_map["raw_file_max_size_in_GB"] = std::to_string(raw_file_max_size_in_GB);
 	}
 
 	if (argc >= 6) {
 		data_file_name.assign(argv[5]);
 		fprintf(stdout, "data_file_name(%s)!\n", data_file_name.c_str());
+		Parameters_map["data_file_name"] = data_file_name;
+	}
+
+	//save config;
+	if (Parameters_map.size() > 0) {
+		std::ofstream ofs(camera_ip, std::ofstream::trunc | std::ofstream::out);
+		if (ofs.good()) {
+			for (auto& a : Parameters_map) {
+				std::string line;
+				line.append(a.first + "=" + a.second + "\n");
+				ofs.write(line.c_str(), line.size());
+			}
+		}
+		ofs.close();
 	}
 
 	//start Create Resource
 	std::map<std::string, std::map<int32_t, std::string>>  cameras = {};
+	fprintf(stdout, "1cameras size(%d)!\n", cameras.size());
 	CCamera::FindCamera(&cameras);
+	fprintf(stdout, "2cameras size(%d)!\n", cameras.size());
 
 	if (cameras.find(camera_ip) == cameras.end()) {
 		fprintf(stdout, "This PC has no the camera(%s)!\n", camera_ip.c_str());
 		exit(-1);
 	}
-
+	fprintf(stdout, "3cameras size(%d)!\n", cameras.size());
 	CFileStorage::m_max_file_size = raw_file_max_size_in_GB* ONE_GB;
 	PlaybackCtrlServiceHandler* handler = new PlaybackCtrlServiceHandler();
 	g_cs.m_data_port = data_port;
