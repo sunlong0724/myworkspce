@@ -31,6 +31,7 @@ public:
 	int64_t				m_from_a2b_index;
 	BOOL				m_toward_2b;
 
+	std::vector<char> buffer_io;
 	//IplImage*			g_bayer  ;
 };
 

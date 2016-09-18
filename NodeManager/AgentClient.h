@@ -66,8 +66,6 @@ private:
 	std::string						m_server_ip;
 	uint16_t						m_cmd_port;
 
-	int32_t			m_acquire_store_process_id;
-
 	ConnectStatus					m_status;
 	ConnectStatus					m_last_status;
 	ConnectedCallback				m_connect_callback;

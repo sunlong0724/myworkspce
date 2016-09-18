@@ -39,6 +39,9 @@
     <ClCompile Include="..\std\thrift\gen-cpp\AgentServerService.cpp">
       <Filter>thrift</Filter>
     </ClCompile>
+    <ClCompile Include="..\std\MyThread.cc">
+      <Filter>std</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AgentClient.h">

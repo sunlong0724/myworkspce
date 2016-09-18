@@ -18,9 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cc">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService.cpp">
       <Filter>thrift</Filter>
     </ClCompile>
@@ -36,14 +33,14 @@
     <ClCompile Include="..\std\TransportData.cc">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\std\lcthw\bstrlib.c">
-      <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\std\lcthw\ringbuffer.c">
-      <Filter>include</Filter>
-    </ClCompile>
     <ClCompile Include="..\std\ping\Ping.cc">
       <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\MyThread.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\NoLockCBuffer.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,15 +59,6 @@
     <ClInclude Include="..\std\TransportData.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\std\lcthw\bstrlib.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\lcthw\dbg.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\lcthw\ringbuffer.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="PlaybackCtrlClient.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -79,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="..\std\defs.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\std\NoLockCBuffer.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

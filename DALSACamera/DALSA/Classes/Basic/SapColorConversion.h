@@ -29,6 +29,7 @@ public:
    typedef int Align;
    enum _Align
    {
+      AlignNone = 0,
       AlignGBRG = CORCOLORCONV_ALIGN_GB_RG,
       AlignBGGR = CORCOLORCONV_ALIGN_BG_GR,
       AlignRGGB = CORCOLORCONV_ALIGN_RG_GB,
@@ -41,6 +42,7 @@ public:
    typedef int Method;
    enum _Method
    {
+      MethodNone = 0,
       Method1   = CORCOLORCONV_METHOD_1,
       Method2   = CORCOLORCONV_METHOD_2,
       Method3   = CORCOLORCONV_METHOD_3,
@@ -54,6 +56,7 @@ public:
 public:
    SapColorConversion();
    SapColorConversion(SapAcquisition *pAcq, SapBuffer* pBuffer);
+   SapColorConversion(SapAcqDevice *pAcqDevice, SapBuffer* pBuffer);
    SapColorConversion(SapBuffer *pBuffer);
    SapColorConversion(const SapColorConversion &colorConversion);
    virtual ~SapColorConversion();
@@ -78,6 +81,9 @@ public:
 
    virtual BOOL SetAcquisition(SapAcquisition *pAcq);
    SapAcquisition* GetAcquisition() const { return mp_Acq; }
+
+   virtual BOOL SetAcqDevice(SapAcqDevice *pAcqDevice);
+   SapAcqDevice* GetAcqDevice() const { return mp_AcqDevice; }
 
    virtual BOOL SetInputBuffer(SapBuffer *pBuffer);
    SapBuffer* GetInputBuffer() const { return mp_InputBuffer; }
@@ -120,6 +126,9 @@ public:
    BOOL IsAcqLut() const { return m_IsAcqLut; }
    virtual BOOL EnableLut(BOOL enable = TRUE);
 
+   // helper functions
+   static SapColorConversion::Align GetAlignModeFromAcqDevice(SapAcqDevice* pAcqDevice);
+
 protected:
    // Utility methods
    virtual void Construct(SapAcquisition *pAcq, SapBuffer *pBuffer);
@@ -149,6 +158,7 @@ protected:
 protected:
    /* resources */
    SapAcquisition *mp_Acq;
+   SapAcqDevice *mp_AcqDevice;
    SapBuffer *mp_InputBuffer;
    SapBuffer *mp_OutputBuffer;
    SapBufferRoi *mp_BufferRoi;

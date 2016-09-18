@@ -7,6 +7,7 @@ struct MinMaxStruct {
 
 service PlaybackCtrlService{
 
+//client1
  i32					get_data_port();
  i32					set_play_frame_rate(1: i32 play_frame_rate, 2: i32 sample_gap),
  i32					set_play_frame_resolution(1: i32 w, 2: i32 h),
@@ -20,11 +21,18 @@ service PlaybackCtrlService{
  i32					play_forward(1: i32 play_frame_rate, 2: i32 sample_gap),
  i32					play_backward(1: i32 play_frame_rate, 2: i32 sample_gap),		
  i32					play_from_a2b(1: i64 from, 2: i64 to),
+
+//client2 
+ string				get_frame_data(1: i64 seq),
+ i32					get_the_frame_data(1: byte direct, 2: byte gap),
+ i64					sync_frame_by_timestamp_in_pause(1: i64	timestamp),
  
+//client3 
  double       get_camera_grab_fps(),
  double				get_soft_grab_fps(),
  double				get_soft_snd_fps(),
  double       get_file_write_fps(),
+ i32					kill_myself(),
  
  i32 					set_exposure_time(1: double microseconds),
  i32 					set_gain_by_sensor_all(1: double gain),

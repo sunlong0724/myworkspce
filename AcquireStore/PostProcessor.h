@@ -42,7 +42,7 @@ protected:
 		
 
 		int64_t	s = GET_IMAGE_BUFFER_SIZE(m_image_w, m_image_h);
-		m_ring_buffer = RingBuffer_create(s * 1);
+		m_ring_buffer = RingBuffer_create(s , 1);
 		m_buffer.resize(s, 0x00);
 
 		while (!m_exited) {
@@ -64,8 +64,6 @@ protected:
 				continue;
 			}
 
-			resized_iamge();
-
 			if (m_sink_cb) {
 				m_sink_cb((unsigned char*)m_buffer_resized.data(), m_buffer_resized.size(), m_sink_cb_ctx);
 			}
@@ -77,55 +75,55 @@ protected:
 	}
 
 private:
-	//RGRG	RGRG RGRG RGRG RGRG RGRG
-	//GBGB	GBGB GBGB GBGB GBGB GBGB
-	//RGRG	RGRG RGRG RGRG RGRG RGRG
-	//GBGB	GBGB GBGB GBGB GBGB GBGB
+	//RGRG	RGRG 
+	//GBGB	GBGB 
+	//RGRG	RGRG 
+	//GBGB	GBGB 
 
-	//RGRG	RGRG RGRG RGRG RGRG RGRG
-	//GBGB	GBGB GBGB GBGB GBGB GBGB
-	//RGRG	RGRG RGRG RGRG RGRG RGRG
-	//GBGB	GBGB GBGB GBGB GBGB GBGB
+	//RGRG	RGRG 
+	//GBGB	GBGB 
+	//RGRG	RGRG 
+	//GBGB	GBGB 
 
-	//RGRG	RGRG RGRG RGRG RGRG RGRG
-	//GBGB	GBGB GBGB GBGB GBGB GBGB
-	//RGRG	RGRG RGRG RGRG RGRG RGRG
-	//GBGB	GBGB GBGB GBGB GBGB GBGB
+	//RGRG	RGRG 
+	//GBGB	GBGB 
+	//RGRG	RGRG 
+	//GBGB	GBGB 
 
 
-	void resized_iamge() {
-		int k = 0;
-		memcpy(m_buffer_resized.data(), m_buffer.data(), FRAME_DATA_START);
-		unsigned char*p = (unsigned char*)(&m_buffer_resized[FRAME_DATA_START]);
+	//void resized_iamge() {
+	//	int k = 0;
+	//	memcpy(m_buffer_resized.data(), m_buffer.data(), FRAME_DATA_START);
+	//	unsigned char*p = (unsigned char*)(&m_buffer_resized[FRAME_DATA_START]);
 
-		unsigned char* src = (unsigned char*)(&m_buffer[FRAME_DATA_START]);
-		for (int i = 0; i < m_image_h/4; ++i) {
-			if (i % 2 == 0) {
-				for (int j = 0; j < m_image_w/4; ++j ) {
-					if (j % 2 == 0) {
-						//R
-						p[k++] = src[m_image_w*(2 + i * 4) + (j * 4 + 2)];
-					}
-					else {
-						//G = (G1+G2)/2
-						p[k++] = (src[m_image_w *(1 + i * 4) + (j * 4 + 2)] + src[m_image_w *(2 + i*4) + 4 * j + 1]) / 2;
-					}
-				}
-			}
-			else {
-				for (int j = 0; j < m_image_w / 4; ++j) {
-					if (j % 2 == 0) {
-						//G = (G1+G2)/2
-						p[k++] = (src[m_image_w *(1 + i * 4) + (j * 4 + 2)] + src[m_image_w *(2 + i * 4) + 4 * j + 1]) / 2;
-					}
-					else {
-						//B
-						p[k++] = src[m_image_w*(1 + i * 4) + (j * 4 + 2)];
-					}
-				}
-			}
-		}
-	}
+	//	unsigned char* src = (unsigned char*)(&m_buffer[FRAME_DATA_START]);
+	//	for (int i = 0; i < m_image_h/4; ++i) {
+	//		if (i % 2 == 0) {
+	//			for (int j = 0; j < m_image_w/4; ++j ) {
+	//				if (j % 2 == 0) {
+	//					//R
+	//					p[k++] = src[m_image_w*(2 + i * 4) + (j * 4 + 2)];
+	//				}
+	//				else {
+	//					//G = (G1+G2)/2
+	//					p[k++] = src[m_image_w *(1 + i * 4) + (j * 4 + 2)]/2 + src[m_image_w *(2 + i*4) + 4 * j + 1] / 2;
+	//				}
+	//			}
+	//		}
+	//		else {
+	//			for (int j = 0; j < m_image_w / 4; ++j) {
+	//				if (j % 2 == 0) {
+	//					//G = (G1+G2)/2
+	//					p[k++] = src[m_image_w *(1 + i * 4) + (j * 4 + 2)]/2 + src[m_image_w *(2 + i * 4) + 4 * j + 1] / 2;
+	//				}
+	//				else {
+	//					//B
+	//					p[k++] = src[m_image_w*(1 + i * 4) + (j * 4 + 1)];
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
 public:
 	void resized_iamge(unsigned char* src_buffer,int src_w, int src_h, unsigned char* resized_buffer) {
@@ -143,7 +141,7 @@ public:
 					}
 					else {
 						//G = (G1+G2)/2
-						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)] + src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
+						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)])/2 + (src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
 					}
 				}
 			}
@@ -151,11 +149,45 @@ public:
 				for (int j = 0; j < src_w / 4; ++j) {
 					if (j % 2 == 0) {
 						//G = (G1+G2)/2
-						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)] + src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
+						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)])/2 + (src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
 					}
 					else {
 						//B
-						p[k++] = src[src_w*(1 + i * 4) + (j * 4 + 2)];
+						p[k++] = src[src_w*(1 + i * 4) + (j * 4 + 1)];
+					}
+				}
+			}
+		}
+	}
+
+	void resized_iamge_bggr(unsigned char* src_buffer, int src_w, int src_h, unsigned char* resized_buffer) {
+		int k = 0;
+		memcpy(resized_buffer, src_buffer, FRAME_DATA_START);
+		unsigned char*p = (unsigned char*)(&resized_buffer[FRAME_DATA_START]);
+
+		unsigned char* src = (unsigned char*)(&src_buffer[FRAME_DATA_START]);
+		for (int i = 0; i < src_h / 4; ++i) {
+			if (i % 2 == 0) {
+				for (int j = 0; j < src_w / 4; ++j) {
+					if (j % 2 == 0) {
+						//B
+						p[k++] = src[src_w*(2 + i * 4) + (j * 4 + 2)];
+					}
+					else {
+						//G = (G1+G2)/2
+						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)]) / 2 + (src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
+					}
+				}
+			}
+			else {
+				for (int j = 0; j < src_w / 4; ++j) {
+					if (j % 2 == 0) {
+						//G = (G1+G2)/2
+						p[k++] = (src[src_w *(1 + i * 4) + (j * 4 + 2)]) / 2 + (src[src_w *(2 + i * 4) + 4 * j + 1]) / 2;
+					}
+					else {
+						//R
+						p[k++] = src[src_w*(1 + i * 4) + (j * 4 + 1)];
 					}
 				}
 			}

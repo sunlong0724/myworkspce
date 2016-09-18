@@ -27,6 +27,23 @@
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
 
+#define _DALSA
+#ifdef _DALSA
+//  ..\DALSACamera
+#if _DEBUG
+#pragma comment(lib, "DALSACamerad.lib")
+#else 
+#pragma comment(lib, "DALSACamera.lib")
+#endif
+#else
+#if _DEBUG
+///..\PointGreyCamera
+#pragma comment(lib, "PointGreyCamerad.lib")
+#else
+#pragma comment(lib, "PointGreyCamera.lib")
+#endif
+#endif
+
 using namespace boost::filesystem;
 using namespace boost::system;
 
@@ -34,6 +51,9 @@ using namespace boost::system;
 std::string	CFileStorage::m_file_name = "data.raw";
  long long CFileStorage::m_max_file_size = ONE_GB;
  std::map<int64_t, int64_t> CFileStorage::m_frame_offset_map = {};
+ std::map<int64_t, int64_t> CFileStorage::m_frame_timestamp_seq_map = {};
+ std::map<int64_t, int64_t> CFileStorage::m_frame_seq_timestamp_map_for_read = {};
+
 
 using namespace std;
 using namespace apache::thrift;
@@ -44,7 +64,9 @@ using namespace apache::thrift::concurrency;
 
 using namespace hawkeye;
 
-void cmd_run(PlaybackCtrlServiceHandler* h, uint16_t port) {
+std::mutex			g_resized_mutex;
+
+void cmd_run(PlaybackCtrlServiceHandler* h, TThreadPoolServer** pp_server, uint16_t port) {
 	WORD wVersionRequested;
 	WSADATA wsaData;
 	int err;
@@ -62,14 +84,16 @@ void cmd_run(PlaybackCtrlServiceHandler* h, uint16_t port) {
 	boost::shared_ptr<StdThreadFactory> threadFactory = boost::shared_ptr<StdThreadFactory>(new StdThreadFactory());
 	threadManager->threadFactory(threadFactory);
 	threadManager->start();
-	TThreadPoolServer server(processor, serverTransport, transportFactory, protocolFactory, threadManager);
+	*pp_server = new TThreadPoolServer(processor, serverTransport, transportFactory, protocolFactory, threadManager);
 	//TThreadedServer server(processor,	serverTransport,	transportFactory,	protocolFactory);
 
 
 	printf("Starting the server...\n");
-	server.serve();
-	printf("done.\n");
+	(*pp_server)->serve();
 
+	delete *pp_server;
+	printf("done.\n");
+	
 	WSACleanup();
 }
 
@@ -85,6 +109,28 @@ BOOL check_avaiable_driver(std::string driver) {
 		}
 	}
 	return TRUE;
+}
+
+int onCameraConnectStatusChanged(char* camera_ip, int status, void* ctx){
+
+	if (camera_ip == NULL) {
+		return 0;
+	}
+
+	if (strcmp(g_cs.m_camera_name, camera_ip) == 0) {
+		fprintf(stdout, "%s %s %d!!!\n", __FUNCTION__, camera_ip, status);
+		if (status == 0) {
+			g_cs.m_camera->Stop();
+			g_cs.m_camera->DestroyOtherObjects();
+		}
+		else {
+			if (g_cs.m_camera->m_last_is_grabbing) {
+				g_cs.m_camera->CreateOtherObjects();
+				g_cs.m_camera->Start();
+			}
+		}
+	}
+	return 1;
 }
 
 
@@ -136,15 +182,18 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	}
 
 	CFileStorage::m_max_file_size = raw_file_max_size_in_GB* ONE_GB;
-	PlaybackCtrlServiceHandler* handler = new PlaybackCtrlServiceHandler();
+
 	g_cs.m_data_port = data_port;
 
 	g_cs.m_camera = new CCamera(cameras[camera_ip].begin()->second.c_str(), cameras[camera_ip].begin()->first);
+//	g_cs.m_camera = new CCamera(camera_ip.c_str());
 	if (!g_cs.m_camera->CreateDevice()) {
 		fprintf(stdout, "CreateDevice failed!\n");
 		return 0;
 	}
-	g_cs.m_camera->RegisterConnectionEventCallback();//camera reconnect function!!!
+
+	g_cs.m_camera->GetCurrentIPAddress(g_cs.m_camera_name, sizeof g_cs.m_camera_name);
+	CCamera::RegisterConnectionEventCallback(onCameraConnectStatusChanged, &g_cs);//camera reconnect function!!!
 
 	if (data_file_name.size() > 0) {
 		CFileStorage::m_file_name = data_file_name;
@@ -191,20 +240,85 @@ int main(int argc, char **argv) {//.\\AcqurieStore.exe server_port gige_server_n
 	g_cs.m_playback_thread->start();
 	//do not start here!!! g_cs.m_post_processor_thread->start();
 
+	sleep(1000);
+	//FIXME:
+	g_cs.m_snd_data_thread->m_data_transport_mode = 2;
+	std::thread  data_thread;
+	TThreadPoolServer* data_server = NULL;
+	if (g_cs.m_snd_data_thread->m_data_transport_mode == 2) {//thrift
+		PlaybackCtrlServiceHandler* handler2 = new PlaybackCtrlServiceHandler();
+		data_thread = std::thread(cmd_run, handler2, &data_server, g_cs.m_data_port);
+	}
+
 	g_cs.m_snd_data_thread->init(g_cs.m_data_port);
 	g_cs.m_snd_data_thread->set_parameters(GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h));
 	g_cs.m_snd_data_thread->start();
 
-	std::thread cmd_thread(cmd_run,handler, server_port);
-	cmd_thread.join();
+	TThreadPoolServer* cmd_server = NULL;
+	PlaybackCtrlServiceHandler* handler = new PlaybackCtrlServiceHandler();
+	std::thread cmd_thread(cmd_run,handler, &cmd_server,server_port);
+
+	//cmd_thread.join();
+	while (!g_cs.m_exited) {
+		
+		fprintf(stdout, "FPS statistics:cam(%.2f),soft(%.2f),disk_w(%.2f),snd(%.2f)\r", \
+			g_cs.m_camera->GetGrabFPS(), g_cs.m_soft_grab_counter.GetFPS(), g_cs.m_file_storage_object_for_write_thread->m_fps_counter.GetFPS(), g_cs.m_snd_data_thread->m_soft_snd_counter.GetFPS());
+	
+
+		//fprintf(stdout, "\n2####m_last_live_play_seq %d, m_frame_counter %d, m_play_frame_gap %d m_snd_live_frame_flag %d\n", g_cs.m_last_live_play_seq, g_cs.m_frame_counter, g_cs.m_play_frame_gap, g_cs.m_snd_live_frame_flag);
+	
+		if (g_cs.m_start_grab_time != 0 && time(NULL) - g_cs.m_start_grab_time > 5) {
+			if (g_cs.m_camera->m_grabbing == TRUE && g_cs.m_camera->GetGrabFPS() < 1) {
+#ifndef _DEBUG
+//maybe cause a problem  here and onCameraConnectStatusChanged will execute the flow actions at the same time
+				g_cs.m_camera->Stop();
+				g_cs.m_camera->DestroyOtherObjects();
+				g_cs.m_camera->CreateOtherObjects();
+				g_cs.m_camera->Start();
+
+				g_cs.m_start_grab_time = time(NULL);
+#endif
+			}
+		}
 
 
+		if (g_cs.m_camera->m_grabbing == TRUE) {
+			((CFPSCounter*)g_cs.m_camera->m_GrabFPSCounter)->statistics(__FUNCTION__, FALSE, FALSE);
+		}
+
+		sleep(1000);
+	}
+
+	if (cmd_server) {
+		cmd_server->getServerTransport()->close();//////////////////////////////////////////////
+		cmd_server->stop();
+		fprintf(stdout, "%s 1\n", __FUNCTION__);
+			//if (cmd_thread.joinable()) 
+		{
+		//		fprintf(stdout, "%s 2\n", __FUNCTION__);
+		//		cmd_thread.join();
+		//		fprintf(stdout, "%s 3\n", __FUNCTION__);
+
+		}
+	}
+
+	if (data_server) {
+		data_server->getServerTransport()->close();///////////////////////////////////////////////////
+		data_server->stop();
+		//if (data_thread.joinable())
+		//	data_thread.join();
+	}
 
 	g_cs.m_playback_thread->stop();
 	g_cs.m_file_storage_object_for_write_thread->stop();
 	g_cs.m_snd_data_thread->stop();
 
+	g_cs.m_camera->Stop();
+	sleep(300);
+	g_cs.m_camera->DestroyOtherObjects();
 	g_cs.m_camera->DestroyDevice();
+
+	exit(0);//exit
 
 	delete g_cs.m_camera;
 	delete g_cs.m_file_storage_object_for_write_thread;

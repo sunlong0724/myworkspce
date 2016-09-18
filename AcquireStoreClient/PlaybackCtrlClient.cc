@@ -29,9 +29,28 @@ void    CPlaybackCtrlClient::start(const std::string& ip, const uint16_t port, i
 	m_cmd_port = port;
 	m_frame_gap = frame_gap;
 	CMyThread::start();
+
+
+	if (1 == m_frame_gap) {
+		if (m_transport_mode == 1) {
+			m_recv_thread.init(m_server_ip, m_data_port, m_frame_gap);
+			m_recv_thread.start();
+		}
+		else {
+			m_recv_thread_by_thrift.init(m_server_ip, m_data_port, m_frame_gap);
+			m_recv_thread_by_thrift.start();
+		}
+	}
 }
 void	CPlaybackCtrlClient::stop() {
 	CMyThread::stop();
+
+	if (m_transport_mode == 1) {
+		m_recv_thread.stop();
+	}
+	else {
+		m_recv_thread_by_thrift.stop();
+	}
 }
 
 
@@ -47,9 +66,9 @@ BOOL CPlaybackCtrlClient::connect(const std::string& ip, const uint16_t cmd_port
 
 		m_socket = boost::shared_ptr<TTransport>(p);
 
-		p->setConnTimeout(500);
-		p->setSendTimeout(300);
-		p->setRecvTimeout(300);
+		p->setConnTimeout(50);
+		p->setSendTimeout(30);
+		p->setRecvTimeout(30);
 
 		m_transport = boost::shared_ptr<TTransport>(new TBufferedTransport(m_socket));
 		m_protocol = boost::shared_ptr<TProtocol>(new TBinaryProtocol(m_transport));
@@ -59,7 +78,10 @@ BOOL CPlaybackCtrlClient::connect(const std::string& ip, const uint16_t cmd_port
 
 		//uint16_t data_port = 0;
 		try {
+			fprintf(stdout, "1 get_data_port \n");
 			m_data_port = m_client->get_data_port();
+			fprintf(stdout, "2 get_data_port %d\n", m_data_port);
+
 		}
 		catch (TException& e) {
 			fprintf(stdout, "%s\n", e.what());
@@ -67,8 +89,15 @@ BOOL CPlaybackCtrlClient::connect(const std::string& ip, const uint16_t cmd_port
 			return FALSE;
 		}
 		
-		m_recv_thread.init(m_server_ip, m_data_port, m_frame_gap);
-		m_recv_thread.start();
+		if (1 == m_frame_gap) {
+			if (m_transport_mode == 1) {
+				m_recv_thread.init(m_server_ip, m_data_port, m_frame_gap);
+			}
+			else {
+				m_recv_thread_by_thrift.init(m_server_ip, m_data_port, m_frame_gap);
+			}
+		}
+
 		m_status = ConnectStatus_CONNECTED;
 		return TRUE;
 	}
@@ -81,17 +110,20 @@ BOOL CPlaybackCtrlClient::connect(const std::string& ip, const uint16_t cmd_port
 
 BOOL CPlaybackCtrlClient::close() {
 	try {
-		m_recv_thread.stop();
-		m_client->getInputProtocol().get()->getTransport()->close();
+		
+		try {
+			m_client->getInputProtocol().get()->getTransport()->close();
+		}catch(TException& e) {
+			fprintf(stdout, "%s\n", e.what());
+			m_status = ConnectStatus_DISCONNECT;
+		}
+		
 		delete m_client;
-		m_protocol.reset();
-		m_transport.reset();
-		m_socket.reset();
-		WSACleanup();
 		return TRUE;
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
+		delete m_client;
 		m_status = ConnectStatus_DISCONNECT;
 		return FALSE;
 	}
@@ -136,7 +168,13 @@ BOOL CPlaybackCtrlClient::is_connected() {
 }
 
 void	CPlaybackCtrlClient::set_recv_sink_callback(SinkDataCallback cb, void* context) {
-	m_recv_thread.set_sink_data_callback(cb, context);
+	if (m_transport_mode == 1) {
+		m_recv_thread.set_sink_data_callback(cb, context);
+	}
+	else {
+		m_recv_thread_by_thrift.set_sink_data_callback(cb, context);
+	}
+	
 }
 
 
@@ -248,9 +286,36 @@ int32_t	CPlaybackCtrlClient::play_from_a2b(const int64_t a, const int64_t b) {
 	}
 }
 
+int32_t CPlaybackCtrlClient::get_the_frame_data(const int8_t direct, const int8_t gap) {
+	CHECK_CONNECT_STATUS(m_status);
+	if (0 == gap) {
+		return FALSE;
+	}
 
+	try {
+		return m_client->get_the_frame_data(direct, gap);
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		m_status = ConnectStatus_DISCONNECT;
+		return FALSE;
+	}
+}
 
-
+int64_t CPlaybackCtrlClient::sync_frame_by_timestamp_in_pause(const int64_t timestamp) {
+	CHECK_CONNECT_STATUS(m_status);
+	if (0 == timestamp) {
+		return FALSE;
+	}
+	try {
+		return m_client->sync_frame_by_timestamp_in_pause(timestamp);
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		m_status = ConnectStatus_DISCONNECT;
+		return FALSE;
+	}
+}
 
 double  CPlaybackCtrlClient::get_camera__grab_fps() {
 	CHECK_CONNECT_STATUS(m_status);
@@ -290,7 +355,14 @@ double  CPlaybackCtrlClient::get_soft_snd_fps() {
 }
 
 double  CPlaybackCtrlClient::get_soft_recv_fps() {
-	return m_recv_thread.m_soft_recv_counter.GetFPS();
+	if (m_transport_mode == 1) {
+		return m_recv_thread.m_soft_recv_counter.GetFPS();
+	}
+	else {
+		return .001f;
+		//return m_recv_thread_by_thrift.m_soft_recv_counter.GetFPS();
+	}
+
 }
 
 double  CPlaybackCtrlClient::get_write_file_fps() {
@@ -306,6 +378,17 @@ double  CPlaybackCtrlClient::get_write_file_fps() {
 	}
 }
 
+int32_t CPlaybackCtrlClient::kill_myself() {
+	CHECK_CONNECT_STATUS(m_status);
+
+	try {
+		return m_client->kill_myself();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+		return FALSE;
+	}
+}
 
 int32_t CPlaybackCtrlClient::set_exposure_time(const double microseconds) {
 	CHECK_CONNECT_STATUS(m_status);
@@ -772,9 +855,9 @@ void CPlaybackCtrlClient::connect_pingpong() {
 
 		m_socket_pingpong = boost::shared_ptr<TTransport>(p);
 
-		p->setConnTimeout(500);
-		p->setSendTimeout(300);
-		p->setRecvTimeout(300);
+		p->setConnTimeout(50);
+		p->setSendTimeout(30);
+		p->setRecvTimeout(30);
 
 		m_transport_pingpong = boost::shared_ptr<TTransport>(new TBufferedTransport(m_socket_pingpong));
 		m_protocol_pingpong = boost::shared_ptr<TProtocol>(new TBinaryProtocol(m_transport_pingpong));
@@ -788,30 +871,33 @@ void CPlaybackCtrlClient::connect_pingpong() {
 }
 
 void CPlaybackCtrlClient::close_pingpong() {
-	m_client_pingpong->getInputProtocol().get()->getTransport()->close();
-	delete m_client_pingpong;
+	try {
+		m_client_pingpong->getInputProtocol().get()->getTransport()->close();
+	}
+	catch (TException& e) {
+		fprintf(stdout, "%s\n", e.what());
+	}
+
 	m_protocol_pingpong.reset();
 	m_transport_pingpong.reset();
 	m_socket_pingpong.reset();
+
+	delete m_client_pingpong;
 	WSACleanup();
 }
 
-
-
 void CPlaybackCtrlClient::run() {
 	
-	m_status = ConnectStatus_NONE;
+	m_last_status = m_status = ConnectStatus_NONE;
 	
 	while (!m_exited) {
 		if (m_status == ConnectStatus_NONE) {
-
 			connect(m_server_ip, m_cmd_port);
 			if (m_connect_callback && m_last_status != m_status) {
 				m_last_status = m_status;
 				m_connect_callback(m_status, m_connect_ctx);
 			}
-		}
-		if (m_status == ConnectStatus_DISCONNECT) {
+		}else 	if (m_status == ConnectStatus_DISCONNECT) {
 			close();
 			connect(m_server_ip, m_cmd_port);
 
@@ -820,18 +906,18 @@ void CPlaybackCtrlClient::run() {
 				m_connect_callback(m_status, m_connect_ctx);
 			}
 		}
-
-		try {
-			connect_pingpong();
-			m_client_pingpong->get_data_port();//check as PING
-			close_pingpong();
+		else {
+			try {
+				connect_pingpong();
+				m_client_pingpong->get_data_port();//check as PING
+				close_pingpong();
+			}
+			catch (TException& e) {
+				close_pingpong();
+				fprintf(stdout, "%s\n", e.what());
+				m_status = ConnectStatus_DISCONNECT;
+			}
 		}
-		catch (TException& e) {
-			close_pingpong();
-			fprintf(stdout, "%s\n", e.what());
-			m_status = ConnectStatus_DISCONNECT;
-		}
-		
 		sleep(500);
 	}
 	close();

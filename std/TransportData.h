@@ -3,6 +3,7 @@
 
 #include "MyThread.h"
 #include "utils.h"
+#include <mutex>
 
 class CSendData : public CMyThread{
 public:
@@ -10,6 +11,7 @@ public:
 	void set_parameters(int32_t elem_size);
 
 	int64_t send(char* data, int64_t data_len);
+	int64_t recv(std::vector<char>& recv_buffer);
 protected:
 	void run();
 private:
@@ -18,7 +20,8 @@ private:
 public:
 	CFPSCounter			m_soft_snd_counter;
 	int64_t				m_last_snd_seq;
-private:
+
+//private:
 	void				*m_zmq_ctx;
 	void				*m_zmq_sock;
 	std::vector<char>	m_buffer;
@@ -30,11 +33,15 @@ private:
 	int32_t				m_elem_size;
 	BOOL				m_flag;
 	int					m_status;
-	
+
+	int					m_data_transport_mode;//1-- zmq  2--thrift
+
+	std::mutex			m_mutex;
 };
 
 class CRecvData : public CMyThread {
 public:
+	CRecvData();
 	void init(std::string& server_ip, uint16_t port, int64_t frame_gap = 1);
 
 	void set_sink_data_callback(SinkDataCallback cb, void* context);
@@ -62,6 +69,30 @@ private:
 	SinkDataCallback	m_cb;
 	void*				m_cb_ctx;
 	int					m_status;
+};
+
+
+
+class CRecvDatabyThrift : public CMyThread {
+public:
+	CRecvDatabyThrift();
+	void init(std::string& server_ip, uint16_t port, int64_t frame_gap = 1);
+
+	void set_sink_data_callback(SinkDataCallback cb, void* context);
+protected:
+	void run();
+
+public:
+	//CFPSCounter			m_soft_recv_counter;
+private:
+	std::string			m_server_ip;
+	uint16_t			m_port;
+
+	SinkDataCallback	m_cb;
+	void*				m_cb_ctx;
+	int					m_status;
+
+	
 };
 
 #endif // !__SEND_DATA_H__

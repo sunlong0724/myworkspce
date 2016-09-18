@@ -3,10 +3,12 @@
 
 #include "defs.h"
 #include "ping/Ping.h"
-extern "C" {
-	#include "lcthw\ringbuffer.h"
-}
 
+//extern "C" {
+//	#include "lcthw\ringbuffer.h"
+//}
+
+#include "NoLockCBuffer.h"
 #include <string>
 #include <vector>
 #include <map>

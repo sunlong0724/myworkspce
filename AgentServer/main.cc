@@ -84,7 +84,7 @@ std::map<std::string, std::vector<double>>  GetDiskInfo() {
 	std::map<std::string, std::vector<double>> disk_info;
 	for (int i = ds; i >= 0; --i) {
 		if (drives_c[i] >= 'C' && drives_c[i] <= 'Z') {
-			fprintf(stdout, "%s driver %s was found!\n", __FUNCTION__, &drives_c[i]);
+			//fprintf(stdout, "%s driver %s was found!\n", __FUNCTION__, &drives_c[i]);
 			//CHECK!!!
 			std::vector<double>   info;
 
@@ -92,7 +92,7 @@ std::map<std::string, std::vector<double>>  GetDiskInfo() {
 			ULARGE_INTEGER lptotal;
 			ULARGE_INTEGER lpfree;
 			GetDiskFreeSpaceEx(&drives_c[i], &lpuse, &lptotal, &lpfree);
-			fprintf(stdout, "%s: use(%4.4fGB),tatal(%4.4fGB),free(%4.4fGB)\n", &drives_c[i], lpuse.QuadPart / 1024.0 / 1024.0 / 1024.0, lptotal.QuadPart / 1024.0 / 1024.0 / 1024.0, lpfree.QuadPart / 1024.0 / 1024.0 / 1024.0);
+			//fprintf(stdout, "%s: use(%4.4fGB),tatal(%4.4fGB),free(%4.4fGB)\n", &drives_c[i], lpuse.QuadPart / 1024.0 / 1024.0 / 1024.0, lptotal.QuadPart / 1024.0 / 1024.0 / 1024.0, lpfree.QuadPart / 1024.0 / 1024.0 / 1024.0);
 		
 			info.push_back(lpuse.QuadPart / 1024.0 / 1024.0 / 1024.0);
 			info.push_back(lptotal.QuadPart / 1024.0 / 1024.0 / 1024.0);

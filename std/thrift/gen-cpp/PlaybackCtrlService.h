@@ -26,10 +26,14 @@ class PlaybackCtrlServiceIf {
   virtual int32_t play_forward(const int32_t play_frame_rate, const int32_t sample_gap) = 0;
   virtual int32_t play_backward(const int32_t play_frame_rate, const int32_t sample_gap) = 0;
   virtual int32_t play_from_a2b(const int64_t from, const int64_t to) = 0;
+  virtual void get_frame_data(std::string& _return, const int64_t seq) = 0;
+  virtual int32_t get_the_frame_data(const int8_t direct, const int8_t gap) = 0;
+  virtual int64_t sync_frame_by_timestamp_in_pause(const int64_t timestamp) = 0;
   virtual double get_camera_grab_fps() = 0;
   virtual double get_soft_grab_fps() = 0;
   virtual double get_soft_snd_fps() = 0;
   virtual double get_file_write_fps() = 0;
+  virtual int32_t kill_myself() = 0;
   virtual int32_t set_exposure_time(const double microseconds) = 0;
   virtual int32_t set_gain_by_sensor_all(const double gain) = 0;
   virtual int32_t set_gain_by_sensor_analog(const double gain) = 0;
@@ -139,6 +143,17 @@ class PlaybackCtrlServiceNull : virtual public PlaybackCtrlServiceIf {
     int32_t _return = 0;
     return _return;
   }
+  void get_frame_data(std::string& /* _return */, const int64_t /* seq */) {
+    return;
+  }
+  int32_t get_the_frame_data(const int8_t /* direct */, const int8_t /* gap */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  int64_t sync_frame_by_timestamp_in_pause(const int64_t /* timestamp */) {
+    int64_t _return = 0;
+    return _return;
+  }
   double get_camera_grab_fps() {
     double _return = (double)0;
     return _return;
@@ -153,6 +168,10 @@ class PlaybackCtrlServiceNull : virtual public PlaybackCtrlServiceIf {
   }
   double get_file_write_fps() {
     double _return = (double)0;
+    return _return;
+  }
+  int32_t kill_myself() {
+    int32_t _return = 0;
     return _return;
   }
   int32_t set_exposure_time(const double /* microseconds */) {
@@ -1477,6 +1496,339 @@ class PlaybackCtrlService_play_from_a2b_presult {
 
 };
 
+typedef struct _PlaybackCtrlService_get_frame_data_args__isset {
+  _PlaybackCtrlService_get_frame_data_args__isset() : seq(false) {}
+  bool seq;
+} _PlaybackCtrlService_get_frame_data_args__isset;
+
+class PlaybackCtrlService_get_frame_data_args {
+ public:
+
+  PlaybackCtrlService_get_frame_data_args() : seq(0) {
+  }
+
+  virtual ~PlaybackCtrlService_get_frame_data_args() throw() {}
+
+  int64_t seq;
+
+  _PlaybackCtrlService_get_frame_data_args__isset __isset;
+
+  void __set_seq(const int64_t val) {
+    seq = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_get_frame_data_args & rhs) const
+  {
+    if (!(seq == rhs.seq))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_get_frame_data_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_get_frame_data_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_get_frame_data_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_get_frame_data_pargs() throw() {}
+
+  const int64_t* seq;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_get_frame_data_result__isset {
+  _PlaybackCtrlService_get_frame_data_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_get_frame_data_result__isset;
+
+class PlaybackCtrlService_get_frame_data_result {
+ public:
+
+  PlaybackCtrlService_get_frame_data_result() : success() {
+  }
+
+  virtual ~PlaybackCtrlService_get_frame_data_result() throw() {}
+
+  std::string success;
+
+  _PlaybackCtrlService_get_frame_data_result__isset __isset;
+
+  void __set_success(const std::string& val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_get_frame_data_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_get_frame_data_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_get_frame_data_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_get_frame_data_presult__isset {
+  _PlaybackCtrlService_get_frame_data_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_get_frame_data_presult__isset;
+
+class PlaybackCtrlService_get_frame_data_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_get_frame_data_presult() throw() {}
+
+  std::string* success;
+
+  _PlaybackCtrlService_get_frame_data_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _PlaybackCtrlService_get_the_frame_data_args__isset {
+  _PlaybackCtrlService_get_the_frame_data_args__isset() : direct(false), gap(false) {}
+  bool direct;
+  bool gap;
+} _PlaybackCtrlService_get_the_frame_data_args__isset;
+
+class PlaybackCtrlService_get_the_frame_data_args {
+ public:
+
+  PlaybackCtrlService_get_the_frame_data_args() : direct(0), gap(0) {
+  }
+
+  virtual ~PlaybackCtrlService_get_the_frame_data_args() throw() {}
+
+  int8_t direct;
+  int8_t gap;
+
+  _PlaybackCtrlService_get_the_frame_data_args__isset __isset;
+
+  void __set_direct(const int8_t val) {
+    direct = val;
+  }
+
+  void __set_gap(const int8_t val) {
+    gap = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_get_the_frame_data_args & rhs) const
+  {
+    if (!(direct == rhs.direct))
+      return false;
+    if (!(gap == rhs.gap))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_get_the_frame_data_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_get_the_frame_data_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_get_the_frame_data_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_get_the_frame_data_pargs() throw() {}
+
+  const int8_t* direct;
+  const int8_t* gap;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_get_the_frame_data_result__isset {
+  _PlaybackCtrlService_get_the_frame_data_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_get_the_frame_data_result__isset;
+
+class PlaybackCtrlService_get_the_frame_data_result {
+ public:
+
+  PlaybackCtrlService_get_the_frame_data_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_get_the_frame_data_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_get_the_frame_data_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_get_the_frame_data_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_get_the_frame_data_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_get_the_frame_data_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_get_the_frame_data_presult__isset {
+  _PlaybackCtrlService_get_the_frame_data_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_get_the_frame_data_presult__isset;
+
+class PlaybackCtrlService_get_the_frame_data_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_get_the_frame_data_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_get_the_frame_data_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args__isset {
+  _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args__isset() : timestamp(false) {}
+  bool timestamp;
+} _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args__isset;
+
+class PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args {
+ public:
+
+  PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args() : timestamp(0) {
+  }
+
+  virtual ~PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args() throw() {}
+
+  int64_t timestamp;
+
+  _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args__isset __isset;
+
+  void __set_timestamp(const int64_t val) {
+    timestamp = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args & rhs) const
+  {
+    if (!(timestamp == rhs.timestamp))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_sync_frame_by_timestamp_in_pause_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_sync_frame_by_timestamp_in_pause_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_sync_frame_by_timestamp_in_pause_pargs() throw() {}
+
+  const int64_t* timestamp;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result__isset {
+  _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result__isset;
+
+class PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result {
+ public:
+
+  PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result() throw() {}
+
+  int64_t success;
+
+  _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result__isset __isset;
+
+  void __set_success(const int64_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_sync_frame_by_timestamp_in_pause_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_presult__isset {
+  _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_presult__isset;
+
+class PlaybackCtrlService_sync_frame_by_timestamp_in_pause_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_sync_frame_by_timestamp_in_pause_presult() throw() {}
+
+  int64_t* success;
+
+  _PlaybackCtrlService_sync_frame_by_timestamp_in_pause_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 
 class PlaybackCtrlService_get_camera_grab_fps_args {
  public:
@@ -1848,6 +2200,100 @@ class PlaybackCtrlService_get_file_write_fps_presult {
   double* success;
 
   _PlaybackCtrlService_get_file_write_fps_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class PlaybackCtrlService_kill_myself_args {
+ public:
+
+  PlaybackCtrlService_kill_myself_args() {
+  }
+
+  virtual ~PlaybackCtrlService_kill_myself_args() throw() {}
+
+
+  bool operator == (const PlaybackCtrlService_kill_myself_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_kill_myself_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_kill_myself_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PlaybackCtrlService_kill_myself_pargs {
+ public:
+
+
+  virtual ~PlaybackCtrlService_kill_myself_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_kill_myself_result__isset {
+  _PlaybackCtrlService_kill_myself_result__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_kill_myself_result__isset;
+
+class PlaybackCtrlService_kill_myself_result {
+ public:
+
+  PlaybackCtrlService_kill_myself_result() : success(0) {
+  }
+
+  virtual ~PlaybackCtrlService_kill_myself_result() throw() {}
+
+  int32_t success;
+
+  _PlaybackCtrlService_kill_myself_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const PlaybackCtrlService_kill_myself_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const PlaybackCtrlService_kill_myself_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlaybackCtrlService_kill_myself_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _PlaybackCtrlService_kill_myself_presult__isset {
+  _PlaybackCtrlService_kill_myself_presult__isset() : success(false) {}
+  bool success;
+} _PlaybackCtrlService_kill_myself_presult__isset;
+
+class PlaybackCtrlService_kill_myself_presult {
+ public:
+
+
+  virtual ~PlaybackCtrlService_kill_myself_presult() throw() {}
+
+  int32_t* success;
+
+  _PlaybackCtrlService_kill_myself_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -5458,6 +5904,15 @@ class PlaybackCtrlServiceClient : virtual public PlaybackCtrlServiceIf {
   int32_t play_from_a2b(const int64_t from, const int64_t to);
   void send_play_from_a2b(const int64_t from, const int64_t to);
   int32_t recv_play_from_a2b();
+  void get_frame_data(std::string& _return, const int64_t seq);
+  void send_get_frame_data(const int64_t seq);
+  void recv_get_frame_data(std::string& _return);
+  int32_t get_the_frame_data(const int8_t direct, const int8_t gap);
+  void send_get_the_frame_data(const int8_t direct, const int8_t gap);
+  int32_t recv_get_the_frame_data();
+  int64_t sync_frame_by_timestamp_in_pause(const int64_t timestamp);
+  void send_sync_frame_by_timestamp_in_pause(const int64_t timestamp);
+  int64_t recv_sync_frame_by_timestamp_in_pause();
   double get_camera_grab_fps();
   void send_get_camera_grab_fps();
   double recv_get_camera_grab_fps();
@@ -5470,6 +5925,9 @@ class PlaybackCtrlServiceClient : virtual public PlaybackCtrlServiceIf {
   double get_file_write_fps();
   void send_get_file_write_fps();
   double recv_get_file_write_fps();
+  int32_t kill_myself();
+  void send_kill_myself();
+  int32_t recv_kill_myself();
   int32_t set_exposure_time(const double microseconds);
   void send_set_exposure_time(const double microseconds);
   int32_t recv_set_exposure_time();
@@ -5604,10 +6062,14 @@ class PlaybackCtrlServiceProcessor : public ::apache::thrift::TDispatchProcessor
   void process_play_forward(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_play_backward(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_play_from_a2b(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_get_frame_data(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_get_the_frame_data(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_sync_frame_by_timestamp_in_pause(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_camera_grab_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_soft_grab_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_soft_snd_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_get_file_write_fps(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_kill_myself(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_exposure_time(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_gain_by_sensor_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_set_gain_by_sensor_analog(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -5658,10 +6120,14 @@ class PlaybackCtrlServiceProcessor : public ::apache::thrift::TDispatchProcessor
     processMap_["play_forward"] = &PlaybackCtrlServiceProcessor::process_play_forward;
     processMap_["play_backward"] = &PlaybackCtrlServiceProcessor::process_play_backward;
     processMap_["play_from_a2b"] = &PlaybackCtrlServiceProcessor::process_play_from_a2b;
+    processMap_["get_frame_data"] = &PlaybackCtrlServiceProcessor::process_get_frame_data;
+    processMap_["get_the_frame_data"] = &PlaybackCtrlServiceProcessor::process_get_the_frame_data;
+    processMap_["sync_frame_by_timestamp_in_pause"] = &PlaybackCtrlServiceProcessor::process_sync_frame_by_timestamp_in_pause;
     processMap_["get_camera_grab_fps"] = &PlaybackCtrlServiceProcessor::process_get_camera_grab_fps;
     processMap_["get_soft_grab_fps"] = &PlaybackCtrlServiceProcessor::process_get_soft_grab_fps;
     processMap_["get_soft_snd_fps"] = &PlaybackCtrlServiceProcessor::process_get_soft_snd_fps;
     processMap_["get_file_write_fps"] = &PlaybackCtrlServiceProcessor::process_get_file_write_fps;
+    processMap_["kill_myself"] = &PlaybackCtrlServiceProcessor::process_kill_myself;
     processMap_["set_exposure_time"] = &PlaybackCtrlServiceProcessor::process_set_exposure_time;
     processMap_["set_gain_by_sensor_all"] = &PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_all;
     processMap_["set_gain_by_sensor_analog"] = &PlaybackCtrlServiceProcessor::process_set_gain_by_sensor_analog;
@@ -5825,6 +6291,34 @@ class PlaybackCtrlServiceMultiface : virtual public PlaybackCtrlServiceIf {
     return ifaces_[i]->play_from_a2b(from, to);
   }
 
+  void get_frame_data(std::string& _return, const int64_t seq) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->get_frame_data(_return, seq);
+    }
+    ifaces_[i]->get_frame_data(_return, seq);
+    return;
+  }
+
+  int32_t get_the_frame_data(const int8_t direct, const int8_t gap) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->get_the_frame_data(direct, gap);
+    }
+    return ifaces_[i]->get_the_frame_data(direct, gap);
+  }
+
+  int64_t sync_frame_by_timestamp_in_pause(const int64_t timestamp) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->sync_frame_by_timestamp_in_pause(timestamp);
+    }
+    return ifaces_[i]->sync_frame_by_timestamp_in_pause(timestamp);
+  }
+
   double get_camera_grab_fps() {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -5859,6 +6353,15 @@ class PlaybackCtrlServiceMultiface : virtual public PlaybackCtrlServiceIf {
       ifaces_[i]->get_file_write_fps();
     }
     return ifaces_[i]->get_file_write_fps();
+  }
+
+  int32_t kill_myself() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->kill_myself();
+    }
+    return ifaces_[i]->kill_myself();
   }
 
   int32_t set_exposure_time(const double microseconds) {

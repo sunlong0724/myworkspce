@@ -95,8 +95,7 @@ void CAgentClient::run() {
 				m_last_status = m_status;
 				m_connect_callback(m_status, m_connect_ctx);
 			}
-		}
-		if (m_status == ConnectStatus_DISCONNECT) {
+		}else 	if (m_status == ConnectStatus_DISCONNECT) {
 			close();
 			connect(m_server_ip, m_cmd_port);
 
@@ -105,16 +104,17 @@ void CAgentClient::run() {
 				m_connect_callback(m_status, m_connect_ctx);
 			}
 		}
-
-		try {
-			connect_pingpong();
-			m_client_pingpong->get_cpu_usage();//check as PING
-			close_pingpong();
-		}
-		catch (TException& e) {
-			close_pingpong();
-			fprintf(stdout, "%s\n", e.what());
-			m_status = ConnectStatus_DISCONNECT;
+		else {
+			try {
+				connect_pingpong();
+				//m_client_pingpong->get_cpu_usage();//check as PING
+				close_pingpong();
+			}
+			catch (TException& e) {
+				close_pingpong();
+				fprintf(stdout, "%s\n", e.what());
+				m_status = ConnectStatus_DISCONNECT;
+			}
 		}
 
 		sleep(500);
@@ -184,7 +184,7 @@ BOOL CAgentClient::find_cameras(std::map<std::string, std::map<int, std::string>
 int32_t CAgentClient::exec_program(const std::string& cmdline) {
 	// Your implementation goes here
 	try {
-		return m_acquire_store_process_id = m_client->exec_program(cmdline);
+		return m_client->exec_program(cmdline);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());
@@ -196,7 +196,7 @@ int32_t CAgentClient::exec_program(const std::string& cmdline) {
 int32_t CAgentClient::kill_program(const int64_t process_id) {
 	// Your implementation goes here
 	try {
-		return m_client->kill_program(m_acquire_store_process_id);
+		return m_client->kill_program(process_id);
 	}
 	catch (TException& e) {
 		fprintf(stdout, "%s\n", e.what());

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>9070 55555 192.168.0.100 10 e:\data.raw</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>9009 55509 192.168.0.9 10 d:\\data.raw</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>9070 55555 192.168.0.100 10 e:\\data.raw</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>9098 55598 192.168.0.98 10 d:\\data.raw</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>

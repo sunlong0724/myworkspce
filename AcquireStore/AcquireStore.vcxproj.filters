@@ -13,12 +13,6 @@
     <ClCompile Include="..\std\thrift\gen-cpp\PlaybackCtrlService_server.cpp">
       <Filter>thrift</Filter>
     </ClCompile>
-    <ClCompile Include="..\std\lcthw\bstrlib.c">
-      <Filter>lcthw</Filter>
-    </ClCompile>
-    <ClCompile Include="..\std\lcthw\ringbuffer.c">
-      <Filter>lcthw</Filter>
-    </ClCompile>
     <ClCompile Include="main.cc">
       <Filter>src</Filter>
     </ClCompile>
@@ -34,6 +28,12 @@
     <ClCompile Include="SinkBayerDatasCallbackImpl.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\std\MyThread.cc">
+      <Filter>std</Filter>
+    </ClCompile>
+    <ClCompile Include="..\std\NoLockCBuffer.cpp">
+      <Filter>std</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService.h">
@@ -44,15 +44,6 @@
     </ClInclude>
     <ClInclude Include="..\std\thrift\gen-cpp\PlaybackCtrlService_types.h">
       <Filter>thrift</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\lcthw\bstrlib.h">
-      <Filter>lcthw</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\lcthw\dbg.h">
-      <Filter>lcthw</Filter>
-    </ClInclude>
-    <ClInclude Include="..\std\lcthw\ringbuffer.h">
-      <Filter>lcthw</Filter>
     </ClInclude>
     <ClInclude Include="..\std\defs.h">
       <Filter>std</Filter>
@@ -81,13 +72,13 @@
     <ClInclude Include="FileStorage.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\std\NoLockCBuffer.h">
+      <Filter>std</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="thrift">
       <UniqueIdentifier>{c288018e-d015-4280-8419-002c4f978f59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lcthw">
-      <UniqueIdentifier>{94b9edb4-31cf-4632-a384-fb1765101ea8}</UniqueIdentifier>
     </Filter>
     <Filter Include="std">
       <UniqueIdentifier>{fc340217-9224-41cc-a8bb-acf2b04ce7cf}</UniqueIdentifier>

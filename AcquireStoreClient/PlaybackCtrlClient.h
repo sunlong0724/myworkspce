@@ -18,6 +18,7 @@ using namespace apache::thrift::transport;
 using namespace hawkeye;
 
 
+
 class DLL_API CPlaybackCtrlClient :public CMyThread{
 public:
 
@@ -29,7 +30,7 @@ public:
 
 	void	set_connected_callback(ConnectedCallback cb, void* ctx);
 	void	set_recv_sink_callback(SinkDataCallback cb, void* context);
-	void    start(const std::string& ip, const uint16_t port, int64_t frame_gap);
+	void    start(const std::string& ip, const uint16_t port, int64_t frame_gap);//do not start recv data thread when frame_gap  is 0;
 	void	stop();
 
 	int32_t	start_grab();
@@ -45,12 +46,15 @@ public:
 	int32_t play_pause();
 	int32_t	play_from_a2b(const int64_t a, const int64_t b);
 
+	int32_t get_the_frame_data(const int8_t direct, const int8_t gap);//direct:1--forward 2--backward  gap:=0 invalid; >0 forwad; <0 backward
+	int64_t sync_frame_by_timestamp_in_pause(const int64_t timestamp);
+
 	double  get_camera__grab_fps();
 	double  get_soft_grab_fps();
 	double  get_soft_snd_fps();
 	double  get_soft_recv_fps();
 	double  get_write_file_fps();
-
+	int32_t kill_myself();
 
 	//CAMERA
 	int32_t set_exposure_time(const double microseconds) ;
@@ -121,6 +125,8 @@ private:
 
 	int64_t							m_frame_gap;
 	CRecvData						m_recv_thread;
+	CRecvDatabyThrift				m_recv_thread_by_thrift;
+	const int						m_transport_mode = 2;		//1--zmq 2--thrift
 
 	ConnectStatus					m_status;
 	ConnectStatus					m_last_status;

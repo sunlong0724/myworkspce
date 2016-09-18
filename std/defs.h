@@ -8,6 +8,8 @@
 #define CAMERA_MAX_FPS (180)
 #define GET_IMAGE_BUFFER_SIZE(w,h)  (sizeof int64_t + sizeof int64_t + (w) * (h))
 
+#define MAX_CACHE_IMAGE_TIME 8
+
 #define MAX_CACHE_IMAGE_COUNT	(30)
 
 
@@ -65,7 +67,8 @@ enum ConnectStatus {
 
 typedef struct _CustomStruct {
 	_CustomStruct():m_playback_thread(NULL), m_post_processor(NULL), m_snd_data_thread(NULL), m_file_storage_object_for_write_thread(NULL), m_file_storage_object_for_read(NULL), m_camera(NULL),
-		m_frame_counter(0),	m_store_file_flag(0), m_snd_live_frame_flag(0), m_processor_data_flag(0), m_play_frame_gap(0), m_last_live_play_seq(0), m_data_port(0), m_play_frame_rate(1){}
+		m_frame_counter(0),	m_store_file_flag(0), m_snd_live_frame_flag(0), m_processor_data_flag(0), m_play_frame_gap(0), m_last_live_play_seq(0), 
+		m_data_port(0), m_play_frame_rate(1), m_exited(false), m_start_grab_time(0){}
 
 
 	CPlaybackCtrlThread			*m_playback_thread;
@@ -74,6 +77,7 @@ typedef struct _CustomStruct {
 	CFileStorage				*m_file_storage_object_for_write_thread;
 	CFileStorage				*m_file_storage_object_for_read;
 	CCamera						*m_camera;
+	char						m_camera_name[30];
 
 	CFPSCounter					m_soft_grab_counter;
 
@@ -83,6 +87,7 @@ typedef struct _CustomStruct {
 	BOOL						m_snd_live_frame_flag;
 	BOOL						m_processor_data_flag;
 
+	
 	uint16_t					m_data_port;
 
 	int32_t						m_image_w;
@@ -100,12 +105,18 @@ typedef struct _CustomStruct {
 	int32_t						m_play_frame_w;
 	int32_t						m_play_frame_h;
 
+	std::vector<char>			m_snd_buffer;// (GET_IMAGE_BUFFER_SIZE(g_cs.m_image_w, g_cs.m_image_h), 0x00);
 
+	BOOL						m_sync_frame_flag;
+	int64_t						m_sync_frame_timestamp;
+
+	bool						m_exited;
+
+	time_t						m_start_grab_time;
 }CustomStruct;
 
 
 typedef int(*SinkDataCallback)(unsigned char*, int, void*);
 typedef void(*ConnectedCallback)(ConnectStatus, void*);
-
 
 #endif // !__DEFS__H_

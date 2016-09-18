@@ -3,33 +3,33 @@
 
 #define DLL_API __declspec(dllexport)  
 
-#include "SapClassBasic.h"
-#include "SapManager.h"
+
 
 #include <vector>
 #include <map>
 #include <memory>
 #include <chrono>
-#include "FPSCounter.h"
+#include <Windows.h>
 
-extern FILE* g_err_fp;
+
 
 #ifdef FPRINTF_
+//extern FILE* g_err_fp;
 //#define stdout	g_err_fp
 #endif
 
-
 typedef int (*CameraSinkDataCallback)(unsigned char*, int,int,void*);
-
+typedef int(*CameraConnectStatusChanged)(char*, int, void*);
 
 class DLL_API CCamera {
 
 public:
 	CCamera(const char* serverName, int index);
+	CCamera(const char* camera_ip) throw(...);
 	virtual ~CCamera();
      
 	static BOOL FindCamera(std::map<std::string, std::map<int32_t, std::string>>  *cameras);
-	void		RegisterConnectionEventCallback();
+	static void		RegisterConnectionEventCallback(CameraConnectStatusChanged cb, void* ctx);
 
 	void		SetSinkBayerDataCallback(CameraSinkDataCallback cb, void* ctx);
 	void		SetSinkRGBDataCallback(CameraSinkDataCallback cb, void* ctx);
@@ -105,7 +105,7 @@ public:
 		return m_ctx1;
 	}
 
-private:
+public:
 	BOOL				GetFeatureRange(const char* featureName, double* min, double* max);
 
 	enum ConnectionStatus
@@ -121,23 +121,41 @@ private:
 	}
 
 public:
-	SapAcqDevice		*m_AcqDevice;
-	SapBuffer			*m_Buffers;
-	SapColorConversion  *m_ColorConv;
-	SapTransfer			*m_Xfer;
+	//SapAcqDevice		*m_AcqDevice;
+	//SapBuffer			*m_Buffers;
+	//SapColorConversion  *m_ColorConv;
+	//SapTransfer			*m_Xfer;
+	////SapView			*m_View;
+	//SapProcessing		*m_Pro;
+	//CFPSCounter			m_GrabFPSCounter;
+	//CFPSCounter			m_ProcessFPSCounter;
+
+
+	void		*m_AcqDevice;
+	void		*m_Buffers;
+	void	    *m_ColorConv;
+	void		*m_Xfer;
 	//SapView			*m_View;
-	SapProcessing		*m_Pro;
+	void		*m_Pro;
+
+
+
 
 	CameraSinkDataCallback	m_sink_bayer_cb;
 	void				*m_ctx0;
 
 	CameraSinkDataCallback	m_sink_rgb_cb;
 	void				*m_ctx1;
+
+	static CameraConnectStatusChanged m_status_changed_cb;
+	static void				*m_status_changed_cb_ctx;
 	
 	void				*m_dummy_bayer_fp;
-	void				*m_dummy_rgb_fp;
-	CFPSCounter			m_GrabFPSCounter;
-	CFPSCounter			m_ProcessFPSCounter;
+	static void				*m_dummy_rgb_fp;
+
+	
+	void*				m_GrabFPSCounter;
+	void*				m_ProcessFPSCounter;
 
 	char				m_UserDefinedName[256];
 	char				m_AcqServerName[256];
@@ -147,7 +165,6 @@ public:
 	BOOL				m_last_is_connected;
 
 	int					m_index;
-
 	int64_t				m_lost;
 };
 

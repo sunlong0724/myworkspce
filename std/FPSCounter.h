@@ -11,8 +11,10 @@ public:
 		m_old_fps = m_fps = .0f;
 	}
 
-	void statistics(const char* function_name = "", BOOL printfFlag = TRUE) {
-		++m_fps;
+	void statistics(const char* function_name = "", BOOL printfFlag = TRUE, BOOL inc = TRUE) {
+		if (inc) {
+			++m_fps;
+		}
 		::QueryPerformanceCounter(&m_nStopCounter);
 		double nTime = 1000.0f*(m_nStopCounter.QuadPart - m_nStartCounter.QuadPart) / m_nFrequency.QuadPart;
 		if (nTime >= 1000.0f) {
@@ -34,5 +36,6 @@ private:
 	LARGE_INTEGER m_nStopCounter;
 	double		  m_fps;
 	double	      m_old_fps;
+	double		  m_old_fps_dummy;
 };
 #endif

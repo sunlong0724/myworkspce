@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 
 	BOOL ret = CCamera::FindCamera(&cameras);
 	CCamera* camera = new CCamera(cameras.begin()->second.begin()->second.c_str(), cameras.begin()->second.begin()->first);
-	camera->RegisterConnectionEventCallback();
+	camera->RegisterConnectionEventCallback(NULL, NULL);
 
 	if (camera->CreateDevice() && camera->CreateOtherObjects()) {
 		camera->Start();

@@ -24,7 +24,7 @@ void printf_cameras(std::map<std::string, std::map<int, std::string>>& cs) {
 	}
 }
 
-
+int64_t g_process_id = 0;
 void connected_callback(ConnectStatus status, void* ctx) {
 	if (status == ConnectStatus_CONNECTED) {
 		CAgentClient *ac = (CAgentClient*)ctx;
@@ -33,9 +33,9 @@ void connected_callback(ConnectStatus status, void* ctx) {
 		printf_cameras(cameras);
 
 		char cmdline[1024];
-		sprintf(cmdline, ".\\AcquireStore.exe 9070 55555 %s 10 e:\\data.raw", cameras.begin()->first.c_str());
+		sprintf(cmdline, "AcquireStore 9098 55598 192.168.0.98 10 d:\\data.raw");
 		printf("%s\n", cmdline);
-		int32_t process_id = ac->exec_program(cmdline);
+		g_process_id = ac->exec_program(cmdline);
 
 	}
 	else if (status == ConnectStatus_DISCONNECT) {
@@ -55,14 +55,14 @@ int main(int argc, char** argv) {
 		display_rate = atoi(argv[1]);
 	}
 
-	std::vector<std::string> ips;
 	CAgentClient ac;
-	ips = ac.scan_ip(std::string("192.168.1.18"), std::string("192.168.1.19"));
-
 
 	ac.set_connected_callback(connected_callback, &ac);
-	ac.set_connect_parameters(ips[0], port);
+	ac.set_connect_parameters("192.168.1.99", port);
 	ac.start();
+
+	sleep(1000*5);
+	ac.kill_program(g_process_id);
 
 	while (1) {
 		sleep(1);

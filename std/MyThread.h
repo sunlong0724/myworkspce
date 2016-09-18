@@ -7,31 +7,16 @@
 class DLL_API CMyThread {
 
 public:
-	CMyThread():m_exited(true){
-	}
+	CMyThread();
 
-	virtual ~CMyThread() {
-
-	}
+	virtual ~CMyThread();
 	
-	void start() {
-		if (m_exited) {
-			m_exited = false;
-			m_impl = std::thread(&CMyThread::run, this);
-		}
-	}
+	void start();
 
-	void stop() {
-		if (!m_exited) {
-			m_exited = true;
-			m_impl.join();
-		}
-	}
+	void stop();
 
 protected:
-	virtual void run() {
-
-	}
+	virtual void run();
 	bool			m_exited;
 
 private:

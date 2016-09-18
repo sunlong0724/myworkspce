@@ -58,11 +58,16 @@ class AgentServerServiceHandler : virtual public AgentServerServiceIf {
 
   int32_t kill_program(const int64_t process_id) {
 	  // Your implementation goes here
-	  printf("kill_program\n");
+	  printf("kill_program %lld\n", process_id);
 	  HANDLE hPrc;
 	  if (0 == process_id) return FALSE;
 
-	  hPrc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, process_id);  // Opens handle to the process.
+	  hPrc = OpenProcess(PROCESS_TERMINATE, FALSE, process_id);  // Opens handle to the process.
+	  if (hPrc == NULL) {
+		  DWORD dw = GetLastError();
+		  printf("kill_program failed %p %d\n", hPrc, dw);
+		  return -1;
+	  }
 	  if (!TerminateProcess(hPrc, 0))  {
 		  CloseHandle(hPrc);
 		  return FALSE;

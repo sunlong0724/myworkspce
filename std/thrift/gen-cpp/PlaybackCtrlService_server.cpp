@@ -27,6 +27,7 @@ using boost::shared_ptr;
 using namespace  ::hawkeye;
 
 extern CustomStruct g_cs;
+extern std::mutex			g_resized_mutex;
 
 inline void calc_frame_rate_some(const int32_t play_frame_rate, const int32_t sample) {
 	g_cs.m_play_frame_rate = play_frame_rate;
@@ -41,6 +42,8 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     // Your initialization goes here
   }
 
+  
+
   int32_t get_data_port() {
 	  // Your implementation goes here
 	  //printf("get_data_port/PingPong\n");
@@ -49,7 +52,7 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t set_play_frame_rate(const int32_t play_frame_rate, const int32_t sample_gap) {
 	  // Your implementation goes here
-	  printf("set_play_frame_rate\n");
+	  printf("\nset_play_frame_rate\n");
      calc_frame_rate_some(play_frame_rate,sample_gap);
 	  return 1;
   }
@@ -57,46 +60,36 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t set_play_frame_resolution(const int32_t w, const int32_t h) {
     // Your implementation goes here
-    printf("set_play_frame_resolution(%d %d)\n", w, h);
+    printf("\nset_play_frame_resolution(%d %d)\n", w, h);
+
+	if (w == g_cs.m_play_frame_w  && h == g_cs.m_play_frame_h)//need check!!!!
+		return 0;
+
 	g_cs.m_play_frame_w = w;
 	g_cs.m_play_frame_h = h;
 
 	BOOL flag = (g_cs.m_image_w != g_cs.m_play_frame_w || g_cs.m_image_h != g_cs.m_play_frame_h);
 	g_cs.m_snd_data_thread->set_parameters(GET_IMAGE_BUFFER_SIZE(w, h));
 	g_cs.m_processor_data_flag = flag;
-
-	//if (g_cs.m_processor_data_flag) {
-	//	g_cs.m_post_processor_thread->set_parameters(g_cs.m_image_w, g_cs.m_image_h, g_cs.m_play_frame_w, g_cs.m_play_frame_h);
-	//	g_cs.m_post_processor_thread->set_sink_callback(processor_sink_data_cb, &g_cs);
-	//	g_cs.m_post_processor_thread->start();
-	//}
-	//else {
-	//	g_cs.m_post_processor_thread->stop();
-	//}
-
-	if (Pb_STATUS_PLAY_PAUSE == g_cs.m_playback_thread->m_status) {
-		std::vector<char> buffer(GET_IMAGE_BUFFER_SIZE(g_cs.m_play_frame_w,g_cs.m_play_frame_h), 0x00);
-		g_cs.m_file_storage_object_for_read->read_file(buffer.data(), buffer.size(), g_cs.m_snd_data_thread->m_last_snd_seq);
-		g_cs.m_snd_data_thread->send(buffer.data(), buffer.size());
-	}
-
 	return 1;
   }
 
   int32_t set_store_file(const int32_t flag) {
 	  // Your implementation goes here
-	  printf("set_store_file\n");
+	  printf("\nset_store_file %d\n", flag);
 	  return g_cs.m_store_file_flag = flag;
   }
 
   int32_t start_grab() {
 	  // Your implementation goes here
-	  printf("start_grab\n");
+	  printf("\nstart_grab\n");
 	  g_cs.m_camera->SetSinkBayerDataCallback(SinkBayerDatasCallbackImpl, &g_cs);
 	  if (!g_cs.m_camera->CreateOtherObjects()) {
 		  fprintf(stdout, "%s CreateOtherObjects failed!\n", __FUNCTION__);
 	  }
 	  g_cs.m_camera->Start();
+
+	  g_cs.m_start_grab_time = time(NULL);
 	  return 1;
   }
 
@@ -114,11 +107,17 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t play_pause() {
 	  // Your implementation goes here
-	  printf("play_pause m_last_snd_seq %d\n", g_cs.m_snd_data_thread->m_last_snd_seq);
-	  printf("play_pause cur(%d),last(%d)\n", g_cs.m_playback_thread->m_status, g_cs.m_playback_thread->m_last_status);
+	  printf("\nplay_pause m_last_snd_seq %d\n", g_cs.m_snd_data_thread->m_last_snd_seq);
+	  printf("\nplay_pause cur(%d),last(%d)\n", g_cs.m_playback_thread->m_status, g_cs.m_playback_thread->m_last_status);
+
+	  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq;
+	
 	  if (g_cs.m_playback_thread->m_last_status == Pb_STATUS_NONE) {
 		  g_cs.m_snd_live_frame_flag = FALSE;
 		  g_cs.m_playback_thread->m_last_status = g_cs.m_playback_thread->m_status;
+
+		  //g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq;
+		  
 		  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_PAUSE;
 	  }
 	  else {
@@ -137,13 +136,17 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 
   int32_t play_live(const int32_t play_frame_rate, const int32_t sample_gap) {
 	  // Your implementation goes here
-	  printf("play_live\n");
+	  printf("play_live(%d %d)\n", play_frame_rate, sample_gap);
 	  calc_frame_rate_some(play_frame_rate, sample_gap);
+
+	  if (Pb_STATUS_PLAY_CAMERAS == g_cs.m_playback_thread->m_status) {
+		  RingBuffer_clear(g_cs.m_playback_thread->m_ring_buffer);
+	  }
+	 
 	  g_cs.m_snd_live_frame_flag = TRUE;
 	  g_cs.m_last_live_play_seq = g_cs.m_frame_counter;
 
 	  g_cs.m_playback_thread->m_start_play_frame_no_begin = 0;
-
 	  g_cs.m_playback_thread->m_last_status = Pb_STATUS_NONE;
 	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_CAMERAS;
   }
@@ -153,6 +156,10 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	  printf("play_forward\n");
 	  calc_frame_rate_some(play_frame_rate, sample_gap);
 	  g_cs.m_snd_live_frame_flag = FALSE;
+
+	  if (Pb_STATUS_PLAY_FORWARD == g_cs.m_playback_thread->m_status) {
+		  return Pb_STATUS_PLAY_FORWARD;
+	  }
 	  g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
 	  g_cs.m_playback_thread->m_last_status = Pb_STATUS_NONE;
 	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_FORWARD;
@@ -163,15 +170,12 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	  printf("play_backward m_last_snd_seq %d\n", g_cs.m_snd_data_thread->m_last_snd_seq);
 	  calc_frame_rate_some(play_frame_rate, sample_gap);
 	  g_cs.m_snd_live_frame_flag = FALSE;
-	  //if (g_cs.m_playback_thread->m_start_play_frame_no_begin == 0) {
-		 // g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_file_storage_object_for_read->m_frame_offset_map.rbegin()->first - 1;/*g_cs.m_frame_counter - 1;*/
-	  //}
-	  //else 
-	  {
-		  //g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
-		  g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
+
+	  if (Pb_STATUS_PLAY_BACKWARD == g_cs.m_playback_thread->m_status) {
+		  return Pb_STATUS_PLAY_BACKWARD;
 	  }
-	 
+
+	  g_cs.m_playback_thread->m_start_play_frame_no_begin = g_cs.m_playback_thread->m_start_play_frame_no = g_cs.m_snd_data_thread->m_last_snd_seq - 1;//update m_start_play_frame_no as m_last_snd_seq-1
 	  printf("start_backward_play_temp m_start_play_frame_no %d, m_start_play_frame_no_begin %d\n", g_cs.m_playback_thread->m_start_play_frame_no, g_cs.m_playback_thread->m_start_play_frame_no_begin);
 	  fprintf(stdout, "%s map size(%lld),beg(seq:%lld,offset:%lld),end(seq:%lld,offset:%lld)\n", __FUNCTION__, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.size(), \
 		  g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.begin()->first, g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.begin()->second, \
@@ -191,6 +195,80 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	  return g_cs.m_playback_thread->m_status = Pb_STATUS_PLAY_FROM_A2B_LOOP;
   }
 
+  void get_frame_data(std::string& _return, const int64_t seq) {
+	  // Your implementation goes here
+	  //printf("get_frame_data seq %d\n", seq);//seq no need temp!!!
+	  if (-1 == g_cs.m_snd_data_thread->recv(g_cs.m_snd_buffer)) {
+		  //printf("####no data %d\n", seq);
+		  _return.clear();
+		  return;
+	  }
+
+	  g_cs.m_snd_data_thread->m_soft_snd_counter.statistics(__FUNCTION__, FALSE);
+
+	  int64_t frame_no;
+	  memcpy(&frame_no, &g_cs.m_snd_buffer[FRAME_SEQ_START], sizeof int64_t);
+	  //printf("snd %d bytes, seq:%lld, sndno:%lld,timestamp:%lld\r", ret, frame_no, frame_no, timestamp);
+	  g_cs.m_snd_data_thread->m_last_snd_seq = frame_no;
+	  _return.assign(g_cs.m_snd_buffer.data(), g_cs.m_snd_buffer.size());
+  }
+
+  int32_t get_the_frame_data(const int8_t direct, const int8_t gap) {
+	  // Your implementation goes here
+	  printf("get_the_frame_data\n");
+	  if (g_cs.m_playback_thread->m_status != Pb_STATUS_PLAY_PAUSE) {
+		  fprintf(stdout, "%s status %d!\n", __FUNCTION__, g_cs.m_playback_thread->m_status);
+		  return -1;
+	  }
+
+	  if (0 == gap) {
+		  fprintf(stdout, "%s gap %d!\n", __FUNCTION__, gap);
+		  return 0;
+	  }
+
+	  int64_t the_seq = 0;
+	  if (direct == 1) {
+		  the_seq = g_cs.m_snd_data_thread->m_last_snd_seq + gap;
+	  }
+	  else {
+		  the_seq = g_cs.m_snd_data_thread->m_last_snd_seq - gap;
+	  }
+
+	  if (g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.size() == 0) {
+		  return 0;
+	  }
+
+	  if (the_seq > g_cs.m_file_storage_object_for_write_thread->m_frame_offset_map.rbegin()->first) {
+		  fprintf(stdout, "1 %s %lld not found!\n", __FUNCTION__, the_seq);
+		  return -1;
+	  }
+	  int ret = g_cs.m_file_storage_object_for_read->read_file(g_cs.m_playback_thread->buffer_io.data(), g_cs.m_playback_thread->buffer_io.size(), the_seq);
+	  if ( ret > 0) {
+		  fprintf(stdout, "2 %s %lld  found!\n", __FUNCTION__, the_seq);
+		  return g_cs.m_playback_thread->buffer_io.size();
+	  }
+	  else {
+		  fprintf(stdout, "3 %s %lld not found!\n", __FUNCTION__, the_seq);
+		  g_cs.m_snd_data_thread->m_last_snd_seq = the_seq;
+	  }
+	  return ret;
+  }
+
+  int64_t sync_frame_by_timestamp_in_pause(const int64_t timestamp) {
+	  // Your implementation goes here
+	  printf("\nsync_frame_by_timestamp_in_pause(%lld)\n", timestamp);
+	  //set flag true when in pause!!!
+	  if (g_cs.m_playback_thread->m_status != Pb_STATUS_PLAY_PAUSE) {
+		  fprintf(stdout, "%s status %d!\n", __FUNCTION__, g_cs.m_playback_thread->m_status);
+		  return -1;
+	  }
+	  if (timestamp == 0) {
+		  return 0;
+	  }
+	  g_cs.m_sync_frame_flag = TRUE;
+	  g_cs.m_sync_frame_timestamp = timestamp;
+	  return timestamp;
+  }
 
   double get_camera_grab_fps() {
 	  // Your implementation goes here
@@ -213,6 +291,13 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
 	  // Your implementation goes here
 	  printf("get_file_write_fps\n");
 	  return g_cs.m_file_storage_object_for_write_thread->m_fps_counter.GetFPS();
+  }
+
+  int32_t kill_myself() {
+    // Your implementation goes here
+    printf("kill_myself\n");
+	g_cs.m_exited = true;
+	return 0;
   }
 
   int32_t set_exposure_time(const double microseconds) {

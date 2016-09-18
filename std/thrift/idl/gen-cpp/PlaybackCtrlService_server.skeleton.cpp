@@ -77,6 +77,21 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
     printf("play_from_a2b\n");
   }
 
+  void get_frame_data(std::string& _return, const int64_t seq) {
+    // Your implementation goes here
+    printf("get_frame_data\n");
+  }
+
+  int32_t get_the_frame_data(const int8_t direct, const int8_t gap) {
+    // Your implementation goes here
+    printf("get_the_frame_data\n");
+  }
+
+  int64_t sync_frame_by_timestamp_in_pause(const int64_t timestamp) {
+    // Your implementation goes here
+    printf("sync_frame_by_timestamp_in_pause\n");
+  }
+
   double get_camera_grab_fps() {
     // Your implementation goes here
     printf("get_camera_grab_fps\n");
@@ -95,6 +110,11 @@ class PlaybackCtrlServiceHandler : virtual public PlaybackCtrlServiceIf {
   double get_file_write_fps() {
     // Your implementation goes here
     printf("get_file_write_fps\n");
+  }
+
+  int32_t kill_myself() {
+    // Your implementation goes here
+    printf("kill_myself\n");
   }
 
   int32_t set_exposure_time(const double microseconds) {
